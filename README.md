@@ -9,3 +9,5 @@ It's divided into four categories:
 2. Intermediate
 3. Machine / Deep Learning 
 4. Applications
+
+Please see also other repositories such as cycling_data and facemask detector
