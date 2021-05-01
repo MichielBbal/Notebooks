@@ -1,6 +1,6 @@
 import time
 import paho.mqtt.client as paho
-broker="broker.hivemq.com"
+#broker="broker.hivemq.com" hivemq is commercieel
 broker="iot.eclipse.org"
 #define callback
 def on_message(client, userdata, message):
