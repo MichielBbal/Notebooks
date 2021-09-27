@@ -1,5 +1,5 @@
 import paho.mqtt.client as mqtt
-mqtt_topic = 'pipeline/openears/OE001'
+mqtt_topic = 'cputemp'
 mqtt_server_ip="mqtt.eclipseprojects.io" #use external broker
 
 def on_connect(client, userdata, flags, rc):
