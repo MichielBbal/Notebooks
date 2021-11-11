@@ -1,0 +1,1 @@
+{"result": {"bounding_boxes": [{"height": 252, "label": "zebra", "value": 0.9409910440444946, "width": 201, "x": 13, "y": 38}, {"height": 193, "label": "linksaf", "value": 0.8306697607040405, "width": 209, "x": 23, "y": 114}]}}
