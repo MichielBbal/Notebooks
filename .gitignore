@@ -1,4 +1,7 @@
-# models
+#credentials
+notebooks_config.py
+
+# models / large files
 mask_rcnn_coco.h5
 yolo.h5
 yolov3.weights
