@@ -1,0 +1,5077 @@
+openapi: 3.0.0
+info:
+  title: VERA-Relaties
+  description: API-specificatie van informatiedomein Relaties
+  contact:
+    name: VERA
+    url: https://cora.wikixl.nl/index.php/VERA_Standaard
+    email: info@stichting-vera.nl
+  license:
+    name: "Licentie voor hergebruik: Creative Commons Naamsvermelding 4.0."
+    url: https://creativecommons.org/licenses/by/4.0/deed.nl
+  version: '4.0'
+servers:
+  - url: https://relaties.vera.io:{port}/{basePath}
+    description: Productieserver
+    variables:
+       port:
+         enum:
+           - '8443'
+           - '443'
+         default: '443'
+       basePath:
+         default: v4
+tags:
+- name: Accounts
+  description: Operaties met betrekking tot een Account
+- name: Afspraken
+  description: Operaties met betrekking tot een Afspraak
+- name: AfspraakOpties
+  description: Operaties met betrekking tot een AfspraakOptie
+- name: Afspraakverzoeken
+  description: Operaties met betrekking tot een Afspraakverzoek
+- name: Betaalgegevens
+  description: Operaties met betrekking tot een Betaalgegeven
+- name: Contactgegevens
+  description: Operaties met betrekking tot een Contactgegeven
+- name: Contactmomenten
+  description: Operaties met betrekking tot een Contactmoment
+- name: Inkomens
+  description: Operaties met betrekking tot een Inkomen
+- name: NatuurlijkPersonen
+  description: Operaties met betrekking tot een NatuurlijkPersoon
+- name: Opleidingen
+  description: Operaties met betrekking tot een Opleiding
+- name: Rechtspersonen
+  description: Operaties met betrekking tot een Rechtspersoon
+- name: Relaties
+  description: Operaties met betrekking tot een Relatie
+- name: RelatieAdressen
+  description: Operaties met betrekking tot een RelatieAdres
+- name: Relatiegroepen
+  description: Operaties met betrekking tot een Relatiegroep
+- name: Relatierollen
+  description: Operaties met betrekking tot een Relatierol
+- name: Signaleringen
+  description: Operaties met betrekking tot een Signalering
+- name: Telefoonnummers
+  description: Operaties met betrekking tot een Telefoonnummer
+- name: Accounts
+  description: Operaties met betrekking tot een Account
+- name: Afspraken
+  description: Operaties met betrekking tot een Afspraak
+- name: AfspraakOpties
+  description: Operaties met betrekking tot een AfspraakOptie
+- name: Afspraakverzoeken
+  description: Operaties met betrekking tot een Afspraakverzoek
+- name: Betaalgegevens
+  description: Operaties met betrekking tot een Betaalgegeven
+- name: Contactgegevens
+  description: Operaties met betrekking tot een Contactgegeven
+- name: Contactmomenten
+  description: Operaties met betrekking tot een Contactmoment
+- name: Inkomens
+  description: Operaties met betrekking tot een Inkomen
+- name: NatuurlijkPersonen
+  description: Operaties met betrekking tot een NatuurlijkPersoon
+- name: Opleidingen
+  description: Operaties met betrekking tot een Opleiding
+- name: Rechtspersonen
+  description: Operaties met betrekking tot een Rechtspersoon
+- name: Relaties
+  description: Operaties met betrekking tot een Relatie
+- name: RelatieAdressen
+  description: Operaties met betrekking tot een RelatieAdres
+- name: Relatiegroepen
+  description: Operaties met betrekking tot een Relatiegroep
+- name: Relatierollen
+  description: Operaties met betrekking tot een Relatierol
+- name: Signaleringen
+  description: Operaties met betrekking tot een Signalering
+- name: Telefoonnummers
+  description: Operaties met betrekking tot een Telefoonnummer
+paths:
+  /ping:
+    get:
+      description: |
+        Een ping wordt beantwoord met response code 200
+      operationId: ping
+      responses:
+        '200':
+          description: OK
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /accounts:
+    get:
+      tags:
+      - 'Accounts'
+      description: Ophalen van Accounts
+      operationId: listAccounts
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Account response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Accounts'
+      description: Voegt een nieuw(e) Account toe.
+      operationId: createAccount
+      requestBody:
+        description: Account
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Account succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Accounts'
+      description: |
+        Vervangen van een Account op basis van overeenkomstige sleutelvelden.
+      operationId: replaceAccount
+      requestBody:
+        description: Entiteit Account
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Account succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Account bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Account met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Accounts'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Account. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateAccount
+      requestBody:
+        description: Entiteit Account
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Account succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Account bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Account met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /accounts/{id}:
+    get:
+      tags:
+      - 'Accounts'
+      description: Retourneert een Account met de gegeven identifier
+      operationId: readAccountById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Account om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Account response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Account met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Accounts'
+      description: Vervangen van een Account
+      operationId: replaceAccountById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Account om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Account
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Account succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Account met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Accounts'
+      description: Wijzigen van een Account
+      operationId: updateAccountById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Account om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Account
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Account'
+      responses:
+        '200':
+          description: Account succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Account met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /afspraken:
+    get:
+      tags:
+      - 'Afspraken'
+      description: Ophalen van Afspraken
+      operationId: listAfspraken
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Afspraak'
+      responses:
+        '200':
+          description: Afspraak response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Afspraak'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Afspraken'
+      description: Voegt een nieuw(e) Afspraak toe.
+      operationId: createAfspraak
+      requestBody:
+        description: Afspraak
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Afspraak'
+      responses:
+        '200':
+          description: Afspraak succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Afspraken'
+      description: |
+        Vervangen van een Afspraak op basis van overeenkomstige sleutelvelden.
+      operationId: replaceAfspraak
+      requestBody:
+        description: Entiteit Afspraak
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Afspraak'
+      responses:
+        '200':
+          description: Afspraak succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Afspraak bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Afspraak met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Afspraken'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Afspraak. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateAfspraak
+      requestBody:
+        description: Entiteit Afspraak
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Afspraak'
+      responses:
+        '200':
+          description: Afspraak succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Afspraak bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Afspraak met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /afspraken/{id}:
+    get:
+      tags:
+      - 'Afspraken'
+      description: Retourneert een Afspraak met de gegeven identifier
+      operationId: readAfspraakById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Afspraak om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Afspraak response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Afspraak'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Afspraak met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Afspraken'
+      description: Vervangen van een Afspraak
+      operationId: replaceAfspraakById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Afspraak om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Afspraak
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Afspraak'
+      responses:
+        '200':
+          description: Afspraak succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Afspraak met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Afspraken'
+      description: Wijzigen van een Afspraak
+      operationId: updateAfspraakById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Afspraak om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Afspraak
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Afspraak'
+      responses:
+        '200':
+          description: Afspraak succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Afspraak met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /afspraak-opties:
+    get:
+      tags:
+      - 'AfspraakOpties'
+      description: Ophalen van AfspraakOpties
+      operationId: listAfspraakOpties
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/AfspraakOptie'
+      responses:
+        '200':
+          description: AfspraakOptie response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AfspraakOptie'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'AfspraakOpties'
+      description: Voegt een nieuw(e) AfspraakOptie toe.
+      operationId: createAfspraakOptie
+      requestBody:
+        description: AfspraakOptie
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AfspraakOptie'
+      responses:
+        '200':
+          description: AfspraakOptie succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'AfspraakOpties'
+      description: |
+        Vervangen van een AfspraakOptie op basis van overeenkomstige sleutelvelden.
+      operationId: replaceAfspraakOptie
+      requestBody:
+        description: Entiteit AfspraakOptie
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AfspraakOptie'
+      responses:
+        '200':
+          description: AfspraakOptie succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             AfspraakOptie bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: AfspraakOptie met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'AfspraakOpties'
+      description: |
+        Wijzigen van afzonderlijke attributen van een AfspraakOptie. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateAfspraakOptie
+      requestBody:
+        description: Entiteit AfspraakOptie
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AfspraakOptie'
+      responses:
+        '200':
+          description: AfspraakOptie succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             AfspraakOptie bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: AfspraakOptie met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /afspraak-opties/{id}:
+    get:
+      tags:
+      - 'AfspraakOpties'
+      description: Retourneert een AfspraakOptie met de gegeven identifier
+      operationId: readAfspraakOptieById
+      parameters:
+      - name: id
+        in: path
+        description: Id van AfspraakOptie om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: AfspraakOptie response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AfspraakOptie'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: AfspraakOptie met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'AfspraakOpties'
+      description: Vervangen van een AfspraakOptie
+      operationId: replaceAfspraakOptieById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van AfspraakOptie om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit AfspraakOptie
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AfspraakOptie'
+      responses:
+        '200':
+          description: AfspraakOptie succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: AfspraakOptie met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'AfspraakOpties'
+      description: Wijzigen van een AfspraakOptie
+      operationId: updateAfspraakOptieById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van AfspraakOptie om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit AfspraakOptie
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AfspraakOptie'
+      responses:
+        '200':
+          description: AfspraakOptie succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: AfspraakOptie met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /afspraakverzoeken:
+    get:
+      tags:
+      - 'Afspraakverzoeken'
+      description: Ophalen van Afspraakverzoeken
+      operationId: listAfspraakverzoeken
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Afspraakverzoek'
+      responses:
+        '200':
+          description: Afspraakverzoek response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Afspraakverzoek'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Afspraakverzoeken'
+      description: Voegt een nieuw(e) Afspraakverzoek toe.
+      operationId: createAfspraakverzoek
+      requestBody:
+        description: Afspraakverzoek
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Afspraakverzoek'
+      responses:
+        '200':
+          description: Afspraakverzoek succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Afspraakverzoeken'
+      description: |
+        Vervangen van een Afspraakverzoek op basis van overeenkomstige sleutelvelden.
+      operationId: replaceAfspraakverzoek
+      requestBody:
+        description: Entiteit Afspraakverzoek
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Afspraakverzoek'
+      responses:
+        '200':
+          description: Afspraakverzoek succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Afspraakverzoek bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Afspraakverzoek met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Afspraakverzoeken'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Afspraakverzoek. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateAfspraakverzoek
+      requestBody:
+        description: Entiteit Afspraakverzoek
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Afspraakverzoek'
+      responses:
+        '200':
+          description: Afspraakverzoek succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Afspraakverzoek bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Afspraakverzoek met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /afspraakverzoeken/{id}:
+    get:
+      tags:
+      - 'Afspraakverzoeken'
+      description: Retourneert een Afspraakverzoek met de gegeven identifier
+      operationId: readAfspraakverzoekById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Afspraakverzoek om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Afspraakverzoek response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Afspraakverzoek'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Afspraakverzoek met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Afspraakverzoeken'
+      description: Vervangen van een Afspraakverzoek
+      operationId: replaceAfspraakverzoekById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Afspraakverzoek om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Afspraakverzoek
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Afspraakverzoek'
+      responses:
+        '200':
+          description: Afspraakverzoek succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Afspraakverzoek met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Afspraakverzoeken'
+      description: Wijzigen van een Afspraakverzoek
+      operationId: updateAfspraakverzoekById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Afspraakverzoek om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Afspraakverzoek
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Afspraakverzoek'
+      responses:
+        '200':
+          description: Afspraakverzoek succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Afspraakverzoek met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /betaalgegevens:
+    get:
+      tags:
+      - 'Betaalgegevens'
+      description: Ophalen van Betaalgegevens
+      operationId: listBetaalgegevens
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Betaalgegeven'
+      responses:
+        '200':
+          description: Betaalgegeven response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Betaalgegeven'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Betaalgegevens'
+      description: Voegt een nieuw(e) Betaalgegeven toe.
+      operationId: createBetaalgegeven
+      requestBody:
+        description: Betaalgegeven
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Betaalgegeven'
+      responses:
+        '200':
+          description: Betaalgegeven succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Betaalgegevens'
+      description: |
+        Vervangen van een Betaalgegeven op basis van overeenkomstige sleutelvelden.
+      operationId: replaceBetaalgegeven
+      requestBody:
+        description: Entiteit Betaalgegeven
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Betaalgegeven'
+      responses:
+        '200':
+          description: Betaalgegeven succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Betaalgegeven bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Betaalgegeven met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Betaalgegevens'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Betaalgegeven. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateBetaalgegeven
+      requestBody:
+        description: Entiteit Betaalgegeven
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Betaalgegeven'
+      responses:
+        '200':
+          description: Betaalgegeven succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Betaalgegeven bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Betaalgegeven met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /betaalgegevens/{id}:
+    get:
+      tags:
+      - 'Betaalgegevens'
+      description: Retourneert een Betaalgegeven met de gegeven identifier
+      operationId: readBetaalgegevenById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Betaalgegeven om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Betaalgegeven response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Betaalgegeven'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Betaalgegeven met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Betaalgegevens'
+      description: Vervangen van een Betaalgegeven
+      operationId: replaceBetaalgegevenById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Betaalgegeven om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Betaalgegeven
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Betaalgegeven'
+      responses:
+        '200':
+          description: Betaalgegeven succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Betaalgegeven met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Betaalgegevens'
+      description: Wijzigen van een Betaalgegeven
+      operationId: updateBetaalgegevenById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Betaalgegeven om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Betaalgegeven
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Betaalgegeven'
+      responses:
+        '200':
+          description: Betaalgegeven succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Betaalgegeven met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /contactgegevens:
+    get:
+      tags:
+      - 'Contactgegevens'
+      description: Ophalen van Contactgegevens
+      operationId: listContactgegevens
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Contactgegeven'
+      responses:
+        '200':
+          description: Contactgegeven response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contactgegeven'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Contactgegevens'
+      description: Voegt een nieuw(e) Contactgegeven toe.
+      operationId: createContactgegeven
+      requestBody:
+        description: Contactgegeven
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contactgegeven'
+      responses:
+        '200':
+          description: Contactgegeven succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Contactgegevens'
+      description: |
+        Vervangen van een Contactgegeven op basis van overeenkomstige sleutelvelden.
+      operationId: replaceContactgegeven
+      requestBody:
+        description: Entiteit Contactgegeven
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contactgegeven'
+      responses:
+        '200':
+          description: Contactgegeven succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Contactgegeven bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Contactgegeven met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Contactgegevens'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Contactgegeven. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateContactgegeven
+      requestBody:
+        description: Entiteit Contactgegeven
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contactgegeven'
+      responses:
+        '200':
+          description: Contactgegeven succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Contactgegeven bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Contactgegeven met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /contactgegevens/{id}:
+    get:
+      tags:
+      - 'Contactgegevens'
+      description: Retourneert een Contactgegeven met de gegeven identifier
+      operationId: readContactgegevenById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Contactgegeven om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Contactgegeven response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contactgegeven'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Contactgegeven met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Contactgegevens'
+      description: Vervangen van een Contactgegeven
+      operationId: replaceContactgegevenById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Contactgegeven om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Contactgegeven
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contactgegeven'
+      responses:
+        '200':
+          description: Contactgegeven succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Contactgegeven met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Contactgegevens'
+      description: Wijzigen van een Contactgegeven
+      operationId: updateContactgegevenById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Contactgegeven om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Contactgegeven
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contactgegeven'
+      responses:
+        '200':
+          description: Contactgegeven succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Contactgegeven met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /contactmomenten:
+    get:
+      tags:
+      - 'Contactmomenten'
+      description: Ophalen van Contactmomenten
+      operationId: listContactmomenten
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Contactmoment'
+      responses:
+        '200':
+          description: Contactmoment response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Contactmoment'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Contactmomenten'
+      description: Voegt een nieuw(e) Contactmoment toe.
+      operationId: createContactmoment
+      requestBody:
+        description: Contactmoment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contactmoment'
+      responses:
+        '200':
+          description: Contactmoment succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Contactmomenten'
+      description: |
+        Vervangen van een Contactmoment op basis van overeenkomstige sleutelvelden.
+      operationId: replaceContactmoment
+      requestBody:
+        description: Entiteit Contactmoment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contactmoment'
+      responses:
+        '200':
+          description: Contactmoment succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Contactmoment bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Contactmoment met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Contactmomenten'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Contactmoment. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateContactmoment
+      requestBody:
+        description: Entiteit Contactmoment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contactmoment'
+      responses:
+        '200':
+          description: Contactmoment succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Contactmoment bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Contactmoment met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /contactmomenten/{id}:
+    get:
+      tags:
+      - 'Contactmomenten'
+      description: Retourneert een Contactmoment met de gegeven identifier
+      operationId: readContactmomentById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Contactmoment om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Contactmoment response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Contactmoment'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Contactmoment met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Contactmomenten'
+      description: Vervangen van een Contactmoment
+      operationId: replaceContactmomentById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Contactmoment om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Contactmoment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contactmoment'
+      responses:
+        '200':
+          description: Contactmoment succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Contactmoment met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Contactmomenten'
+      description: Wijzigen van een Contactmoment
+      operationId: updateContactmomentById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Contactmoment om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Contactmoment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Contactmoment'
+      responses:
+        '200':
+          description: Contactmoment succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Contactmoment met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /inkomens:
+    get:
+      tags:
+      - 'Inkomens'
+      description: Ophalen van Inkomens
+      operationId: listInkomens
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Inkomen'
+      responses:
+        '200':
+          description: Inkomen response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Inkomen'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Inkomens'
+      description: Voegt een nieuw(e) Inkomen toe.
+      operationId: createInkomen
+      requestBody:
+        description: Inkomen
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inkomen'
+      responses:
+        '200':
+          description: Inkomen succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Inkomens'
+      description: |
+        Vervangen van een Inkomen op basis van overeenkomstige sleutelvelden.
+      operationId: replaceInkomen
+      requestBody:
+        description: Entiteit Inkomen
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inkomen'
+      responses:
+        '200':
+          description: Inkomen succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Inkomen bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Inkomen met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Inkomens'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Inkomen. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateInkomen
+      requestBody:
+        description: Entiteit Inkomen
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inkomen'
+      responses:
+        '200':
+          description: Inkomen succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Inkomen bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Inkomen met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /inkomens/{id}:
+    get:
+      tags:
+      - 'Inkomens'
+      description: Retourneert een Inkomen met de gegeven identifier
+      operationId: readInkomenById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Inkomen om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Inkomen response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inkomen'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Inkomen met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Inkomens'
+      description: Vervangen van een Inkomen
+      operationId: replaceInkomenById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Inkomen om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Inkomen
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inkomen'
+      responses:
+        '200':
+          description: Inkomen succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Inkomen met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Inkomens'
+      description: Wijzigen van een Inkomen
+      operationId: updateInkomenById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Inkomen om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Inkomen
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Inkomen'
+      responses:
+        '200':
+          description: Inkomen succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Inkomen met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /natuurlijk-personen:
+    get:
+      tags:
+      - 'NatuurlijkPersonen'
+      description: Ophalen van NatuurlijkPersonen
+      operationId: listNatuurlijkPersonen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/NatuurlijkPersoon'
+      responses:
+        '200':
+          description: NatuurlijkPersoon response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/NatuurlijkPersoon'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'NatuurlijkPersonen'
+      description: Voegt een nieuw(e) NatuurlijkPersoon toe.
+      operationId: createNatuurlijkPersoon
+      requestBody:
+        description: NatuurlijkPersoon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NatuurlijkPersoon'
+      responses:
+        '200':
+          description: NatuurlijkPersoon succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'NatuurlijkPersonen'
+      description: |
+        Vervangen van een NatuurlijkPersoon op basis van overeenkomstige sleutelvelden.
+      operationId: replaceNatuurlijkPersoon
+      requestBody:
+        description: Entiteit NatuurlijkPersoon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NatuurlijkPersoon'
+      responses:
+        '200':
+          description: NatuurlijkPersoon succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             NatuurlijkPersoon bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: NatuurlijkPersoon met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'NatuurlijkPersonen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een NatuurlijkPersoon. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateNatuurlijkPersoon
+      requestBody:
+        description: Entiteit NatuurlijkPersoon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NatuurlijkPersoon'
+      responses:
+        '200':
+          description: NatuurlijkPersoon succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             NatuurlijkPersoon bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: NatuurlijkPersoon met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /natuurlijk-personen/{id}:
+    get:
+      tags:
+      - 'NatuurlijkPersonen'
+      description: Retourneert een NatuurlijkPersoon met de gegeven identifier
+      operationId: readNatuurlijkPersoonById
+      parameters:
+      - name: id
+        in: path
+        description: Id van NatuurlijkPersoon om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: NatuurlijkPersoon response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NatuurlijkPersoon'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: NatuurlijkPersoon met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'NatuurlijkPersonen'
+      description: Vervangen van een NatuurlijkPersoon
+      operationId: replaceNatuurlijkPersoonById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van NatuurlijkPersoon om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit NatuurlijkPersoon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NatuurlijkPersoon'
+      responses:
+        '200':
+          description: NatuurlijkPersoon succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: NatuurlijkPersoon met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'NatuurlijkPersonen'
+      description: Wijzigen van een NatuurlijkPersoon
+      operationId: updateNatuurlijkPersoonById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van NatuurlijkPersoon om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit NatuurlijkPersoon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NatuurlijkPersoon'
+      responses:
+        '200':
+          description: NatuurlijkPersoon succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: NatuurlijkPersoon met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /opleidingen:
+    get:
+      tags:
+      - 'Opleidingen'
+      description: Ophalen van Opleidingen
+      operationId: listOpleidingen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Opleiding'
+      responses:
+        '200':
+          description: Opleiding response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Opleiding'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Opleidingen'
+      description: Voegt een nieuw(e) Opleiding toe.
+      operationId: createOpleiding
+      requestBody:
+        description: Opleiding
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Opleiding'
+      responses:
+        '200':
+          description: Opleiding succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Opleidingen'
+      description: |
+        Vervangen van een Opleiding op basis van overeenkomstige sleutelvelden.
+      operationId: replaceOpleiding
+      requestBody:
+        description: Entiteit Opleiding
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Opleiding'
+      responses:
+        '200':
+          description: Opleiding succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Opleiding bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Opleiding met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Opleidingen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Opleiding. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateOpleiding
+      requestBody:
+        description: Entiteit Opleiding
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Opleiding'
+      responses:
+        '200':
+          description: Opleiding succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Opleiding bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Opleiding met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /opleidingen/{id}:
+    get:
+      tags:
+      - 'Opleidingen'
+      description: Retourneert een Opleiding met de gegeven identifier
+      operationId: readOpleidingById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Opleiding om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Opleiding response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Opleiding'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Opleiding met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Opleidingen'
+      description: Vervangen van een Opleiding
+      operationId: replaceOpleidingById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Opleiding om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Opleiding
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Opleiding'
+      responses:
+        '200':
+          description: Opleiding succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Opleiding met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Opleidingen'
+      description: Wijzigen van een Opleiding
+      operationId: updateOpleidingById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Opleiding om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Opleiding
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Opleiding'
+      responses:
+        '200':
+          description: Opleiding succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Opleiding met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /rechtspersonen:
+    get:
+      tags:
+      - 'Rechtspersonen'
+      description: Ophalen van Rechtspersonen
+      operationId: listRechtspersonen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Rechtspersoon'
+      responses:
+        '200':
+          description: Rechtspersoon response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Rechtspersoon'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Rechtspersonen'
+      description: Voegt een nieuw(e) Rechtspersoon toe.
+      operationId: createRechtspersoon
+      requestBody:
+        description: Rechtspersoon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rechtspersoon'
+      responses:
+        '200':
+          description: Rechtspersoon succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Rechtspersonen'
+      description: |
+        Vervangen van een Rechtspersoon op basis van overeenkomstige sleutelvelden.
+      operationId: replaceRechtspersoon
+      requestBody:
+        description: Entiteit Rechtspersoon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rechtspersoon'
+      responses:
+        '200':
+          description: Rechtspersoon succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Rechtspersoon bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Rechtspersoon met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Rechtspersonen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Rechtspersoon. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateRechtspersoon
+      requestBody:
+        description: Entiteit Rechtspersoon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rechtspersoon'
+      responses:
+        '200':
+          description: Rechtspersoon succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Rechtspersoon bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Rechtspersoon met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /rechtspersonen/{id}:
+    get:
+      tags:
+      - 'Rechtspersonen'
+      description: Retourneert een Rechtspersoon met de gegeven identifier
+      operationId: readRechtspersoonById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Rechtspersoon om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Rechtspersoon response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Rechtspersoon'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Rechtspersoon met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Rechtspersonen'
+      description: Vervangen van een Rechtspersoon
+      operationId: replaceRechtspersoonById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Rechtspersoon om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Rechtspersoon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rechtspersoon'
+      responses:
+        '200':
+          description: Rechtspersoon succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Rechtspersoon met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Rechtspersonen'
+      description: Wijzigen van een Rechtspersoon
+      operationId: updateRechtspersoonById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Rechtspersoon om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Rechtspersoon
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Rechtspersoon'
+      responses:
+        '200':
+          description: Rechtspersoon succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Rechtspersoon met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /relaties:
+    get:
+      tags:
+      - 'Relaties'
+      description: Ophalen van Relaties
+      operationId: listRelaties
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Relatie'
+      responses:
+        '200':
+          description: Relatie response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Relatie'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Relaties'
+      description: Voegt een nieuw(e) Relatie toe.
+      operationId: createRelatie
+      requestBody:
+        description: Relatie
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatie'
+      responses:
+        '200':
+          description: Relatie succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Relaties'
+      description: |
+        Vervangen van een Relatie op basis van overeenkomstige sleutelvelden.
+      operationId: replaceRelatie
+      requestBody:
+        description: Entiteit Relatie
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatie'
+      responses:
+        '200':
+          description: Relatie succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Relatie bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatie met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Relaties'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Relatie. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateRelatie
+      requestBody:
+        description: Entiteit Relatie
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatie'
+      responses:
+        '200':
+          description: Relatie succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Relatie bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatie met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /relaties/{id}:
+    get:
+      tags:
+      - 'Relaties'
+      description: Retourneert een Relatie met de gegeven identifier
+      operationId: readRelatieById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Relatie om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relatie response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relatie'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatie met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Relaties'
+      description: Vervangen van een Relatie
+      operationId: replaceRelatieById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Relatie om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Relatie
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatie'
+      responses:
+        '200':
+          description: Relatie succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatie met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Relaties'
+      description: Wijzigen van een Relatie
+      operationId: updateRelatieById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Relatie om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Relatie
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatie'
+      responses:
+        '200':
+          description: Relatie succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatie met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /relatie-adressen:
+    get:
+      tags:
+      - 'RelatieAdressen'
+      description: Ophalen van RelatieAdressen
+      operationId: listRelatieAdressen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/RelatieAdres'
+      responses:
+        '200':
+          description: RelatieAdres response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RelatieAdres'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'RelatieAdressen'
+      description: Voegt een nieuw(e) RelatieAdres toe.
+      operationId: createRelatieAdres
+      requestBody:
+        description: RelatieAdres
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelatieAdres'
+      responses:
+        '200':
+          description: RelatieAdres succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'RelatieAdressen'
+      description: |
+        Vervangen van een RelatieAdres op basis van overeenkomstige sleutelvelden.
+      operationId: replaceRelatieAdres
+      requestBody:
+        description: Entiteit RelatieAdres
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelatieAdres'
+      responses:
+        '200':
+          description: RelatieAdres succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             RelatieAdres bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: RelatieAdres met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'RelatieAdressen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een RelatieAdres. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateRelatieAdres
+      requestBody:
+        description: Entiteit RelatieAdres
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelatieAdres'
+      responses:
+        '200':
+          description: RelatieAdres succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             RelatieAdres bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: RelatieAdres met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /relatie-adressen/{id}:
+    get:
+      tags:
+      - 'RelatieAdressen'
+      description: Retourneert een RelatieAdres met de gegeven identifier
+      operationId: readRelatieAdresById
+      parameters:
+      - name: id
+        in: path
+        description: Id van RelatieAdres om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: RelatieAdres response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RelatieAdres'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: RelatieAdres met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'RelatieAdressen'
+      description: Vervangen van een RelatieAdres
+      operationId: replaceRelatieAdresById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van RelatieAdres om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit RelatieAdres
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelatieAdres'
+      responses:
+        '200':
+          description: RelatieAdres succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: RelatieAdres met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'RelatieAdressen'
+      description: Wijzigen van een RelatieAdres
+      operationId: updateRelatieAdresById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van RelatieAdres om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit RelatieAdres
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RelatieAdres'
+      responses:
+        '200':
+          description: RelatieAdres succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: RelatieAdres met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /relatiegroepen:
+    get:
+      tags:
+      - 'Relatiegroepen'
+      description: Ophalen van Relatiegroepen
+      operationId: listRelatiegroepen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Relatiegroep'
+      responses:
+        '200':
+          description: Relatiegroep response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Relatiegroep'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Relatiegroepen'
+      description: Voegt een nieuw(e) Relatiegroep toe.
+      operationId: createRelatiegroep
+      requestBody:
+        description: Relatiegroep
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatiegroep'
+      responses:
+        '200':
+          description: Relatiegroep succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Relatiegroepen'
+      description: |
+        Vervangen van een Relatiegroep op basis van overeenkomstige sleutelvelden.
+      operationId: replaceRelatiegroep
+      requestBody:
+        description: Entiteit Relatiegroep
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatiegroep'
+      responses:
+        '200':
+          description: Relatiegroep succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Relatiegroep bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatiegroep met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Relatiegroepen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Relatiegroep. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateRelatiegroep
+      requestBody:
+        description: Entiteit Relatiegroep
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatiegroep'
+      responses:
+        '200':
+          description: Relatiegroep succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Relatiegroep bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatiegroep met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /relatiegroepen/{id}:
+    get:
+      tags:
+      - 'Relatiegroepen'
+      description: Retourneert een Relatiegroep met de gegeven identifier
+      operationId: readRelatiegroepById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Relatiegroep om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relatiegroep response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relatiegroep'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatiegroep met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Relatiegroepen'
+      description: Vervangen van een Relatiegroep
+      operationId: replaceRelatiegroepById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Relatiegroep om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Relatiegroep
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatiegroep'
+      responses:
+        '200':
+          description: Relatiegroep succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatiegroep met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Relatiegroepen'
+      description: Wijzigen van een Relatiegroep
+      operationId: updateRelatiegroepById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Relatiegroep om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Relatiegroep
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatiegroep'
+      responses:
+        '200':
+          description: Relatiegroep succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatiegroep met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /relatierollen:
+    get:
+      tags:
+      - 'Relatierollen'
+      description: Ophalen van Relatierollen
+      operationId: listRelatierollen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Relatierol'
+      responses:
+        '200':
+          description: Relatierol response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Relatierol'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Relatierollen'
+      description: Voegt een nieuw(e) Relatierol toe.
+      operationId: createRelatierol
+      requestBody:
+        description: Relatierol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatierol'
+      responses:
+        '200':
+          description: Relatierol succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Relatierollen'
+      description: |
+        Vervangen van een Relatierol op basis van overeenkomstige sleutelvelden.
+      operationId: replaceRelatierol
+      requestBody:
+        description: Entiteit Relatierol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatierol'
+      responses:
+        '200':
+          description: Relatierol succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Relatierol bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatierol met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Relatierollen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Relatierol. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateRelatierol
+      requestBody:
+        description: Entiteit Relatierol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatierol'
+      responses:
+        '200':
+          description: Relatierol succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Relatierol bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatierol met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /relatierollen/{id}:
+    get:
+      tags:
+      - 'Relatierollen'
+      description: Retourneert een Relatierol met de gegeven identifier
+      operationId: readRelatierolById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Relatierol om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Relatierol response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Relatierol'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatierol met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Relatierollen'
+      description: Vervangen van een Relatierol
+      operationId: replaceRelatierolById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Relatierol om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Relatierol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatierol'
+      responses:
+        '200':
+          description: Relatierol succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatierol met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Relatierollen'
+      description: Wijzigen van een Relatierol
+      operationId: updateRelatierolById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Relatierol om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Relatierol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Relatierol'
+      responses:
+        '200':
+          description: Relatierol succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Relatierol met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /signaleringen:
+    get:
+      tags:
+      - 'Signaleringen'
+      description: Ophalen van Signaleringen
+      operationId: listSignaleringen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Signalering'
+      responses:
+        '200':
+          description: Signalering response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Signalering'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Signaleringen'
+      description: Voegt een nieuw(e) Signalering toe.
+      operationId: createSignalering
+      requestBody:
+        description: Signalering
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signalering'
+      responses:
+        '200':
+          description: Signalering succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Signaleringen'
+      description: |
+        Vervangen van een Signalering op basis van overeenkomstige sleutelvelden.
+      operationId: replaceSignalering
+      requestBody:
+        description: Entiteit Signalering
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signalering'
+      responses:
+        '200':
+          description: Signalering succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Signalering bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Signalering met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Signaleringen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Signalering. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateSignalering
+      requestBody:
+        description: Entiteit Signalering
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signalering'
+      responses:
+        '200':
+          description: Signalering succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Signalering bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Signalering met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /signaleringen/{id}:
+    get:
+      tags:
+      - 'Signaleringen'
+      description: Retourneert een Signalering met de gegeven identifier
+      operationId: readSignaleringById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Signalering om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Signalering response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Signalering'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Signalering met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Signaleringen'
+      description: Vervangen van een Signalering
+      operationId: replaceSignaleringById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Signalering om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Signalering
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signalering'
+      responses:
+        '200':
+          description: Signalering succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Signalering met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Signaleringen'
+      description: Wijzigen van een Signalering
+      operationId: updateSignaleringById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Signalering om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Signalering
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Signalering'
+      responses:
+        '200':
+          description: Signalering succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Signalering met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /telefoonnummers:
+    get:
+      tags:
+      - 'Telefoonnummers'
+      description: Ophalen van Telefoonnummers
+      operationId: listTelefoonnummers
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Telefoonnummer'
+      responses:
+        '200':
+          description: Telefoonnummer response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Telefoonnummer'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Telefoonnummers'
+      description: Voegt een nieuw(e) Telefoonnummer toe.
+      operationId: createTelefoonnummer
+      requestBody:
+        description: Telefoonnummer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Telefoonnummer'
+      responses:
+        '200':
+          description: Telefoonnummer succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Telefoonnummers'
+      description: |
+        Vervangen van een Telefoonnummer op basis van overeenkomstige sleutelvelden.
+      operationId: replaceTelefoonnummer
+      requestBody:
+        description: Entiteit Telefoonnummer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Telefoonnummer'
+      responses:
+        '200':
+          description: Telefoonnummer succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Telefoonnummer bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Telefoonnummer met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Telefoonnummers'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Telefoonnummer. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateTelefoonnummer
+      requestBody:
+        description: Entiteit Telefoonnummer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Telefoonnummer'
+      responses:
+        '200':
+          description: Telefoonnummer succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Telefoonnummer bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Telefoonnummer met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /telefoonnummers/{id}:
+    get:
+      tags:
+      - 'Telefoonnummers'
+      description: Retourneert een Telefoonnummer met de gegeven identifier
+      operationId: readTelefoonnummerById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Telefoonnummer om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Telefoonnummer response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Telefoonnummer'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Telefoonnummer met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Telefoonnummers'
+      description: Vervangen van een Telefoonnummer
+      operationId: replaceTelefoonnummerById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Telefoonnummer om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Telefoonnummer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Telefoonnummer'
+      responses:
+        '200':
+          description: Telefoonnummer succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Telefoonnummer met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Telefoonnummers'
+      description: Wijzigen van een Telefoonnummer
+      operationId: updateTelefoonnummerById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Telefoonnummer om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Telefoonnummer
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Telefoonnummer'
+      responses:
+        '200':
+          description: Telefoonnummer succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Telefoonnummer met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+security:
+  - ApiKeyAuth: []
+components:
+  headers:
+    X-Stuurgegevens-TijdstipBericht:
+      schema:
+        type: string
+        format: data-time
+        description: Tijdstip waarop het bericht verzonden is
+    X-Stuurgegevens-Referentienummer:
+      schema:
+        type: string
+        format: any
+        description: Een unieke code voor correlatie
+    X-Stuurgegevens-Zender-Organisatie:
+      schema:
+        type: string
+        format: any
+        description: Naam van de verzendende organisatie
+    X-Stuurgegevens-Zender-Administratie:
+      schema:
+        type: string
+        format: any
+        description: |
+          Met het stuurgegeven Administratie kan onderscheid gemaakt worden tussen 
+          de verschillende gegevensverzamelingen die de verzendende organisatie beheert
+    X-Parameters-Aantal:
+      schema:
+        type: integer
+        description: Totaal aantal gevonden entiteiten
+        example: 135
+    X-Parameters-AantalPerPagina:
+      schema:
+        type: integer
+        description: Miximum aantal entiteiten per pagina
+        example: 20
+    X-Parameters-Pagina:
+      schema:
+        type: integer
+        description: Huidige paginanummer
+        example: 3
+    X-Parameters-PeiltijdstipMaterieel:
+      schema:
+        type: string
+        format: date-time
+        description: De peildatum. Indien leeg worden de actuele gegevens opgevraagd
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+  responses:
+    NietGeautoriseerd:
+      description: API-key ontbreekt of is ongeldig
+      headers:
+        X-API-KEY:
+          schema:
+            type: string
+  schemas:
+    Account:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De status van de registratie.Bijv. Geregistreerd, Geactiveerd, Beëindigd etc.
+        begindatum:
+          type: string
+          format: date-time
+          description: De begindatum van de registratie.
+        einddatum:
+          type: string
+          format: date-time
+          description: De einddatum van de registratie.
+        gebruikersnaam:
+          type: string
+          format: any
+          description: De gebruikersnaam van de registratie.
+        relatie:
+          $ref: '#/components/schemas/Relatie'
+          description: De relatie behorend bij de registratie.
+        wachtwoorddatum:
+          type: string
+          format: date-time
+          description: De datum en tijd waarop het wachtwoord het laatst is gewijzigd.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Referentiedata:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken) Bijvoorbeeld NL.
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De soort van het referentiedata item. Bijvoorbeeld nationaliteit.
+        naam:
+          type: string
+          format: any
+          description: De te tonen waarde van het referentiedata item. Bijvoorbeeld Nederlandse.
+        omschrijving:
+          type: string
+          format: any
+          description: De omschrijving van de referentiedata. Bijvoorbeeld De Nederlandse nationaliteit.
+        parent:
+          $ref: '#/components/schemas/Referentiedata-sleutels'
+          description: De bovenliggende referentiedata in het geval er sprake is van een hierarchische relatie tussen referentiedata.
+        begindatum:
+          type: string
+          format: date
+          description: De begindatum van het klasse item.
+        einddatum:
+          type: string
+          format: date
+          description: De einddatum van het klasse item.
+        sortering:
+          type: string
+          format: any
+          description: De sorteervolgorde van de referentiedata anders dan alfabetisch.
+    Referentiedata-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken) Bijvoorbeeld NL.
+        naam:
+          type: string
+          format: any
+          description: De te tonen waarde van het referentiedata item. Bijvoorbeeld Nederlandse.
+    Relatie:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort relatie: NatuurlijkPersoon, Relatiegroep of Rechtspersoon.'
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De status van de relatie, bijv. In het geval van een VVE kan deze de status slapend of actief hebben.
+        adressen:
+          description: De adressen behorend bij de relatie.
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatieAdres'
+        afspraken:
+          description: De afspraken behorend bij de relatie.
+          type: array
+          items:
+            $ref: '#/components/schemas/Afspraak'
+        betaalgegevens:
+          description: De betaalgegevens behorend bij de relatie. Bijvoorbeeld het rekeningnummer.
+          type: array
+          items:
+            $ref: '#/components/schemas/Betaalgegeven'
+        contactgegevens:
+          description: De contactgegevens van de relatie.
+          type: array
+          items:
+            $ref: '#/components/schemas/Contactgegeven'
+        contactmomenten:
+          description: De contactmomenten behorend bij de relatie.
+          type: array
+          items:
+            $ref: '#/components/schemas/Contactmoment'
+        groepen:
+          description: De relatiegroepen waar de relatie toe behoort.
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatiegroep'
+        inspecties:
+          type: string
+          format: uri
+          description: 'Referentie naar Inspectie in de vorm: vera/v4/inspecties/12345'
+        onderhoudsverzoeken:
+          type: string
+          format: uri
+          description: 'Referentie naar Onderhoudsverzoek in de vorm: vera/v4/onderhoudsverzoeken/12345'
+        overeenkomsten:
+          type: string
+          format: uri
+          description: 'Referentie naar Overeenkomst in de vorm: vera/v4/overeenkomsten/12345'
+        rollen:
+          description: 'De rollen behorend bij de relatie. Bijvoorbeeld: Prospect, bewoner.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatierol'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+      oneOf:
+      - $ref: '#/components/schemas/NatuurlijkPersoon'
+      - $ref: '#/components/schemas/Rechtspersoon'
+      - $ref: '#/components/schemas/Relatiegroep'
+    RelatieAdres:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort adres van de relatie. Bijvoorbeeld: Woonadres, postadres, bezoekadres en factuuradres.'
+        begindatum:
+          type: string
+          format: date
+          description: De begindatum waarop de relatie bij het adres hoort.
+        einddatum:
+          type: string
+          format: date
+          description: De einddatum waarop de relatie niet meer bij het adres hoort.
+        adres:
+          type: string
+          format: uri
+          description: 'Referentie naar Adres in de vorm: vera/v4/adressen/12345'
+        relatie:
+          $ref: '#/components/schemas/Relatie'
+          description: De relatie behorend bij het adres.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    ExtraAttribuut:
+      type: object
+      properties:
+        naam:
+          type: string
+          format: any
+          description: De naam van het niet bestaande attribuut. Bijv. Huurprognose.
+        waarde:
+          type: string
+          format: any
+          description: De waarde van het niet bestaande attribuut. Bijv. €850,-.
+    Afspraak:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        onderwerp:
+          type: string
+          format: any
+          description: Het onderwerp van de afspraak.
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De status van de afspraak.
+        begindatum:
+          type: string
+          format: date-time
+          description: De datum en tijd waarop de afspraak plaatsvindt. Als (nog) geen afspraak begindatum bekend is kan er wel een bloktijd zijn opgeven.
+        einddatum:
+          type: string
+          format: date-time
+          description: De datum en tijd tot wanneer de afspraak naar verwachting loopt.
+        bloktijdBegin:
+          type: string
+          format: date-time
+          description: De datum en tijd die het begin van een blok markeert waarbinnen de afspraak bij voorkeur start. Pas als de afspraak daadwerkelijk ingepland is, is er ook een afspraak begindatum bekend.
+        bloktijdEind:
+          type: string
+          format: date-time
+          description: De datum en tijd die het eind van een blok markeert waarbinnen de afspraak bij voorkeur start.
+        alternatiefContactgegeven:
+          type: string
+          format: any
+          description: Tekstveld waarin contactgegevens van een alternatieve contactpersoon opgenomen kunnen worden. Voorbeeld is het verzoek van een huurder (student) waarbij hij aangeeft contact op te nemen met zijn ouders voor de afhandeling van het verzoek.
+        contactgegeven:
+          $ref: '#/components/schemas/Contactgegeven'
+          description: Het contactgegeven van de relatie welke van toepassing is voor de afspraak.
+        locatie:
+          type: string
+          format: uri
+          description: 'Referentie naar Adres in de vorm: vera/v4/adressen/12345'
+        relaties:
+          description: De relatie waarmee de afspraak is gemaakt. Bijv. de huurder, medewerker etc.
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatie'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Contactgegeven:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort communicatie. Bijvoorbeeld: Telefoon, E-mail, .Social media etc.'
+        detailSoort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort detail communicatie. Bijvoorbeeld: Mobiel, privé, werk.'
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De status van het contactgegeven. Bijv. Aangemaakt, Gevalideerd, Ongeldig etc.
+        relatie:
+          $ref: '#/components/schemas/Relatie'
+          description: De relatie behorend bij het contactgegeven.
+        relatierol:
+          $ref: '#/components/schemas/Relatierol'
+          description: De relatie rol van de relatie behorend bij het contactgegeven.
+        vertrouwelijkheid:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De classificatie van het vertrouwelijkheidsniveau.
+        voorkeur:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'De manier waarop de relatie contact wil krijgen door dit contactgegeven. Bijvoorbeeld: 1e voorkeur, 2e voorkeur.'
+        waarde:
+          type: string
+          format: any
+          description: 'De aard van het contactgegeven. Dit kan de waarde zijn van een telefoonnummer, emailadres, of twitteradres. Bijvoorbeeld: 020-1234563 '
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+      oneOf:
+      - $ref: '#/components/schemas/Telefoonnummer'
+    Relatierol:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Het soort rol van de relatie. Bijvoorbeeld Klant, Prospect, Leverancier, Medewerker, Team etc.
+        naam:
+          type: string
+          format: any
+          description: De naam van de relatie rol.
+        omschrijving:
+          type: string
+          format: any
+          description: De omschrijving van de relatie rol.
+        begindatum:
+          type: string
+          format: date
+          description: begindatum van de rol
+        einddatum:
+          type: string
+          format: date
+          description: einddatum van de rol
+        contactgegevens:
+          description: De contactgegevens van een relatie in een bepaalde rol.
+          type: array
+          items:
+            $ref: '#/components/schemas/Contactgegeven'
+        contactmomenten:
+          description: De contactmomenten die de relatie vanuit een rol heeft.
+          type: array
+          items:
+            $ref: '#/components/schemas/Contactmoment'
+        relatie:
+          $ref: '#/components/schemas/Relatie'
+          description: De relatie waarvoor de rol van toepassing is.
+        relatieAdressen:
+          description: De adresssen van de relatie die voor de rol van toepassing zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatieAdres'
+        rolRelatie:
+          $ref: '#/components/schemas/Relatie'
+          description: De relatie die aangeeft waar de relatie en rol koppeling van toepassing is. Dit attribuut geeft aan dat de aangegeven relatie de rol binnen bijvoorbeeld een relatiegroep heeft. Het attribuut relatie is dan bijvoorbeeld een persoon uit een huishouden en de rolRelatie is dan bijvoorbeeld de relatiegroep die het huishouden voorstelt.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Contactmoment:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        omschrijving:
+          type: string
+          format: any
+          description: De omschrijving van het contactmoment
+        datum:
+          type: string
+          format: date-time
+          description: De datum en tijd waarop contact is geweest.
+        dossier:
+          type: string
+          format: uri
+          description: 'Referentie naar Dossier in de vorm: vera/v4/dossiers/12345'
+        kanaal:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het kanaal via welke het contact heeft gelopen. Bijvoorbeeld: Telefoon, email, balie, internet.'
+        relaties:
+          description: De relatie waarmee contact is geweest. Bijv. een huurder, medewerker etc.
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatie'
+        richting:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'De communicatierichting behorend bij het contact. Bijvoorbeeld: Uitgaand of ingaand.'
+        zaak:
+          type: string
+          format: uri
+          description: 'Referentie naar Zaak in de vorm: vera/v4/zaken/12345'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Betaalgegeven:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Het soort betaalgegeven (bijvoorbeeld een bankrekening, paypal, creditcard, G-rekening etc.).
+        begindatum:
+          type: string
+          format: date
+          description: De begindatum van het betaalgegeven.
+        einddatum:
+          type: string
+          format: date
+          description: De einddatum van het betaalgegeven.
+        bic:
+          type: string
+          format: any
+          description: Bank Identifier Code. Hierdoor komen internationale betalingsoverdrachten bij de juiste bank terecht. De BIC wordt ook wel SWIFT-adres of SWIFT-code genoemd.
+        iban:
+          type: string
+          format: any
+          description: Het International Bank Account Number. Identificeert elke rekeninghouder, inclusief bank en vestigingsland.
+        incassomachtigingen:
+          type: string
+          format: uri
+          description: 'Referentie naar Incassomachtiging in de vorm: vera/v4/incassomachtigingen/12345'
+        incassowijze:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De standaard incassowijze voor het betaalgegeven.
+        overeenkomst:
+          type: string
+          format: uri
+          description: 'Referentie naar Overeenkomst in de vorm: vera/v4/overeenkomsten/12345'
+        primair:
+          type: boolean
+          description: De aanduiding dat het betaalgegeven het primaire betaalgegeven betreft.
+        rekeninghouder:
+          type: string
+          format: any
+          description: De naam van de rekeninghouder.
+        rekeningnummer:
+          type: string
+          format: any
+          description: Het rekeningnummer.
+        rekeningPlaats:
+          type: string
+          format: uri
+          description: 'Referentie naar Woonplaats in de vorm: vera/v4/woonplaatsen/12345'
+        relatie:
+          $ref: '#/components/schemas/Relatie'
+          description: De relatie behorend bij het betaalgegeven.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Relatiegroep:
+      allOf:
+        - $ref: '#/components/schemas/Relatie'
+        - type: object
+          properties:
+            naam:
+              type: string
+              format: any
+              description: De naam van de relatiegroep.
+            relaties:
+              description: ''
+              type: array
+              items:
+                $ref: '#/components/schemas/Relatie'
+            extra-attributen:
+              description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+              type: array
+              items:
+                $ref: '#/components/schemas/ExtraAttribuut'
+            informatieobjecten:
+              type: string
+              format: uri
+              description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    AfspraakOptie:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        begindatum:
+          type: string
+          format: date-time
+          description: De datum en tijd waarop de afspraak plaatsvindt.
+        einddatum:
+          type: string
+          format: date-time
+          description: De datum en tijd tot wanneer de afspraak loopt.
+        bloktijdBegin:
+          type: string
+          format: date-time
+          description: De datum en tijd die het begin van een blok markeert waarbinnen de afspraak bij voorkeur start. Pas als de afspraak daadwerkelijk ingepland is, is er ook een afspraak begindatum bekend.
+        bloktijdEind:
+          type: string
+          format: date-time
+          description: De datum en tijd die het eind van een blok markeert waarbinnen de afspraak bij voorkeur start.
+        locatie:
+          type: string
+          format: uri
+          description: 'Referentie naar Adres in de vorm: vera/v4/adressen/12345'
+        onderhoudsorder:
+          type: string
+          format: uri
+          description: 'Referentie naar Onderhoudsorder in de vorm: vera/v4/onderhoudsorders/12345'
+        onderhoudstaak:
+          type: string
+          format: uri
+          description: 'Referentie naar Onderhoudstaak in de vorm: vera/v4/onderhoudstaken/12345'
+        onderhoudsverzoek:
+          type: string
+          format: uri
+          description: 'Referentie naar Onderhoudsverzoek in de vorm: vera/v4/onderhoudsverzoeken/12345'
+        planningscore:
+          type: number
+          format: float
+        relaties:
+          description: De relaties waarvoor de afspraak optie van toepassing is.
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatie'
+        specialisme:
+          $ref: '#/components/schemas/Referentiedata'
+          description: ''
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Afspraakverzoek:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken).
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Soort van de afspraak: bijvoorbeeld voorinspectie.'
+        duur:
+          type: string
+          format: duration
+          description: Duur van de afspraak.
+          pattern: '^(-?)P(?=\d|T\d)(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)([DW]))?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?)?$'
+        termijn:
+          type: string
+          format: duration
+          description: Termijn waarbinnende afspraak moet plaatsvinden.
+          pattern: '^(-?)P(?=\d|T\d)(?:(\d+)Y)?(?:(\d+)M)?(?:(\d+)([DW]))?(?:T(?:(\d+)H)?(?:(\d+)M)?(?:(\d+(?:\.\d+)?)S)?)?$'
+        adres:
+          type: string
+          format: uri
+          description: 'Referentie naar Adres in de vorm: vera/v4/adressen/12345'
+        opties:
+          description: De mogelijke momenten waarop de afspraak kan worden gemaakt.
+          type: array
+          items:
+            $ref: '#/components/schemas/AfspraakOptie'
+        relaties:
+          description: De betrokken relaties voor de te maken afspraak. Bijv. de huurder, medewerker etc.
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatie'
+        volgorde:
+          type: integer
+          format: int32
+          description: De volgorde waarin de specifieke afspraak dient te worden uitgevoerd ten opzichte van andere afspraakverzoeken.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Inkomen:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        controledatum:
+          type: string
+          format: date-time
+          description: De datum en tijd waarop de inkomensgegevens zijn gecontroleerd.
+        bron:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'De waarde die aangeeft op welke wijze het inkomen vergaard. Bijvoorbeeld: Uit Werk of uitkering.'
+        brutoJaarinkomen:
+          type: number
+          format: float
+          description: Het bruto jaarinkomen in euro's van de natuurlijk persoon.
+        brutoMaandinkomen:
+          type: number
+          format: float
+          description: Het bruto maandinkomen in euro's van de natuurlijk persoon.
+        inkomensverklaringsoort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Het soort inkomensverklaring waaruit het inkomen is overgenomen. Bijv. Jaaropgave, Inkomensverklaring belastingdienst etc.
+        nettoJaarinkomen:
+          type: number
+          format: float
+          description: Het netto jaarinkomen in euro's van de natuurlijk persoon.
+        nettoMaandinkomen:
+          type: number
+          format: float
+          description: Het netto maandinkomen in euro's van de natuurlijk persoon.
+        relaties:
+          description: De relaties behorend bij het inkomen. Bijv. de woningzoekende, huurder, controleur etc.
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatie'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    NatuurlijkPersoon:
+      allOf:
+        - $ref: '#/components/schemas/Relatie'
+        - type: object
+          properties:
+            bsn:
+              type: string
+              format: any
+              description: Het BSN (Burger Service Nummer) van de natuurlijk persoon.
+            geboortedatum:
+              type: string
+              format: date
+              description: De geboortedatum van de natuurlijk persoon.
+            overlijdensdatum:
+              type: string
+              format: date
+              description: De datum van overlijden van de natuurlijk persoon.
+            aanbiedingen:
+              type: string
+              format: uri
+              description: 'Referentie naar Aanbieding in de vorm: vera/v4/aanbiedingen/12345'
+            aanhef:
+              type: string
+              format: any
+              description: De aanhef of aanspreking is een (meestal vriendelijke) introducerende zin van een brief of e-mail. Het gaat doorgaans om standaardformuleringen waarmee de schrijver zich tot de geadresseerde richt.
+            achternaam:
+              type: string
+              format: any
+              description: De achternaam van de natuurlijk persoon.
+            burgerlijkeStaat:
+              $ref: '#/components/schemas/Referentiedata'
+              description: De burgerlijke staat van de natuurlijk persoon.
+            geslacht:
+              $ref: '#/components/schemas/Referentiedata'
+              description: Het geslacht van de natuurlijk persoon.
+            initialen:
+              type: string
+              format: any
+              description: De initialen van de natuurlijk persoon.
+            inkomens:
+              description: De inkomens van de natuurlijk persoon.
+              type: array
+              items:
+                $ref: '#/components/schemas/Inkomen'
+            nationaliteit:
+              $ref: '#/components/schemas/Referentiedata'
+              description: De nationaliteit van de natuurlijk persoon.
+            opleiding:
+              $ref: '#/components/schemas/Opleiding'
+              description: Het opleidingsgegeven van de natuurlijk persoon.
+            reacties:
+              type: string
+              format: uri
+              description: 'Referentie naar Reactie in de vorm: vera/v4/reacties/12345'
+            regelingen:
+              type: string
+              format: uri
+              description: 'Referentie naar Regeling in de vorm: vera/v4/regelingen/12345'
+            roepnaam:
+              type: string
+              format: any
+              description: De roepnaam van de natuurlijk persoon.
+            signaleringen:
+              description: De signaleringen behorend bij de natuurlijk persoon.
+              type: array
+              items:
+                $ref: '#/components/schemas/Signalering'
+            toewijzingen:
+              type: string
+              format: uri
+              description: 'Referentie naar Toewijzing in de vorm: vera/v4/toewijzingen/12345'
+            tussenvoegsels:
+              type: string
+              format: any
+              description: De tussenvoegsels behorende bij de naam.
+            voorkeurstaal:
+              $ref: '#/components/schemas/Referentiedata'
+              description: De voorkeurstaal die de natuurlijk persoon voert.
+            voorletters:
+              type: string
+              format: any
+              description: Een voorletter is een afkorting van een voornaam, die in adressering veel wordt gebruikt. De voorletters geven in combinatie met de achternaam meestal een duidelijk onderscheid tussen leden van hetzelfde gezin of dezelfde familie. Indien iemand meerdere voornamen heeft dan worden de voorletters door een punt gescheiden.
+            voornaam:
+              type: string
+              format: any
+              description: De voornaam van de natuurlijk persoon.
+            voorrangsregelingen:
+              type: string
+              format: uri
+              description: 'Referentie naar Voorrangsregeling in de vorm: vera/v4/voorrangsregelingen/12345'
+            extra-attributen:
+              description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+              type: array
+              items:
+                $ref: '#/components/schemas/ExtraAttribuut'
+            informatieobjecten:
+              type: string
+              format: uri
+              description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Opleiding:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        studentnummer:
+          type: string
+          format: any
+          description: Het studentnummer van de relatie
+        begindatum:
+          type: string
+          format: date
+          description: De begindatum waarop de studie is begonnen.
+        einddatum:
+          type: string
+          format: date
+          description: De einddatum waarop de studie is beëindigd.
+        instelling:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De opleidingsinstelling die aangeeft waar de relatie de studie volgt. We hanteren hiervoor de BRIN.
+        niveau:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het hoogst genoten opleidingsniveau van de relatie. Bijvoorbeeld: HBO of Universitair.'
+        plaats:
+          type: string
+          format: any
+          description: De plaats waar de relatie de studie volgt.
+        relatie:
+          $ref: '#/components/schemas/Relatie'
+          description: De relatie die de opleiding volgt.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Signalering:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort signaal. Bijvoorbeeld: Huurschuld, overlast of wietplantage.'
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'De status van de signalering. Bijvoorbeeld: Actief, vervallen of passief.'
+        detailStatus:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'De detailstatus van de signalering. Bijvoorbeeld: Ontruiming, vertrokken.'
+        begindatum:
+          type: string
+          format: date-time
+          description: De begindatum van de signalering.
+        einddatum:
+          type: string
+          format: date-time
+          description: De einddatum van de signalering.
+        adres:
+          type: string
+          format: uri
+          description: 'Referentie naar Adres in de vorm: vera/v4/adressen/12345'
+        relatie:
+          $ref: '#/components/schemas/Relatie'
+          description: De relatie behorend bij de signalering.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Rechtspersoon:
+      allOf:
+        - $ref: '#/components/schemas/Relatie'
+        - type: object
+          properties:
+            kvkNummer:
+              type: string
+              format: any
+              description: Het KVK nummer van de rechtspersoon.
+            globaalLocatienummer:
+              type: string
+              format: any
+              description: Een wereldwijd nummer ter identificatie van een partij of locatie. Het dertiencijferige nummer (GLN) wordt uitgegeven door GS1.
+            naam:
+              type: string
+              format: any
+              description: De naam de rechtspersoon.
+            btwNummer:
+              type: string
+              format: any
+              description: Het BTW nummer van de rechtspersoon.
+            organisatievorm:
+              $ref: '#/components/schemas/Referentiedata'
+              description: 'De organisatievorm van de rechtspersoon. Bijvoorbeeld: BV, NV, stichting of vereniging. Ook wel rechtsvorm genoemd.'
+            relaties:
+              description: De contactpersonen behorend bij de rechtspersoon.
+              type: array
+              items:
+                $ref: '#/components/schemas/Relatie'
+            extra-attributen:
+              description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+              type: array
+              items:
+                $ref: '#/components/schemas/ExtraAttribuut'
+            informatieobjecten:
+              type: string
+              format: uri
+              description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Telefoonnummer:
+      allOf:
+        - $ref: '#/components/schemas/Contactgegeven'
+        - type: object
+          properties:
+            abonneenummer:
+              type: string
+              format: any
+              description: Het abonneenummer van het telefoonnummer.
+            dagdelen:
+              description: De dagdelen waarop er gebruikt gemaakt kan worden van het telefoonnummer.
+              type: array
+              items:
+                $ref: '#/components/schemas/Referentiedata'
+            extensie:
+              type: string
+              format: any
+              description: De extensie van het telefoonnummer.
+            landnummer:
+              type: string
+              format: any
+              description: Het landnummer van het telefoonnummer.
+            netnummer:
+              type: string
+              format: any
+              description: Het netnummer van het telefoonnummer.
+            extra-attributen:
+              description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+              type: array
+              items:
+                $ref: '#/components/schemas/ExtraAttribuut'
+            informatieobjecten:
+              type: string
+              format: uri
+              description: 'Referentie naar Informatieobject in de vorm: vera/v4/informatieobjecten/12345'
+    Account-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Afspraak-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    AfspraakOptie-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Afspraakverzoek-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken).
+    Betaalgegeven-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        iban:
+          type: string
+          format: any
+          description: Het International Bank Account Number. Identificeert elke rekeninghouder, inclusief bank en vestigingsland.
+        rekeningnummer:
+          type: string
+          format: any
+          description: Het rekeningnummer.
+    Contactgegeven-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort communicatie. Bijvoorbeeld: Telefoon, E-mail, .Social media etc.'
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De status van het contactgegeven. Bijv. Aangemaakt, Gevalideerd, Ongeldig etc.
+    Contactmoment-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Inkomen-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    NatuurlijkPersoon-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort relatie: NatuurlijkPersoon, Relatiegroep of Rechtspersoon.'
+        rollen:
+          description: 'De rollen behorend bij de relatie. Bijvoorbeeld: Prospect, bewoner.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatierol'
+    Opleiding-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        studentnummer:
+          type: string
+          format: any
+          description: Het studentnummer van de relatie
+    Rechtspersoon-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort relatie: NatuurlijkPersoon, Relatiegroep of Rechtspersoon.'
+        rollen:
+          description: 'De rollen behorend bij de relatie. Bijvoorbeeld: Prospect, bewoner.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatierol'
+    Relatie-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort relatie: NatuurlijkPersoon, Relatiegroep of Rechtspersoon.'
+        rollen:
+          description: 'De rollen behorend bij de relatie. Bijvoorbeeld: Prospect, bewoner.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatierol'
+    RelatieAdres-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort adres van de relatie. Bijvoorbeeld: Woonadres, postadres, bezoekadres en factuuradres.'
+    Relatiegroep-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort relatie: NatuurlijkPersoon, Relatiegroep of Rechtspersoon.'
+        rollen:
+          description: 'De rollen behorend bij de relatie. Bijvoorbeeld: Prospect, bewoner.'
+          type: array
+          items:
+            $ref: '#/components/schemas/Relatierol'
+    Relatierol-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Signalering-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Telefoonnummer-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het soort communicatie. Bijvoorbeeld: Telefoon, E-mail, .Social media etc.'
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De status van het contactgegeven. Bijv. Aangemaakt, Gevalideerd, Ongeldig etc.
+    Foutbericht:
+      type: object
+      properties:
+        code:
+          type: string
+        omschrijving:
+          type: string
+

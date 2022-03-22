@@ -1,0 +1,39 @@
+@startuml
+class Eenheid{
+identificatie
+}
+class BouwkundigElement{
+identificatie
+naam
+omschrijving
+}
+class InspectieOrder{
+identificatie
+omschrijving
+onderhoudSoort
+begindatum
+einddatum
+uitvoerende
+extraElementen
+}
+class Huurovereenkomst{
+identificatie
+}
+class ExtraElementenInspectie{
+uitvoerendeInterneIdentificatie
+prognoseDoorverhuren
+bouwkundigeElementen
+bedrijf
+huurovereenkomst
+eenheid
+}
+class FinancieelBedrijf{
+identificatie
+}
+class ErrorResponse{
+timestamp
+status
+error
+message
+}
+@enduml

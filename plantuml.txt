@@ -1,0 +1,10 @@
+@startuml
+class Order{
+id
+petId
+quantity
+shipDate
+status
+complete
+}
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+class Order{
+hallo 
+}
+class Customer{
+hallo 
+}
+class Address{
+hallo 
+}
+class Category{
+hallo 
+}
+class User{
+hallo 
+}
+class Tag{
+hallo 
+}
+class Pet{
+hallo 
+}
+class ApiResponse{
+hallo 
+}
+}
+@enduml

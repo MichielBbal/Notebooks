@@ -1,0 +1,87 @@
+@startuml
+class Betalingsregelingen-Betaalgegeven{
+id
+idExtern
+idGegevensbeheerder
+code
+rekeningnummer
+relatie
+}
+class Betalingsregelingen-Betalingsregeling{
+id
+idExtern
+idGegevensbeheerder
+code
+omschrijving
+status
+begindatum
+einddatum
+bedrag
+betaalgegeven
+boekingen
+debiteur
+eindeReden
+incassowijze
+overeenkomst
+prolongatieInterval
+saldo
+termijnen
+termijnenAantal
+extra-attributen
+informatieobjecten
+}
+class Betalingsregelingen-BetalingsregelingTermijn{
+id
+idExtern
+idGegevensbeheerder
+code
+omschrijving
+status
+datum
+vervaldatum
+bedrag
+saldo
+}
+class Betalingsregelingen-Boeking{
+id
+idExtern
+idGegevensbeheerder
+code
+overeenkomst
+}
+class ExtraAttribuut{
+naam
+waarde
+}
+class Foutbericht{
+code
+omschrijving
+}
+class Informatieobject{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+onderwerp
+subonderwerp
+titel
+beschrijving
+bestand
+bestandsgrootte
+bestandslocatie
+bestandsnaam
+externePublicatie
+externePublicatietekst
+formaat
+gebruiksrechten
+taal
+versie
+vertrouwelijkheid
+}
+class Referentiedata{
+code
+naam
+}
+@enduml

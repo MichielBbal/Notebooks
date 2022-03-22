@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.woningnet.nl/Contracten/Common/Meldingen" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mld="http://www.woningnet.nl/Contracten/Common/Meldingen">
+  <xs:element name="Meldingen" type="mld:Meldingen"/>
+  <xs:element name="MeldingKey" type="mld:MeldingKey" nillable="true"/>
+  <xs:element name="Severity" type="mld:SeverityLevel" nillable="false"/>
+  <xs:element name="MeldingTekst" type="mld:MeldingTekst" nillable="true"/>
+  <xs:element name="MeldingTekstKey" type="mld:MeldingTekstKey" nillable="false"/>
+  <xs:element name="MeldingSummary" type="mld:MeldingSummary"/>
+  <xs:complexType name="MeldingKey">
+    <xs:sequence>
+      <xs:element name="Nummer" type="xs:integer" nillable="false"/>
+      <xs:element name="Locale" type="xs:string"/>
+      <xs:element name="Kanaal" type="xs:integer" nillable="true"/>
+      <xs:element ref="mld:Severity"/>
+      <xs:element name="Argumenten" type="mld:MeldingArgument" minOccurs="0" nillable="true"/>
+      <xs:element name="Module" type="xs:string" minOccurs="0"/>
+      <xs:element name="Routine" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Meldingen">
+    <xs:choice>
+      <xs:element ref="mld:MeldingKey" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="mld:MeldingSummary" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="Melding">
+    <xs:sequence>
+      <xs:element ref="mld:MeldingKey"/>
+      <xs:element name="Tekst" type="xs:string" nillable="false"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeldingArgument">
+    <xs:sequence>
+      <xs:element name="Argument" maxOccurs="unbounded" minOccurs="0" nillable="false" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeldingTekst">
+    <xs:sequence>
+      <xs:element minOccurs="1" name="MeldingTekstKey" type="mld:MeldingTekstKey"/>
+      <xs:element name="Tekst" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeldingTekstKey">
+    <xs:sequence>
+      <xs:element minOccurs="1" name="MeldingNummer" type="xs:integer"/>
+      <xs:element minOccurs="1" name="Regiocode" type="xs:string"/>
+      <xs:element minOccurs="1" name="Locale" type="xs:string"/>
+      <xs:element minOccurs="1" name="Kanaal" type="xs:integer"/>
+      <xs:element name="Argumenten" type="mld:MeldingArgument" minOccurs="0" nillable="true"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="MeldingSummary">
+    <xs:sequence>
+      <xs:element name="Omschrijving" type="xs:string"/>
+      <xs:element name="Severity" type="xs:integer"/>
+      <xs:element name="Tekst" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="SeverityLevel">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="Succes"/>
+      <xs:enumeration value="SuccesMetFouten"/>
+      <xs:enumeration value="Fout"/>
+      <xs:enumeration value="Error"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

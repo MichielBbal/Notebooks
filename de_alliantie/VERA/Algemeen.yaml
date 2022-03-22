@@ -1,0 +1,855 @@
+openapi: 3.0.0
+info:
+  title: VERA-Algemeen
+  description: API-specificatie van informatiedomein Algemeen
+  contact:
+    name: VERA
+    url: https://cora.wikixl.nl/index.php/VERA_Standaard
+    email: info@stichting-vera.nl
+  license:
+    name: "Licentie voor hergebruik: Creative Commons Naamsvermelding 4.0."
+    url: https://creativecommons.org/licenses/by/4.0/deed.nl
+  version: '4.0'
+servers:
+  - url: https://algemeen.vera.io:{port}/{basePath}
+    description: Productieserver
+    variables:
+       port:
+         enum:
+           - '8443'
+           - '443'
+         default: '443'
+       basePath:
+         default: v4
+tags:
+- name: ExtraAttributen
+  description: Operaties met betrekking tot een ExtraAttribuut
+- name: Referentiedata
+  description: Operaties met betrekking tot een Referentiedata
+- name: Sturingslabels
+  description: Operaties met betrekking tot een Sturingslabel
+- name: Referentiedata
+  description: Operaties met betrekking tot een Referentiedata
+- name: Sturingslabels
+  description: Operaties met betrekking tot een Sturingslabel
+paths:
+  /ping:
+    get:
+      description: |
+        Een ping wordt beantwoord met response code 200
+      operationId: ping
+      responses:
+        '200':
+          description: OK
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /extra-attributen:
+    get:
+      tags:
+      - 'ExtraAttributen'
+      description: Ophalen van ExtraAttributen
+      operationId: listExtraAttributen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/ExtraAttribuut'
+      responses:
+        '200':
+          description: ExtraAttribuut response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ExtraAttribuut'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'ExtraAttributen'
+      description: Voegt een nieuw(e) ExtraAttribuut toe.
+      operationId: createExtraAttribuut
+      requestBody:
+        description: ExtraAttribuut
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtraAttribuut'
+      responses:
+        '200':
+          description: ExtraAttribuut succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'ExtraAttributen'
+      description: |
+        Vervangen van een ExtraAttribuut op basis van overeenkomstige sleutelvelden.
+      operationId: replaceExtraAttribuut
+      requestBody:
+        description: Entiteit ExtraAttribuut
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtraAttribuut'
+      responses:
+        '200':
+          description: ExtraAttribuut succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             ExtraAttribuut bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: ExtraAttribuut met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'ExtraAttributen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een ExtraAttribuut. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateExtraAttribuut
+      requestBody:
+        description: Entiteit ExtraAttribuut
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtraAttribuut'
+      responses:
+        '200':
+          description: ExtraAttribuut succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             ExtraAttribuut bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: ExtraAttribuut met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /extra-attributen/{id}:
+    get:
+      tags:
+      - 'ExtraAttributen'
+      description: Retourneert een ExtraAttribuut met de gegeven identifier
+      operationId: readExtraAttribuutById
+      parameters:
+      - name: id
+        in: path
+        description: Id van ExtraAttribuut om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ExtraAttribuut response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExtraAttribuut'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: ExtraAttribuut met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'ExtraAttributen'
+      description: Vervangen van een ExtraAttribuut
+      operationId: replaceExtraAttribuutById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van ExtraAttribuut om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit ExtraAttribuut
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtraAttribuut'
+      responses:
+        '200':
+          description: ExtraAttribuut succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: ExtraAttribuut met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'ExtraAttributen'
+      description: Wijzigen van een ExtraAttribuut
+      operationId: updateExtraAttribuutById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van ExtraAttribuut om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit ExtraAttribuut
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExtraAttribuut'
+      responses:
+        '200':
+          description: ExtraAttribuut succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: ExtraAttribuut met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /referentiedata:
+    get:
+      tags:
+      - 'Referentiedata'
+      description: Ophalen van Referentiedata
+      operationId: listReferentiedata
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Referentiedata'
+      responses:
+        '200':
+          description: Referentiedata response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Referentiedata'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Referentiedata'
+      description: Voegt een nieuw(e) Referentiedata toe.
+      operationId: createReferentiedata
+      requestBody:
+        description: Referentiedata
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Referentiedata'
+      responses:
+        '200':
+          description: Referentiedata succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Referentiedata'
+      description: |
+        Vervangen van een Referentiedata op basis van overeenkomstige sleutelvelden.
+      operationId: replaceReferentiedata
+      requestBody:
+        description: Entiteit Referentiedata
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Referentiedata'
+      responses:
+        '200':
+          description: Referentiedata succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Referentiedata bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Referentiedata met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Referentiedata'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Referentiedata. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateReferentiedata
+      requestBody:
+        description: Entiteit Referentiedata
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Referentiedata'
+      responses:
+        '200':
+          description: Referentiedata succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Referentiedata bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Referentiedata met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /referentiedata/{id}:
+    get:
+      tags:
+      - 'Referentiedata'
+      description: Retourneert een Referentiedata met de gegeven identifier
+      operationId: readReferentiedataById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Referentiedata om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Referentiedata response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Referentiedata'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Referentiedata met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Referentiedata'
+      description: Vervangen van een Referentiedata
+      operationId: replaceReferentiedataById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Referentiedata om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Referentiedata
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Referentiedata'
+      responses:
+        '200':
+          description: Referentiedata succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Referentiedata met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Referentiedata'
+      description: Wijzigen van een Referentiedata
+      operationId: updateReferentiedataById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Referentiedata om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Referentiedata
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Referentiedata'
+      responses:
+        '200':
+          description: Referentiedata succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Referentiedata met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /sturingslabels:
+    get:
+      tags:
+      - 'Sturingslabels'
+      description: Ophalen van Sturingslabels
+      operationId: listSturingslabels
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Sturingslabel'
+      responses:
+        '200':
+          description: Sturingslabel response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sturingslabel'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Sturingslabels'
+      description: Voegt een nieuw(e) Sturingslabel toe.
+      operationId: createSturingslabel
+      requestBody:
+        description: Sturingslabel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sturingslabel'
+      responses:
+        '200':
+          description: Sturingslabel succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Sturingslabels'
+      description: |
+        Vervangen van een Sturingslabel op basis van overeenkomstige sleutelvelden.
+      operationId: replaceSturingslabel
+      requestBody:
+        description: Entiteit Sturingslabel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sturingslabel'
+      responses:
+        '200':
+          description: Sturingslabel succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Sturingslabel bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Sturingslabel met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Sturingslabels'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Sturingslabel. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateSturingslabel
+      requestBody:
+        description: Entiteit Sturingslabel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sturingslabel'
+      responses:
+        '200':
+          description: Sturingslabel succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Sturingslabel bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Sturingslabel met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /sturingslabels/{id}:
+    get:
+      tags:
+      - 'Sturingslabels'
+      description: Retourneert een Sturingslabel met de gegeven identifier
+      operationId: readSturingslabelById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Sturingslabel om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Sturingslabel response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Sturingslabel'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Sturingslabel met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Sturingslabels'
+      description: Vervangen van een Sturingslabel
+      operationId: replaceSturingslabelById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Sturingslabel om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Sturingslabel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sturingslabel'
+      responses:
+        '200':
+          description: Sturingslabel succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Sturingslabel met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Sturingslabels'
+      description: Wijzigen van een Sturingslabel
+      operationId: updateSturingslabelById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Sturingslabel om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Sturingslabel
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Sturingslabel'
+      responses:
+        '200':
+          description: Sturingslabel succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Sturingslabel met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+security:
+  - ApiKeyAuth: []
+components:
+  headers:
+    X-Stuurgegevens-TijdstipBericht:
+      schema:
+        type: string
+        format: data-time
+        description: Tijdstip waarop het bericht verzonden is
+    X-Stuurgegevens-Referentienummer:
+      schema:
+        type: string
+        format: any
+        description: Een unieke code voor correlatie
+    X-Stuurgegevens-Zender-Organisatie:
+      schema:
+        type: string
+        format: any
+        description: Naam van de verzendende organisatie
+    X-Stuurgegevens-Zender-Administratie:
+      schema:
+        type: string
+        format: any
+        description: |
+          Met het stuurgegeven Administratie kan onderscheid gemaakt worden tussen 
+          de verschillende gegevensverzamelingen die de verzendende organisatie beheert
+    X-Parameters-Aantal:
+      schema:
+        type: integer
+        description: Totaal aantal gevonden entiteiten
+        example: 135
+    X-Parameters-AantalPerPagina:
+      schema:
+        type: integer
+        description: Miximum aantal entiteiten per pagina
+        example: 20
+    X-Parameters-Pagina:
+      schema:
+        type: integer
+        description: Huidige paginanummer
+        example: 3
+    X-Parameters-PeiltijdstipMaterieel:
+      schema:
+        type: string
+        format: date-time
+        description: De peildatum. Indien leeg worden de actuele gegevens opgevraagd
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+  responses:
+    NietGeautoriseerd:
+      description: API-key ontbreekt of is ongeldig
+      headers:
+        X-API-KEY:
+          schema:
+            type: string
+  schemas:
+    ExtraAttribuut:
+      type: object
+      properties:
+        naam:
+          type: string
+          format: any
+          description: De naam van het niet bestaande attribuut. Bijv. Huurprognose.
+        waarde:
+          type: string
+          format: any
+          description: De waarde van het niet bestaande attribuut. Bijv. €850,-.
+    Referentiedata:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken) Bijvoorbeeld NL.
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De soort van het referentiedata item. Bijvoorbeeld nationaliteit.
+        naam:
+          type: string
+          format: any
+          description: De te tonen waarde van het referentiedata item. Bijvoorbeeld Nederlandse.
+        omschrijving:
+          type: string
+          format: any
+          description: De omschrijving van de referentiedata. Bijvoorbeeld De Nederlandse nationaliteit.
+        parent:
+          $ref: '#/components/schemas/Referentiedata-sleutels'
+          description: De bovenliggende referentiedata in het geval er sprake is van een hierarchische relatie tussen referentiedata.
+        begindatum:
+          type: string
+          format: date
+          description: De begindatum van het klasse item.
+        einddatum:
+          type: string
+          format: date
+          description: De einddatum van het klasse item.
+        sortering:
+          type: string
+          format: any
+          description: De sorteervolgorde van de referentiedata anders dan alfabetisch.
+    Referentiedata-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken) Bijvoorbeeld NL.
+        naam:
+          type: string
+          format: any
+          description: De te tonen waarde van het referentiedata item. Bijvoorbeeld Nederlandse.
+    Sturingslabel:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken) Bijvoorbeeld DVI2014.
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De categorie of groepering van het label. Bijv. dVI samenstelling bezit etc.
+        label:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Het label dat is bepaald op basis van de bijbehorende definitie. Bijv. Zelfstandige huurwoning.
+        datum:
+          type: string
+          format: date
+          description: Datum en tijdstip waarop het label is bepaald.
+        bron:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De bron van de definitie van het label. Bijv. dVI 2014, CORA etc.
+    Sturingslabel-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken) Bijvoorbeeld DVI2014.
+    Foutbericht:
+      type: object
+      properties:
+        code:
+          type: string
+        omschrijving:
+          type: string
+

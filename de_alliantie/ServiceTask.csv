@@ -1,0 +1,26 @@
+callId
+actionCodeId
+description
+name
+locationId
+invoiceMethodId
+reasonId
+causeId
+extraInformation
+vendorAccountId
+resourceGroupId
+quantity
+externalId
+resourceId
+performedById
+scheduleExtern
+planProposal
+  resourceId
+  startDateTime
+  endDateTime
+  planProcessId
+  externalPlanId
+maintenanceType
+fillJob
+automaticPlanning
+deadlineDate

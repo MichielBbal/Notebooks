@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.woningnet.nl/IS/Aanbieding"
+                  xmlns:ssgl="http://www.woningnet.nl/IS/AanbiedingService"
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+                  xmlns:tns="http://www.woningnet.nl/IS/Aanbieding"
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:documentation>
+    <abstractWSDL>http://accext-servicebus.woningnet.nl:80/soa-infra/services/default/AanbiedingIS!1.0/AanbiedingIS.wsdl</abstractWSDL>
+  </wsdl:documentation>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://www.woningnet.nl/IS/AanbiedingService" schemaLocation="AanbiedingISService_ep.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="GetKandidatenRequest">
+    <wsdl:part name="request" element="ssgl:GetKandidatenRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetKandidatenResponse">
+    <wsdl:part name="reply" element="ssgl:GetKandidatenResponse"/>
+  </wsdl:message>
+  <wsdl:message name="SaveAcceptatieRequest">
+    <wsdl:part name="request" element="ssgl:SaveAcceptatieRequest"/>
+  </wsdl:message>
+  <wsdl:message name="SaveAcceptatieResponse">
+    <wsdl:part name="reply" element="ssgl:SaveAcceptatieResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="IAanbiedingIS">
+    <wsdl:operation name="GetKandidaten">
+      <wsdl:input message="tns:GetKandidatenRequest"/>
+      <wsdl:output message="tns:GetKandidatenResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAcceptatie">
+      <wsdl:input message="tns:SaveAcceptatieRequest"/>
+      <wsdl:output message="tns:SaveAcceptatieResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IAanbiedingISBinding" type="tns:IAanbiedingIS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="GetKandidaten">
+      <soap:operation style="document" soapAction="GetKandidaten"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SaveAcceptatie">
+      <soap:operation style="document" soapAction="SaveAcceptatie"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AanbiedingISService_ep">
+    <wsdl:port name="IAanbiedingIS_pt" binding="tns:IAanbiedingISBinding">
+      <soap:address location="http://accext-servicebus.woningnet.nl:80/soa-infra/services/default/AanbiedingIS!1.0*soa_98b1c909-b22f-4a9b-b406-260fcd5d7303/AanbiedingISService_ep"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,53 @@
+@startuml
+class Order{
+id
+petId
+quantity
+shipDate
+status
+complete
+}
+class Customer{
+id
+username
+address
+}
+class Address{
+street
+city
+state
+zip
+}
+class Category{
+id
+name
+}
+class User{
+id
+username
+firstName
+lastName
+email
+password
+phone
+userStatus
+}
+class Tag{
+id
+name
+}
+class Pet{
+id
+name
+category
+photoUrls
+tags
+status
+}
+class ApiResponse{
+code
+type
+message
+}
+}
+@enduml

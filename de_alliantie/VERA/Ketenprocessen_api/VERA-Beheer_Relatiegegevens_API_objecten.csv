@@ -1,0 +1,29 @@
+Betaalgegevens-Betaalgegeven;id,idExtern,idGegevensbeheerder,code,soort,rekeningnummer,begindatum,einddatum,bic,iban,incassomachtigingen,incassowijze,overeenkomst,primair,rekeninghouder,rekeningPlaats,relatie,extra-attributen,informatieobjecten
+Betaalgegevens-Incassomachtiging;id,idExtern,idGegevensbeheerder,code,soort,afgiftedatum,machtigingsnummer,rekening
+Betaalgegevens-Overeenkomst;id,idExtern,idGegevensbeheerder,soort,betaalwijze,eenheden
+Betaalgegevens-Relatie;id,idExtern,idGegevensbeheerder,code,soort,rollen
+Betaalgegevens-Relatierol;id,idExtern,idGegevensbeheerder,code,soort,naam
+Betaalgegevens-Woonplaats;code,naam
+Contactmomenten-Contactmoment;id,idExtern,idGegevensbeheerder,code,omschrijving,datum,dossier,kanaal,relaties,richting,zaak,extra-attributen,informatieobjecten
+Contactmomenten-Relatie;id,idExtern,idGegevensbeheerder,code,soort,rollen
+Contactmomenten-Relatierol;id,idExtern,idGegevensbeheerder,code,soort,naam
+ExtraAttribuut;naam,waarde
+Foutbericht;code,omschrijving
+Informatieobject;id,idExtern,idGegevensbeheerder,code,soort,detailSoort,onderwerp,subonderwerp,titel,beschrijving,bestand,bestandsgrootte,bestandslocatie,bestandsnaam,externePublicatie,externePublicatietekst,formaat,gebruiksrechten,taal,versie,vertrouwelijkheid
+Referentiedata;code,naam
+Relaties-Account;id,idExtern,idGegevensbeheerder,gebruikersnaam,status
+Relaties-Adres;id,idExtern,idGegevensbeheerder,code,soort,adres,huisletter,huisnummer,huisnummerToevoeging,postcode,straatnaam
+Relaties-BuitenlandsAdres;allOf: Relaties-Adres,adresregel1,adresregel2,land,postbusnummer,provincie,woonplaats
+Relaties-Contactgegeven;id,idExtern,idGegevensbeheerder,code,soort,detailSoort,status,vertrouwelijkheid,voorkeur,waarde
+Relaties-Eenheidadres;allOf: Relaties-Adres,land,provincie,woonplaats
+Relaties-NatuurlijkPersoon;allOf: Relaties-Relatie,voornaam,initialen,aanhef,account,achternaam,bsn,burgerlijkeStaat,geboortedatum,geslacht,nationaliteit,opleiding,overlijdensdatum,roepnaam,tussenvoegsels,voorkeurstaal,voorletters
+Relaties-Opleiding;instelling,plaats,studentnummer
+Relaties-Postadres;allOf: Relaties-Adres,antwoordnummer,postbusnummer,woonplaats
+Relaties-Rechtspersoon;allOf: Relaties-Relatie,naam,btwNummer,globaalLocatienummer,kvkNummer,organisatievorm,relaties
+Relaties-Relatie;id,idExtern,idGegevensbeheerder,code,soort,adressen,contactgegevens,groepen,rollen,extra-attributen,informatieobjecten
+Relaties-RelatieAdres;id,idExtern,idGegevensbeheerder,code,soort,begindatum,einddatum,adres
+Relaties-Relatiegroep;allOf: Relaties-Relatie,naam,relaties
+Relaties-Relatierol;id,idExtern,idGegevensbeheerder,code,soort,naam,omschrijving,begindatum,einddatum,contactgegevens,relatieAdressen,rolRelatie
+Relaties-Woonplaats;code,naam
+Signaleringen-Relatie;id,idExtern,idGegevensbeheerder,code,soort
+Signaleringen-Signalering;id,idExtern,idGegevensbeheerder,code,soort,status,detailStatus,begindatum,einddatum,relatie,extra-attributen,informatieobjecten

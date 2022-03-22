@@ -1,0 +1,38 @@
+@startuml
+
+class Adres {
+    +AdresKey : AdresKey
+    +Soort : AdresSoort
+    +Straat : string
+    +Buurt : LocatieType
+    +Wijk : LocatieType
+    +Plaats : LocatieType
+    +Gemeente : LocatieType
+    +Provincie : LocatieType
+    +GeoLocatie : GeoLocatie
+}
+class AdresKey {
+    +Regiocode : string
+    +Id : integer
+    +Land : LocatieType
+    +Postcode : string
+    +Nummer : integer
+    +Toevoeging : string
+}
+enum AdresSoort {
+    W = W
+    P = P
+    O = O
+    V = V
+    A = A
+}
+class AdresSummary {
+    +Key : AdresKey
+    +Straat : string
+    +Plaats : string
+}
+class Adressen {
+    +Adres : Adres[]
+}
+
+@enduml

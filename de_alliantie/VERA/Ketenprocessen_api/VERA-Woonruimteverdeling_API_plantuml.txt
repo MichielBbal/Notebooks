@@ -1,0 +1,1118 @@
+@startuml
+class Eenheden-Adres{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+adres
+huisletter
+huisnummer
+huisnummerToevoeging
+postcode
+straatnaam
+}
+class Eenheden-BuitenlandsAdres{
+allOf: Eenheden-Adres
+land
+}
+class Eenheden-Buurt{
+code
+naam
+}
+class Eenheden-Cluster{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+naam
+}
+class Eenheden-Contactgegeven{
+soort
+detailSoort
+status
+vertrouwelijkheid
+voorkeur
+waarde
+}
+class Eenheden-Eenheid{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+naam
+omschrijving
+kadastraalNummer
+status
+detailStatus
+beginBouwdatum
+opleverdatum
+inExploitatiedatum
+uitExploitatiedatum
+aantalOnzelfstandigeEenheden
+aanvullendeDoelgroep
+adres
+beoogdUitExploitatieDatum
+bestemming
+bouwnummer
+brutohuur
+buitenruimten
+clusters
+doelgroep
+energieprestatie
+energievoorzieningen
+etage
+inExploitatieReden
+interieur
+isolatie
+kamersAantal
+klimaatbeheersing
+kwaliteitsniveau
+ligging
+liggingTuin
+maatschappelijkLabel
+monumenten
+overigeVertrekkenTotaalOppervlakte
+panden
+prijscomponenten
+prijsconditie
+publicatieLabel
+rekenhuur
+relaties
+renovatie
+sanitair
+situering
+streefhuur
+toegankelijkheidslabel
+totaalInhoud
+totaleOppervlakte
+uitExploitatieReden
+verkoop
+vertrekken
+vertrekkenAantal
+verwarmdeVertrekkenAantal
+voorwaarden
+vraagprijs
+woonvertrekInhoud
+woonvertrekkenTotaalOppervlakte
+woonvorm
+zelfstandig
+zorgfaciliteitOmschrijving
+extra-attributen
+informatieobjecten
+}
+class Eenheden-EenheidVoorwaarden{
+maximumAantalPersonen
+maximuminkomen
+maximunleeftijd
+minimumAantalPersonen
+minimuminkomen
+minimumleeftijd
+}
+class Eenheden-Eenheidadres{
+allOf: Eenheden-Adres
+geometrie
+land
+woonplaats
+}
+class Eenheden-Energieprestatie{
+begindatum
+einddatum
+index
+label
+}
+class Eenheden-Gemeente{
+code
+naam
+}
+class Eenheden-Geometrie{
+soort
+}
+class Eenheden-Pand{
+id
+idExtern
+idGegevensbeheerder
+code
+kavelOppervlakte
+liftAanwezig
+renovatie
+}
+class Eenheden-Postadres{
+allOf: Eenheden-Adres
+antwoordnummer
+postbusnummer
+woonplaats
+}
+class Eenheden-Prijscomponent{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+bedrag
+btw
+}
+class Eenheden-Punt{
+allOf: Eenheden-Geometrie
+lengtegraad
+breedtegraad
+}
+class Eenheden-Relatie{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+adressen
+contactgegevens
+rollen
+}
+class Eenheden-RelatieAdres{
+soort
+adres
+}
+class Eenheden-Relatierol{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+naam
+}
+class Eenheden-Renovatie{
+omschrijving
+datum
+}
+class Eenheden-Telefoonnummer{
+allOf: Eenheden-Contactgegeven
+abonneenummer
+dagdelen
+extensie
+landnummer
+netnummer
+}
+class Eenheden-Vertrek{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+naam
+inhoud
+oppervlakte
+}
+class Eenheden-Wijk{
+code
+naam
+}
+class Eenheden-Woonplaats{
+code
+naam
+}
+class ExtraAttribuut{
+naam
+waarde
+}
+class Foutbericht{
+code
+omschrijving
+}
+class Gebeurtenissen-Adres{
+huisletter
+huisnummer
+huisnummerToevoeging
+postcode
+}
+class Gebeurtenissen-Cluster{
+id
+idExtern
+idGegevensbeheerder
+code
+naam
+}
+class Gebeurtenissen-Eenheidadres{
+allOf: Gebeurtenissen-Adres
+gemeente
+geometrie
+land
+woonplaats
+}
+class Gebeurtenissen-Gebeurtenis{
+id
+idExtern
+idGegevensbeheerder
+soort
+datum
+begindatum
+einddatum
+adres
+cluster
+contextId
+inschrijving
+vestiging
+extra-attributen
+informatieobjecten
+}
+class Gebeurtenissen-Gemeente{
+code
+naam
+}
+class Gebeurtenissen-Overeenkomst{
+id
+idExtern
+idGegevensbeheerder
+soort
+detailSoort
+}
+class Gebeurtenissen-Serviceovereenkomst{
+allOf: Gebeurtenissen-Overeenkomst
+samenwerkingsverband
+}
+class Informatieobject{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+onderwerp
+subonderwerp
+titel
+beschrijving
+bestand
+bestandsgrootte
+bestandslocatie
+bestandsnaam
+externePublicatie
+externePublicatietekst
+formaat
+gebruiksrechten
+taal
+versie
+vertrouwelijkheid
+}
+class Kandidaten-Contactgegeven{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+status
+vertrouwelijkheid
+voorkeur
+waarde
+}
+class Kandidaten-Inkomen{
+id
+idExtern
+idGegevensbeheerder
+nettoMaandinkomen
+brutoMaandinkomen
+bron
+brutoJaarinkomen
+controledatum
+nettoJaarinkomen
+}
+class Kandidaten-Kandidaat{
+id
+idExtern
+idGegevensbeheerder
+code
+status
+detailStatus
+aantalKinderen
+aantalVolwassenen
+eenheid
+positie
+relatie
+verzamelinkomen
+verzamelinkomenEU
+extra-attributen
+informatieobjecten
+}
+class Kandidaten-NatuurlijkPersoon{
+allOf: Kandidaten-Relatie
+voornaam
+achternaam
+geboortedatum
+geslacht
+initialen
+inkomens
+opleiding
+roepnaam
+signaleringen
+tussenvoegsels
+}
+class Kandidaten-Opleiding{
+id
+idExtern
+idGegevensbeheerder
+code
+begindatum
+einddatum
+instelling
+niveau
+plaats
+studentnummer
+}
+class Kandidaten-Relatie{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+contactgegevens
+rollen
+}
+class Kandidaten-Relatiegroep{
+allOf: Kandidaten-Relatie
+naam
+relaties
+}
+class Kandidaten-Relatierol{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+naam
+}
+class Kandidaten-Signalering{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+status
+detailStatus
+begindatum
+einddatum
+}
+class Overeenkomsten-Overeenkomst{
+id
+idExtern
+idGegevensbeheerder
+soort
+detailSoort
+status
+begindatum
+einddatum
+eindeDetailReden
+eindeReden
+relaties
+extra-attributen
+informatieobjecten
+}
+class Overeenkomsten-Serviceovereenkomst{
+allOf: Overeenkomsten-Overeenkomst
+samenwerkingsverband
+aantalPersonenHuishouden
+}
+class Overeenkomstkoppelingen-Adres{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+adres
+huisletter
+huisnummer
+huisnummerToevoeging
+postcode
+straatnaam
+}
+class Overeenkomstkoppelingen-NatuurlijkPersoon{
+allOf: Overeenkomstkoppelingen-Relatie
+geboortedatum
+voornaam
+achternaam
+initialen
+roepnaam
+tussenvoegsels
+voorletters
+}
+class Overeenkomstkoppelingen-Overeenkomst{
+id
+idExtern
+idGegevensbeheerder
+soort
+detailSoort
+status
+begindatum
+einddatum
+redenOpzegging
+relaties
+}
+class Overeenkomstkoppelingen-Overeenkomstkoppeling{
+id
+idExtern
+idGegevensbeheerder
+status
+begindatum
+einddatum
+overeenkomsten
+extra-attributen
+informatieobjecten
+}
+class Overeenkomstkoppelingen-Relatie{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+adressen
+huishoudledenAantal
+rollen
+}
+class Overeenkomstkoppelingen-RelatieAdres{
+soort
+adres
+}
+class Overeenkomstkoppelingen-Relatierol{
+soort
+naam
+}
+class Overeenkomstkoppelingen-Serviceovereenkomst{
+allOf: Overeenkomstkoppelingen-Overeenkomst
+samenwerkingsverband
+aantalPersonenHuishouden
+}
+class Publicaties-Adres{
+id
+idExtern
+idGegevensbeheerder
+code
+buurt
+gemeente
+geometrie
+huisletter
+huisnummer
+huisnummerToevoeging
+postcode
+straatnaam
+wijk
+woonplaats
+}
+class Publicaties-Buurt{
+code
+naam
+}
+class Publicaties-Cluster{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+naam
+}
+class Publicaties-Contactgegeven{
+soort
+detailSoort
+status
+vertrouwelijkheid
+voorkeur
+waarde
+}
+class Publicaties-Eenheid{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+naam
+omschrijving
+kadastraalNummer
+bouwnummer
+status
+detailStatus
+beginBouwdatum
+opleverdatum
+aantalOnzelfstandigeEenheden
+aanvullendeDoelgroep
+adres
+beoogdUitExploitatieDatum
+beschermdStadsgezicht
+bewoonbareVertrekkenTotaalInhoud
+brutohuur
+buitenruimten
+clusters
+doelgroep
+energieprestatie
+energievoorzieningen
+etage
+inExploitatiedatum
+inExploitatieReden
+interieur
+isolatie
+kamersAantal
+klimaatbeheersing
+kwaliteitsniveau
+ligging
+liggingTuin
+maatschappelijkLabel
+monumenten
+overigeVertrekkenTotaalOppervlakte
+panden
+prijscomponenten
+prijsconditie
+publicatieLabel
+rayon
+rekenhuur
+relaties
+renovatie
+sanitair
+situering
+streefhuur
+toegankelijkheidslabel
+totaalInhoud
+totaleOppervlakte
+uitExploitatiedatum
+uitExploitatieReden
+verkoop
+vertrekken
+vertrekkenAantal
+verwarmdeVertrekkenAantal
+voorwaarden
+vraagprijs
+woonvertrekInhoud
+woonvertrekkenTotaalOppervlakte
+woonvorm
+zelfstandig
+zorgfaciliteitOmschrijving
+}
+class Publicaties-EenheidVoorwaarden{
+maximumAantalPersonen
+maximuminkomen
+maximunleeftijd
+minimumAantalPersonen
+minimuminkomen
+minimumleeftijd
+}
+class Publicaties-Eenheidadres{
+allOf: Publicaties-Adres
+geometrie
+land
+woonplaats
+}
+class Publicaties-Energieprestatie{
+begindatum
+einddatum
+index
+label
+}
+class Publicaties-Gemeente{
+code
+naam
+}
+class Publicaties-Geometrie{
+soort
+}
+class Publicaties-HuidigeGebruiker{
+id
+idExtern
+idGegevensbeheerder
+code
+Vertrekdatum
+relatie
+}
+class Publicaties-NatuurlijkPersoon{
+allOf: Publicaties-Relatie
+achternaam
+initialen
+tussenvoegsels
+voornaam
+}
+class Publicaties-Pand{
+id
+idExtern
+idGegevensbeheerder
+code
+renovatie
+kavelOppervlakte
+liftAanwezig
+}
+class Publicaties-Prijscomponent{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+bedrag
+btw
+}
+class Publicaties-Publicatie{
+id
+idExtern
+idGegevensbeheerder
+code
+status
+begindatum
+einddatum
+opleverdatum
+aantalEenheden
+aantalEenhedenBeschikbaar
+advertentieUrl
+cluster
+contractvorm
+detailModel
+detailStatus
+eenheden
+huidigeGebruiker
+intakevorm
+label
+looptijd
+model
+modules
+oplevering
+reactieUrl
+taal
+wachttijd
+wachttijdMetVoorrang
+extra-attributen
+informatieobjecten
+}
+class Publicaties-Punt{
+allOf: Publicaties-Geometrie
+lengtegraad
+breedtegraad
+}
+class Publicaties-Relatie{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+contactgegevens
+rollen
+}
+class Publicaties-Relatierol{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+naam
+}
+class Publicaties-Renovatie{
+omschrijving
+datum
+}
+class Publicaties-Telefoonnummer{
+allOf: Publicaties-Contactgegeven
+abonneenummer
+dagdelen
+extensie
+landnummer
+netnummer
+}
+class Publicaties-Vertrek{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+naam
+inhoud
+oppervlakte
+}
+class Publicaties-Wijk{
+code
+naam
+}
+class Publicaties-Woonplaats{
+code
+naam
+}
+class Puntenberekeningen-Adres{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+adres
+huisletter
+huisnummer
+huisnummerToevoeging
+postcode
+straatnaam
+}
+class Puntenberekeningen-Overeenkomst{
+id
+idExtern
+idGegevensbeheerder
+soort
+detailSoort
+}
+class Puntenberekeningen-Puntenberekening{
+id
+idExtern
+idGegevensbeheerder
+datum
+begindatum
+einddatum
+inschrijving
+puntenmutaties
+situatiepunten
+startpunten
+zoekpunten
+extra-attributen
+informatieobjecten
+}
+class Puntenberekeningen-Puntenmutatie{
+id
+idExtern
+idGegevensbeheerder
+soort
+omschrijving
+adressen
+}
+class Puntenberekeningen-Serviceovereenkomst{
+allOf: Puntenberekeningen-Overeenkomst
+samenwerkingsverband
+}
+class Referentiedata{
+code
+naam
+}
+class Relaties-Account{
+id
+idExtern
+idGegevensbeheerder
+gebruikersnaam
+status
+}
+class Relaties-Adres{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+adres
+huisletter
+huisnummer
+huisnummerToevoeging
+postcode
+straatnaam
+}
+class Relaties-BuitenlandsAdres{
+allOf: Relaties-Adres
+adresregel1
+adresregel2
+land
+postbusnummer
+provincie
+woonplaats
+}
+class Relaties-Contactgegeven{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+status
+vertrouwelijkheid
+voorkeur
+waarde
+}
+class Relaties-Eenheidadres{
+allOf: Relaties-Adres
+land
+provincie
+woonplaats
+}
+class Relaties-Inkomen{
+id
+idExtern
+idGegevensbeheerder
+code
+controledatum
+bron
+brutoJaarinkomen
+brutoMaandinkomen
+inkomensverklaringsoort
+nettoJaarinkomen
+nettoMaandinkomen
+relaties
+}
+class Relaties-NatuurlijkPersoon{
+allOf: Relaties-Relatie
+voornaam
+initialen
+aanhef
+account
+achternaam
+bsn
+burgerlijkeStaat
+geboortedatum
+geslacht
+inkomens
+nationaliteit
+opleiding
+overlijdensdatum
+roepnaam
+tussenvoegsels
+voorkeurstaal
+voorletters
+}
+class Relaties-Opleiding{
+instelling
+plaats
+studentnummer
+}
+class Relaties-Postadres{
+allOf: Relaties-Adres
+antwoordnummer
+postbusnummer
+woonplaats
+}
+class Relaties-Rechtspersoon{
+allOf: Relaties-Relatie
+naam
+btwNummer
+globaalLocatienummer
+kvkNummer
+organisatievorm
+relaties
+}
+class Relaties-Relatie{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+adressen
+contactgegevens
+groepen
+rollen
+extra-attributen
+informatieobjecten
+}
+class Relaties-RelatieAdres{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+begindatum
+einddatum
+adres
+}
+class Relaties-Relatiegroep{
+allOf: Relaties-Relatie
+naam
+relaties
+}
+class Relaties-Relatierol{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+naam
+omschrijving
+begindatum
+einddatum
+contactgegevens
+relatieAdressen
+rolRelatie
+}
+class Relaties-Woonplaats{
+code
+naam
+}
+class Sancties-Adres{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+adres
+huisletter
+huisnummer
+huisnummerToevoeging
+postcode
+straatnaam
+}
+class Sancties-Gebeurtenis{
+id
+idExtern
+idGegevensbeheerder
+soort
+datum
+begindatum
+einddatum
+adres
+contextId
+vestiging
+}
+class Sancties-Overeenkomst{
+id
+idExtern
+idGegevensbeheerder
+soort
+detailSoort
+begindatum
+einddatum
+}
+class Sancties-Sanctie{
+id
+idExtern
+idGegevensbeheerder
+soort
+omschrijving
+status
+begindatum
+einddatum
+gebeurtenissen
+inschrijving
+extra-attributen
+informatieobjecten
+}
+class Sancties-Serviceovereenkomst{
+allOf: Sancties-Overeenkomst
+bedrag
+samenwerkingsverband
+}
+class Toewijzingen-Inkomen{
+id
+idExtern
+idGegevensbeheerder
+nettoMaandinkomen
+brutoMaandinkomen
+bron
+brutoJaarinkomen
+controledatum
+nettoJaarinkomen
+}
+class Toewijzingen-Kandidaat{
+id
+idExtern
+idGegevensbeheerder
+code
+status
+detailStatus
+aantalKinderen
+aantalVolwassenen
+positie
+relatie
+verzamelinkomen
+verzamelinkomenEU
+}
+class Toewijzingen-NatuurlijkPersoon{
+allOf: Toewijzingen-Relatie
+voornaam
+achternaam
+geboortedatum
+geslacht
+initialen
+inkomens
+opleiding
+roepnaam
+signaleringen
+tussenvoegsels
+}
+class Toewijzingen-Opleiding{
+id
+idExtern
+idGegevensbeheerder
+code
+begindatum
+einddatum
+instelling
+niveau
+plaats
+studentnummer
+}
+class Toewijzingen-Overeenkomst{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+begindatum
+einddatum
+prijscomponenten
+}
+class Toewijzingen-Relatie{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+rollen
+}
+class Toewijzingen-Relatierol{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+naam
+}
+class Toewijzingen-Signalering{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+status
+detailStatus
+begindatum
+einddatum
+}
+class Toewijzingen-Toewijzing{
+id
+idExtern
+idGegevensbeheerder
+code
+datum
+aanvullendeDoelgroep
+doelgroep
+eenheid
+huishoudgrootte
+kandidaat
+overeenkomst
+Rekenhuur
+Rekeninkomen
+voorrangsregelingen
+extra-attributen
+informatieobjecten
+}
+class Toewijzingen-Voorrangsregeling{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+naam
+begindatum
+einddatum
+profiel
+}
+class Toewijzingen-VoorrangsregelingProfiel{
+id
+idExtern
+idGegevensbeheerder
+code
+eenheidSoorten
+huidigeOppervlakte
+huidigeVerdieping
+huurInkomenTabel
+maximumBrutoHuur
+maximumKamers
+minimumBrutoHuur
+minimumKamers
+minimumOppervlakte
+toegankelijkheidslabels
+}
+@enduml

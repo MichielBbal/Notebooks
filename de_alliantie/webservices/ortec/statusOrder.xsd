@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by Helpdesk (Ortec) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="datetime">
+		<xs:annotation>
+			<xs:documentation>ISO Date time format with (optional) time zone designator: YYYY-MM-DDTHH:MM:SS±hh:mm.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="id">
+		<xs:annotation>
+			<xs:documentation>unique identifier of the entity</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="40"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="taskStatus">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="id" type="id"/>
+				<xs:element name="resourceId" type="id"/>
+				<xs:element name="status" type="xs:string"/>
+				<xs:element name="statusChangedDateTime" type="datetime"/>
+				<xs:element name="extraInfo" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="info1" minOccurs="0"/>
+							<xs:element name="info2" minOccurs="0"/>
+							<xs:element name="info3" minOccurs="0"/>
+							<xs:element name="info4" minOccurs="0"/>
+							<xs:element name="info5" minOccurs="0"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

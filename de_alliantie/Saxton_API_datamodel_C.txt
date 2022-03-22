@@ -1,0 +1,943 @@
+@startuml
+class Communications.Communication{
+id
+description
+companyId
+communicationType
+value
+extension
+isPrimary
+isPrivate
+isMobilePhone
+communicationPurpose
+referenceId
+}
+class Communications.CommunicationCreate{
+description
+communicationTypeId
+value
+extension
+isPrivate
+communicationPurposeId
+}
+class Communications.CommunicationPurpose{
+id
+description
+}
+class Communications.CommunicationType{
+id
+description
+}
+class Communications.CommunicationUpdate{
+description
+value
+extension
+isPrivate
+}
+class CommunityNotification.CommunityNotification{
+id
+type
+employee
+realEstate
+description
+registrationDateTime
+settledDateTime
+closedDateTime
+reasonClosed
+status
+subject
+agression
+importance
+urgency
+memo
+subjectLocation
+contacts
+}
+class CommunityNotification.CommunityNotificationActionPlan{
+id
+action
+sequence
+registrationDateTime
+settledBeforeDateTime
+status
+closedDateTime
+procedure
+memo
+executivePerson
+description
+}
+class CommunityNotification.CommunityNotificationActionPlanAction{
+id
+description
+}
+class CommunityNotification.CommunityNotificationAggression{
+type
+id
+description
+}
+class CommunityNotification.CommunityNotificationContact{
+role
+referenceId
+referenceType
+name
+registrationDateTime
+}
+class CommunityNotification.CommunityNotificationContactCreate{
+roleId
+referenceId
+referenceType
+registrationDateTime
+}
+class CommunityNotification.CommunityNotificationCreate{
+typeId
+realEstate
+description
+registrationDateTime
+subjectId
+agressionId
+importanceId
+urgencyId
+memo
+contacts
+}
+class CommunityNotification.CommunityNotificationEstateType{
+id
+description
+}
+class CommunityNotification.CommunityNotificationImportance{
+type
+id
+description
+}
+class CommunityNotification.CommunityNotificationProcedure{
+id
+description
+}
+class CommunityNotification.CommunityNotificationRealEstateObject{
+id
+realEstateObjectId
+estateType
+address
+name
+}
+class CommunityNotification.CommunityNotificationRealEstateObjectCreate{
+id
+zipCode
+houseNumber
+houseNumberAddition
+}
+class CommunityNotification.CommunityNotificationReasonClosed{
+id
+description
+}
+class CommunityNotification.CommunityNotificationRole{
+id
+description
+}
+class CommunityNotification.CommunityNotificationStatus{
+id
+description
+}
+class CommunityNotification.CommunityNotificationSubject{
+type
+id
+description
+}
+class CommunityNotification.CommunityNotificationSubjectLocation{
+id
+description
+}
+class CommunityNotification.CommunityNotificationType{
+id
+description
+}
+class CommunityNotification.CommunityNotificationUrgency{
+type
+id
+description
+}
+class CommunityNotification.ExecutivePerson{
+referenceType
+referenceId
+name
+email
+mobilePhone
+phone
+}
+class Contracts.AdditionalPayer{
+bankAccount
+customerId
+paymentModeId
+validFrom
+signDateMandate
+}
+class Contracts.BuyRent{
+id
+description
+}
+class Contracts.College{
+id
+name
+}
+class Contracts.Contract{
+id
+address
+approvedPreliminaryContract
+category
+college
+terminationDate
+terminationReason
+companyId
+customerId
+invoiceDivergenceDate
+invoiceFrom
+invoiceTo
+linkedContracts
+name
+noticeDateTenant
+noticeTenant
+paymentDetails
+realEstateObjectId
+signDate
+status
+studentNumber
+type
+validFrom
+validTo
+plotType
+housing
+serviceObject
+}
+class Contracts.ContractAccountabilityCreate{
+accountabilityIncome
+collectiveIncome
+dateAssigned
+dateOfBirth
+exceptionReasonId
+focusGroupId
+occupants
+urgencyId
+}
+class Contracts.ContractActivation{
+validFrom
+signDate
+}
+class Contracts.ContractCategory{
+companyId
+id
+description
+}
+class Contracts.ContractCreate{
+categoryId
+collegePartyId
+customerId
+invoiceDivergenceDateId
+invoiceFrom
+invoiceTo
+name
+noticeTenantId
+occupiedFrom
+occupiedTo
+paymentDetails
+realEstateObjectId
+signDate
+studentNumber
+typeId
+validFrom
+validTo
+vatCodeId
+vatLiability
+}
+class Contracts.ContractEnd{
+endDate
+}
+class Contracts.ContractExceptionReason{
+id
+description
+}
+class Contracts.ContractForm{
+id
+companyid
+description
+type
+}
+class Contracts.ContractInvoiceDivergenceDate{
+id
+description
+}
+class Contracts.ContractNoticeTenant{
+companyId
+id
+numberOfUnits
+timeUnit
+}
+class Contracts.ContractPaymentDetails{
+bankAccount
+customerId
+customerPaymentMode
+invoiceEmail
+paymentTerm
+}
+class Contracts.ContractPeriod{
+id
+name
+}
+class Contracts.ContractPrice{
+companyID
+contractId
+eligibleRent
+netRent
+grossRent
+rentComponents
+}
+class Contracts.ContractPriceAdjReason{
+id
+companyId
+description
+}
+class Contracts.ContractRelation{
+id
+referenceType
+referenceId
+roleId
+roleType
+roleDescription
+contactType
+contactId
+validFrom
+validTo
+name
+email
+phone
+mobile
+}
+class Contracts.ContractRelationSearch{
+referenceType
+referenceId
+roleType
+roleId
+contactType
+contactId
+contractId
+validFrom
+validTo
+contractDescription
+name
+email
+phone
+mobile
+}
+class Contracts.ContractSigning{
+signDate
+}
+class Contracts.ContractStatus{
+id
+description
+}
+class Contracts.ContractTermination{
+endDate
+noticeDate
+terminationDate
+terminationReasonId
+recommendTenant
+viewingAgreed
+}
+class Contracts.ContractTerminationReason{
+companyId
+id
+description
+}
+class Contracts.ContractType{
+companyId
+id
+description
+}
+class Contracts.CostType{
+id
+description
+}
+class Contracts.LinkedContract{
+companyId
+contractId
+}
+class Contracts.ObjectType{
+id
+description
+}
+class Contracts.PaymentDetailsCreate{
+bankAccount
+customerId
+customerPaymentModeId
+signdateMandate
+}
+class Contracts.RealEstateObject{
+companyId
+id
+objectId
+name
+buildingCategory
+buildingType
+destination
+district
+cbsDistrict
+type
+financialComplex
+technicalComplex
+groundId
+housing
+neighbourhood
+cbsNeighbourhood
+plotType
+ownershipType
+builtYear
+renovationYear
+contractForms
+maximumRentAmount
+grossRent
+netRent
+eligibleRent
+address
+buildingId
+realEstateType
+operationalDestination
+floor
+rayon
+landRegister
+typeObjectSpace
+targetRent
+inExploitation
+outExploitation
+realEstateCategory
+availableForRentDate
+block
+mutationId
+segment
+}
+class Contracts.RentComponent{
+id
+costType
+costGroup
+typeCosts
+taxItemGroup
+taxAmount
+employeeAdaptable
+validFrom
+validTo
+amount
+tenantChoice
+rentEligible
+period
+}
+class Contracts.RentComponentCreate{
+costTypeId
+validFrom
+validTo
+priceAdjReasonId
+price
+}
+class Contracts.TypeCosts{
+id
+description
+}
+class Correspondence.Correspondence{
+referenceType
+referenceTypeId
+message
+documentFileGuid
+documentFilename
+companyId
+}
+class Correspondence.CorrespondenceCreate{
+referenceType
+referenceTypeIds
+command
+returnDocument
+}
+class CRM.Activity{
+id
+companyId
+endDateTime
+startDateTime
+employee
+closed
+category
+type
+purpose
+priority
+phase
+status
+closedBy
+description
+plan
+connections
+}
+class CRM.ActivityClose{
+memo
+}
+class CRM.ActivityConnection{
+id
+primary
+referenceType
+}
+class CRM.ActivityCreate{
+employeeId
+closed
+description
+closedByEmployeeId
+priorityId
+purpose
+typeId
+categoryId
+dateClosed
+endDateTime
+startDateTime
+referenceType
+referenceId
+}
+class CRM.Area{
+id
+description
+}
+class CRM.Category{
+id
+description
+}
+class CRM.ContactMomentCreate{
+originId
+startDateTime
+userId
+realEstateObjectId
+}
+class CRM.ContactMomentEnd{
+endDateTime
+}
+class CRM.ContactMomentLine{
+id
+companyId
+area
+type
+description
+answer
+hasAttachment
+activities
+question
+status
+sequence
+avoidable
+internalMemo
+}
+class CRM.ContactMomentLineCreate{
+areaId
+typeId
+description
+answer
+question
+avoidable
+internalMemo
+}
+class CRM.ContactMomentLineOverview{
+id
+companyId
+area
+type
+description
+answer
+activities
+question
+status
+sequence
+avoidable
+contactMomentSummary
+internalMemo
+}
+class CRM.ContactMomentLineSearchChild{
+id
+companyId
+area
+type
+contactMoment
+}
+class CRM.ContactMomentLineSearchParent{
+id
+referenceId
+referenceType
+startDateTime
+endDateTime
+}
+class CRM.ContactMomentLineStatus{
+id
+statusId
+}
+class CRM.ContactMomentLineStatusRequest{
+id
+statusId
+}
+class CRM.ContactMomentOverview{
+id
+companyId
+realEstateObjectId
+origin
+description
+startDateTime
+endDateTime
+lines
+user
+}
+class CRM.ContactMomentSummary{
+companyId
+id
+realEstateObjectId
+referenceId
+referenceType
+origin
+description
+startDateTime
+endDateTime
+user
+}
+class CRM.Origin{
+id
+description
+}
+class CRM.Phase{
+id
+description
+}
+class CRM.Plan{
+id
+description
+}
+class CRM.Priority{
+id
+description
+}
+class CRM.TaskArea{
+taskTypes
+id
+description
+}
+class CRM.TaskType{
+sequence
+id
+description
+}
+class CRM.Type{
+id
+description
+}
+class CRM.User{
+id
+description
+}
+class Customers.BailiffDebtSettlement{
+companyId
+id
+amount
+amountOpen
+contact
+contractId
+dateSettlementStarted
+dateSettlementStopped
+dateEvictionPlanned
+dateEvictionExecuted
+dateStarted
+dateStopped
+kind
+extraInfo
+dossierId
+status
+reasonStarted
+dateAgreementValidFrom
+dateAgreementValidTo
+reasonStopped
+endEvictionReason
+}
+class Customers.CollectionInvoice{
+id
+type
+amount
+openAmount
+contractId
+currencyCode
+dueDate
+createdDate
+transactions
+}
+class Customers.CollectionInvoiceTransaction{
+voucher
+amount
+openAmount
+transDate
+description
+}
+class Customers.Curator{
+referenceType
+referenceId
+name
+phone
+email
+birthDate
+}
+class Customers.CuratorContact{
+referenceType
+referenceId
+displayname
+phoneWork
+emailWork
+birthDate
+}
+class Customers.Customer{
+amountOpen
+companyId
+currencyCode
+hasActiveDebtSettlement
+hasActivePaymentScheme
+id
+referenceId
+referenceType
+}
+class Customers.CustomerCollectionLetterCode{
+id
+description
+}
+class Customers.CustomerCreate{
+referenceId
+referenceType
+}
+class Customers.CustomerInvoice{
+voucher
+dueDate
+amount
+}
+class Customers.CustomerMandateCreate{
+bankAccount
+reason
+}
+class Customers.CustomerPaymentDetails{
+bankAccount
+customerId
+customerPaymentMode
+invoiceEmail
+signdateMandate
+}
+class Customers.CustomerPaymentDetailsCreate{
+bankAccount
+customerId
+paymentModeId
+invoiceEmail
+invoiceMethodId
+}
+class Customers.CustomerPaymentMode{
+id
+description
+paymentType
+mandateRequired
+}
+class Customers.CustomerPaymentType{
+id
+description
+}
+class Customers.CustomerSettleTransaction{
+reference
+referenceId
+amountPaid
+transactionDate
+extTransactionId
+invoices
+}
+class Customers.CustomerTransaction{
+amount
+amountOpen
+collectionLetterCode
+collectionLetterDate
+companyId
+contractId
+currencyCode
+customerId
+dueDate
+invoiceId
+isMovedToDebtSettlement
+isMovedToPaymentScheme
+paymentDetails
+transactionCategory
+transactionDate
+transactionText
+transactionType
+voucher
+status
+marked
+isTransactionReversed
+}
+class Customers.CustomerTransactionCategoryType{
+id
+description
+}
+class Customers.CustomerTransactionSettlement{
+companyId
+customerId
+voucher
+amount
+invoiceId
+currencyCode
+transactionDate
+transactionText
+transactionType
+settleDate
+}
+class Customers.CustomerTransactionStatus{
+id
+description
+}
+class Customers.CustomerVerdict{
+id
+verdictDate
+amount
+debtSettlementId
+type
+}
+class Customers.DebtSettlement{
+companyId
+id
+amount
+amountOpen
+contact
+contractId
+dateStarted
+dateStopped
+dateSettlementStarted
+dateSettlementStopped
+kind
+extraInfo
+dossierId
+status
+reasonStopped
+reasonStarted
+}
+class Customers.DebtSettlementBaseType{
+id
+description
+}
+class Customers.DebtSettlementContact{
+companyId
+contactPersonId
+contactPersonName
+organizationName
+email
+phone
+mobilePhone
+}
+class Customers.DebtSettlementKind{
+id
+companyId
+description
+type
+}
+class Customers.DebtSettlementSearchResponse{
+companyId
+debtSettlementId
+dossierId
+customerId
+customerName
+contractId
+address
+dateStarted
+}
+class Customers.DebtSettlementStatus{
+id
+description
+}
+class Customers.DebtSettlementTransaction{
+companyId
+debtSettlementId
+amount
+amountOpen
+transactionType
+transactionDate
+dueDate
+voucher
+}
+class Customers.EndEvictionReason{
+id
+description
+}
+class Customers.PaymentScheme{
+companyId
+id
+customerId
+contractId
+dateCompleted
+dateStarted
+dateCanceled
+dateStopped
+openAmount
+totalAmount
+description
+numberOfTerms
+status
+paymentSchemeTerms
+paymentDetails
+currencyCode
+voucher
+}
+class Customers.PaymentSchemeCreate{
+totalAmountOpen
+numberOfTerms
+startDate
+customerPaymentDetails
+vouchers
+terms
+}
+class Customers.PaymentSchemeTerm{
+amountOpen
+amount
+dueDate
+}
+class Customers.PaymentSchemeTermCreate{
+dueDate
+amount
+}
+class Customers.PaymentSchemeVoucherCreate{
+voucher
+amountOpen
+}
+class Customers.PaymentTerm{
+id
+description
+}
+class Customers.PaymSchemeStatus{
+id
+description
+}
+class Customers.ReasonStarted{
+id
+description
+}
+class Customers.ReasonStopped{
+id
+description
+}
+class Customers.Receivership{
+id
+startDate
+endDate
+curator
+curatorContact
+type
+}
+class Customers.ReceivershipType{
+id
+description
+}
+class Customers.TransactionType{
+id
+description
+}
+class Customers.Type{
+id
+description
+}
+class Customers.VerdictType{
+id
+description
+}
+@enduml

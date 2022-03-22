@@ -1,0 +1,12 @@
+Eenheid;identificatie
+BeschikbareTijdslotsRequest;actiecode,bedrijf,begindatum,eenheid,einddatum
+FinancieelBedrijf;identificatie
+Sturingslabel;identificatie,datum,label,soort,bron
+Tijdslot;index,begindatum,einddatum,medewerker,reisafstand,reistijd,routeid,volgnummer
+Contactgegeven;soort,detailSoort,waarde,voorkeur,landnummer,netnummer,abonneenummer,extensie,dagdelen
+TijdslotsResponse;identificatie,tijdslots
+NatuurlijkPersoon;identificatie,soort,voornaam,initialen,tussenvoegsels,achternaam,roepnaam,aanhef,voorletters,contactgegevens,sturingslabels
+BoekTijdslotRequest;tijdslot,bedrijf,onderhoudstaak
+Onderhoudstaak;identificatie
+ErrorResponse;timestamp,status,error,message
+UpdateTijdslotRequest;tijdslot

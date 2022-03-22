@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://www.woningnet.nl/IS/Publicatie" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.woningnet.nl/IS/Publicatie" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:spub="http://www.woningnet.nl/IS/PublicatieService" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/">
+  <wsdl:documentation>
+    <abstractWSDL>http://accext-servicebus.woningnet.nl:80/soa-infra/services/default/PublicatieIS!1.0/PublicatieIS.wsdl</abstractWSDL>
+  </wsdl:documentation>
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema">
+      <import namespace="http://www.woningnet.nl/IS/PublicatieService" schemaLocation="PublicatieISService_ep.xsd"/>
+    </schema>
+  </wsdl:types>
+  <wsdl:message name="SavePublicatieRequest">
+    <wsdl:part name="request" element="spub:SavePublicatieRequest"/>
+  </wsdl:message>
+  <wsdl:message name="SavePublicatieResponse">
+    <wsdl:part name="reply" element="spub:SavePublicatieResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="IPublicatieIS">
+    <wsdl:operation name="SavePublicatie">
+      <wsdl:input message="tns:SavePublicatieRequest"/>
+      <wsdl:output message="tns:SavePublicatieResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="IPublicatieISBinding" type="tns:IPublicatieIS">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="SavePublicatie">
+      <soap:operation style="document" soapAction="SavePublicatie"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PublicatieISService_ep">
+    <wsdl:port name="IPublicatieIS_pt" binding="tns:IPublicatieISBinding">
+      <soap:address location="http://accext-servicebus.woningnet.nl:80/soa-infra/services/default/PublicatieIS!1.0*soa_f6476c33-3966-4994-955e-3991176fa629/PublicatieISService_ep"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

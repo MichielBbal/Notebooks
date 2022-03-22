@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.woningnet.nl/IS/AanbiedingService" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woningnet.nl/IS/AanbiedingService" xmlns:gbr="http://www.woningnet.nl/Contracten/Gebruiker" xmlns:abg="http://www.woningnet.nl/Contracten/Wozo/Aanbieding" xmlns:mld="http://www.woningnet.nl/Contracten/Common/Meldingen">
+  <xsd:import namespace="http://www.woningnet.nl/Contracten/Gebruiker" schemaLocation="GebruikerV1.xsd"/>
+  <xsd:import namespace="http://www.woningnet.nl/Contracten/Common/Meldingen" schemaLocation="MeldingenV1.xsd"/>
+  <xsd:import namespace="http://www.woningnet.nl/Contracten/Wozo/Aanbieding" schemaLocation="AanbiedingV1.xsd"/>
+  <xsd:element name="GetKandidatenRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="gbr:Autorisatie"/>
+        <xsd:element ref="abg:KandidatenKey"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="GetKandidatenResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="abg:KandidatenKey"/>
+        <xsd:element ref="abg:Kandidaten"/>
+        <xsd:element ref="mld:Meldingen"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SaveAcceptatieRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="gbr:Autorisatie"/>
+        <xsd:element ref="abg:KandidaatKey"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SaveAcceptatieResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="abg:KandidaatKey"/>
+        <xsd:element ref="mld:Meldingen"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

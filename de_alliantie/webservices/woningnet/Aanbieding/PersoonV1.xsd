@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.woningnet.nl/Contracten/Wozo/Persoon" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:adr="http://www.woningnet.nl/Contracten/Common/Adressen" xmlns:prs="http://www.woningnet.nl/Contracten/Wozo/Persoon" xmlns:mld="http://www.woningnet.nl/Contracten/Common/Meldingen">
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Common/Adressen" schemaLocation="AdressenV1.xsd"/>
+  <xs:element name="Persoon" type="prs:Persoon" nillable="true"/>
+  <xs:element name="PersoonKey" type="prs:PersoonKey" nillable="true"/>
+  <xs:element name="PersoonAdres">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="prs:PersoonKey"/>
+        <xs:element ref="adr:Adres"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="PersoonKey">
+    <xs:sequence>
+      <xs:element name="Regiocode" type="xs:string"/>
+      <xs:element name="Id" type="xs:integer" minOccurs="0" nillable="true"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Persoon">
+    <xs:sequence>
+      <xs:element ref="prs:PersoonKey"/>
+      <xs:element name="Naam" type="xs:string"/>
+      <xs:element name="Voorletters" type="xs:string" minOccurs="0"/>
+      <xs:element name="Tussenvoegsel" type="xs:string" minOccurs="0"/>
+      <xs:element name="Geslacht" type="xs:string" minOccurs="0" nillable="true"/>
+      <xs:element name="Geboortedatum" type="xs:dateTime" minOccurs="0" nillable="true"/>
+      <xs:element name="Nationaliteit" type="xs:string" minOccurs="0"/>
+      <xs:element name="BSN" type="xs:integer" minOccurs="0" nillable="true"/>
+      <xs:element name="Roepnaam" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

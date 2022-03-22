@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.woningnet.nl/Contracten/Gebruiker" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:gbr="http://www.woningnet.nl/Contracten/Gebruiker" xmlns:egr="http://www.woningnet.nl/Contracten/Eigenaar" xmlns:prs="http://www.woningnet.nl/Contracten/Wozo/Persoon">
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Eigenaar" schemaLocation="EigenaarV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Wozo/Persoon" schemaLocation="PersoonV1.xsd"/>
+  <xs:element name="GebruikerKey" type="gbr:GebruikerKey" nillable="true"/>
+  <xs:element name="Autorisatie" type="gbr:Autorisatie"/>
+  <xs:element name="Gebruiker" type="gbr:Gebruiker" nillable="true"/>
+  <xs:element name="GebruikerKanaal" type="gbr:GebruikerKanaal" nillable="true"/>
+  <xs:element name="GebruikersKey" type="gbr:GebruikersKey"/>
+  <xs:element name="Gebruikers" type="gbr:Gebruikers" nillable="true"/>
+  <xs:element name="Regios" type="gbr:Regios"/>
+  <xs:element name="Kanalen" type="gbr:Kanalen"/>
+  <xs:element name="RolKey" type="gbr:RolKey"/>
+  <xs:element name="ModuleCode" type="gbr:ModuleCode"/>
+  <xs:element name="GebruikerToken" type="gbr:GebruikerToken" nillable="true"/>
+  <xs:element name="RollenKey" type="gbr:RollenKey"/>
+  <xs:element name="Rol" type="gbr:Rol"/>
+  <xs:element name="Rollen" type="gbr:Rollen" nillable="true"/>
+  <xs:complexType name="Autorisatie">
+    <xs:sequence>
+      <xs:element name="Gebruikersnaam" type="xs:string"/>
+      <xs:element name="Wachtwoord" minOccurs="0" type="xs:string"/>
+      <xs:element name="Locale" type="xs:string"/>
+      <xs:element name="Kanaal" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GebruikerKey">
+    <xs:sequence>
+      <xs:element name="Id" type="xs:string" minOccurs="0" nillable="true"/>
+      <xs:element name="Gebruikersnaam" type="xs:string" minOccurs="0" nillable="true"/>
+      <xs:element name="AbsUser" type="xs:string" minOccurs="0" nillable="true"/>
+      <xs:element name="Regiocode" type="xs:string" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Gebruiker">
+    <xs:sequence>
+      <xs:element name="GebruikerKey" type="gbr:GebruikerKey"/>
+      <xs:element name="Wachtwoord" type="xs:string" minOccurs="0"/>
+      <xs:element name="WachtwoordWijzigen" type="xs:boolean" minOccurs="0" nillable="true"/>
+      <xs:element name="Regios" type="gbr:Regios" minOccurs="0" nillable="true"/>
+      <xs:element name="Rechten" type="gbr:RechtenTable" minOccurs="0" nillable="true"/>
+      <xs:element name="Kanalen" type="gbr:Kanalen" minOccurs="0" nillable="true"/>
+      <xs:element name="VestigingKeys" type="egr:VestigingKeys" minOccurs="0" nillable="true"/>
+      <xs:element name="SiteId" type="xs:integer" minOccurs="0" nillable="true"/>
+      <xs:element name="Persoon" type="prs:Persoon" nillable="true" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="Actief" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GebruikerKanaal">
+    <xs:sequence>
+      <xs:element name="GebruikerKey" type="gbr:GebruikerKey"/>
+      <xs:element name="KanaalCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Kanaal">
+    <xs:sequence>
+      <xs:element name="Code" type="xs:string"/>
+      <xs:element name="Omschrijving" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Kanalen">
+    <xs:sequence>
+      <xs:element name="Kanaal" type="gbr:Kanaal" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GebruikersKey">
+    <xs:sequence>
+      <xs:element name="Regiocode" type="xs:string" minOccurs="1"/>
+      <xs:element minOccurs="0" ref="egr:VestigingKey"/>
+      <xs:element name="Zoekveld" type="xs:string" minOccurs="0" nillable="true"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Gebruikers">
+    <xs:sequence>
+      <xs:element name="Gebruiker" type="gbr:Gebruiker" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Regio">
+    <xs:sequence>
+      <xs:element name="Code" type="xs:string"/>
+      <xs:element name="User" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Regios">
+    <xs:sequence>
+      <xs:element name="Regio" type="gbr:Regio" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Rechten">
+    <xs:sequence>
+      <xs:element name="Regiocode" type="xs:string"/>
+      <xs:element name="Modulecode" type="xs:string"/>
+      <xs:element name="Functionaliteitcode" type="xs:string"/>
+      <xs:element name="Rechten" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RechtenTable">
+    <xs:sequence>
+      <xs:element name="Rechten" type="gbr:Rechten" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RolKey">
+    <xs:sequence>
+      <xs:element name="Id" type="xs:string"/>
+      <xs:element name="Code" type="xs:string"/>
+      <xs:element name="Regiocode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ModuleCode">
+    <xs:sequence>
+      <xs:element name="ModuleCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GebruikerToken">
+    <xs:sequence>
+      <xs:element name="GebruikerKey" type="gbr:GebruikerKey"/>
+      <xs:element name="Token" type="xs:string"/>
+      <xs:element name="vervaldatum" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RollenKey">
+    <xs:sequence>
+      <xs:element name="Regiocode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Rol">
+    <xs:sequence>
+      <xs:element name="Key" type="gbr:RolKey"/>
+      <xs:element name="Naam" type="xs:string"/>
+      <xs:element name="Omschrijving" type="xs:string"/>
+      <xs:element name="Actief" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Rollen">
+    <xs:sequence>
+      <xs:element name="Rol" type="gbr:Rol" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,330 @@
+@startuml
+class ExtraAttribuut{
+naam
+waarde
+}
+class Foutbericht{
+code
+omschrijving
+}
+class Informatieobject{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+onderwerp
+subonderwerp
+titel
+beschrijving
+bestand
+bestandsgrootte
+bestandslocatie
+bestandsnaam
+externePublicatie
+externePublicatietekst
+formaat
+gebruiksrechten
+taal
+versie
+vertrouwelijkheid
+}
+class Kwaliteitsmetingsresultaten-Kwaliteitsmetingsresultaat{
+id
+idExtern
+idGegevensbeheerder
+code
+omschrijving
+datumReactie
+beoordelingsSchaal
+beoordelingsWaarde
+kwaliteitsmetingsverzoek
+resultaatReactie
+toelichtingBeoordeling
+extra-attributen
+informatieobjecten
+}
+class Kwaliteitsmetingsverzoeken-Adres{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+adres
+huisletter
+huisnummer
+huisnummerToevoeging
+postcode
+straatnaam
+}
+class Kwaliteitsmetingsverzoeken-Contactgegeven{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+status
+vertrouwelijkheid
+voorkeur
+waarde
+}
+class Kwaliteitsmetingsverzoeken-Contactmoment{
+id
+idExtern
+idGegevensbeheerder
+code
+omschrijving
+datum
+kanaal
+relaties
+richting
+}
+class Kwaliteitsmetingsverzoeken-Eenheid{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+naam
+status
+detailStatus
+beginBouwdatum
+adres
+clusters
+relaties
+}
+class Kwaliteitsmetingsverzoeken-Gemeente{
+id
+idExtern
+idGegevensbeheerder
+code
+naam
+}
+class Kwaliteitsmetingsverzoeken-Huurovereenkomst{
+allOf: Kwaliteitsmetingsverzoeken-Overeenkomst
+status
+opzegdatum
+eindeReden
+maatschappelijkLabel
+}
+class Kwaliteitsmetingsverzoeken-Kwaliteitsmetingsverzoek{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+omschrijving
+status
+afgerondeZaak
+contactmoment
+eenheid
+onderhoudsverzoek
+overeenkomst
+relaties
+teEnqueterenRelatie
+extra-attributen
+informatieobjecten
+}
+class Kwaliteitsmetingsverzoeken-NatuurlijkPersoon{
+allOf: Kwaliteitsmetingsverzoeken-Relatie
+voornaam
+initialen
+aanhef
+achternaam
+geboortedatum
+overlijdensdatum
+tussenvoegsels
+voorletters
+}
+class Kwaliteitsmetingsverzoeken-Onderhoudsverzoek{
+id
+idExtern
+idGegevensbeheerder
+code
+omschrijving
+onderhoudSoort
+status
+melddatum
+relaties
+}
+class Kwaliteitsmetingsverzoeken-Overeenkomst{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+begindatum
+einddatum
+}
+class Kwaliteitsmetingsverzoeken-Rechtspersoon{
+allOf: Kwaliteitsmetingsverzoeken-Relatie
+naam
+}
+class Kwaliteitsmetingsverzoeken-Relatie{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+contactgegevens
+rollen
+}
+class Kwaliteitsmetingsverzoeken-Relatierol{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+naam
+}
+class Kwaliteitsmetingsverzoeken-Wijk{
+id
+idExtern
+idGegevensbeheerder
+code
+naam
+}
+class Kwaliteitsmetingsverzoeken-Woonplaats{
+id
+idExtern
+idGegevensbeheerder
+code
+naam
+}
+class Kwaliteitsmetingsverzoeken-Zaak{
+id
+idExtern
+idGegevensbeheerder
+code
+omschrijving
+toelichting
+begindatum
+einddatum
+zaaktype
+}
+class Kwaliteitsmetingsverzoeken-Zaaktype{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+omschrijving
+}
+class Onderzoeksopdrachten-Adres{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+adres
+huisletter
+huisnummer
+huisnummerToevoeging
+postcode
+straatnaam
+}
+class Onderzoeksopdrachten-Contactgegeven{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+detailSoort
+status
+vertrouwelijkheid
+voorkeur
+waarde
+}
+class Onderzoeksopdrachten-Onderzoeksopdracht{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+omschrijving
+status
+contactgegeven
+kanaal
+postadres
+relatie
+vragenlijst
+extra-attributen
+informatieobjecten
+}
+class Onderzoeksopdrachten-Postadres{
+allOf: Onderzoeksopdrachten-Adres
+antwoordnummer
+postbusnummer
+woonplaats
+}
+class Onderzoeksopdrachten-Relatie{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+}
+class Onderzoeksopdrachten-Vragenlijst{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+omschrijving
+vragen
+}
+class Onderzoeksopdrachten-VragenlijstRegel{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+omschrijving
+opties
+volgordenummer
+}
+class Onderzoeksopdrachten-Woonplaats{
+id
+idExtern
+idGegevensbeheerder
+code
+naam
+}
+class Onderzoeksresultaten-Onderzoeksresultaat{
+id
+idExtern
+idGegevensbeheerder
+code
+antwoorden
+opdracht
+extra-attributen
+informatieobjecten
+}
+class Onderzoeksresultaten-VragenlijstAntwoord{
+id
+idExtern
+idGegevensbeheerder
+code
+antwoord
+toelichting
+vraag
+vragenlijst
+}
+class Onderzoeksresultaten-VragenlijstRegel{
+id
+idExtern
+idGegevensbeheerder
+code
+soort
+omschrijving
+}
+class Referentiedata{
+code
+naam
+}
+@enduml

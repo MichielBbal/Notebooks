@@ -1,0 +1,23 @@
+@startuml
+
+class Persoon {
+    +PersoonKey : PersoonKey
+    +Naam : string
+    +Voorletters : string
+    +Tussenvoegsel : string
+    +Geslacht : string
+    +Geboortedatum : dateTime
+    +Nationaliteit : string
+    +BSN : integer
+    +Roepnaam : string
+}
+class PersoonAdres {
+    +PersoonKey : PersoonKey
+    +Adres : Adres
+}
+class PersoonKey {
+    +Regiocode : string
+    +Id : integer
+}
+
+@enduml

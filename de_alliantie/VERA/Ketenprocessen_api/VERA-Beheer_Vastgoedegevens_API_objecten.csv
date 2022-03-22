@@ -1,0 +1,9 @@
+ExtraAttribuut;naam,waarde
+Foutbericht;code,omschrijving
+Informatieobject;id,idExtern,idGegevensbeheerder,code,soort,detailSoort,onderwerp,subonderwerp,titel,beschrijving,bestand,bestandsgrootte,bestandslocatie,bestandsnaam,externePublicatie,externePublicatietekst,formaat,gebruiksrechten,taal,versie,vertrouwelijkheid
+Referentiedata;code,naam
+WoningwaarderingResultaten-Woningwaardering;id,idExtern,idGegevensbeheerder,code,begindatum,einddatum,aantal,criterium,punten
+WoningwaarderingResultaten-WoningwaarderingCriterium;id,idExtern,idGegevensbeheerder,code,naam,meeteenheid,stelsel
+WoningwaarderingResultaten-WoningwaarderingCriteriumGroep;id,idExtern,idGegevensbeheerder,code,naam,omschrijving,stelsel
+WoningwaarderingResultaten-WoningwaarderingGroep;id,idExtern,idGegevensbeheerder,code,begindatum,einddatum,criteriumGroep,punten,woningwaarderingen
+WoningwaarderingResultaten-WoningwaarderingResultaat;id,idExtern,idGegevensbeheerder,code,begindatum,einddatum,eenheid,groepen,maximaleHuur,punten,extra-attributen,informatieobjecten

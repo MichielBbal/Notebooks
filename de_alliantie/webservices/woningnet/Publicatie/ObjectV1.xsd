@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.woningnet.nl/Contracten/Aanbod/Object" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:adr="http://www.woningnet.nl/Contracten/Common/Adressen" xmlns:obj="http://www.woningnet.nl/Contracten/Aanbod/Object" xmlns:com="http://www.woningnet.nl/Contracten/Common" xmlns:med="http://www.woningnet.nl/Contracten/Common/Media" xmlns:egr="http://www.woningnet.nl/Contracten/Eigenaar" xmlns:rda="http://www.woningnet.nl/Contracten/Algemeen/Referentiedata">
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Common/Adressen" schemaLocation="AdressenV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Common/Media" schemaLocation="MediaV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Eigenaar" schemaLocation="EigenaarV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Common" schemaLocation="CommonV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Algemeen/Referentiedata" schemaLocation="ReferentiedataV1.xsd"/>
+  <xs:element name="Object" type="obj:Object"/>
+  <xs:element name="Objecten" nillable="true">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Object" type="obj:Object" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GeoObject" type="obj:GeoObject"/>
+  <xs:element name="GeoObjecten" type="obj:GeoObjecten"/>
+  <xs:element name="ObjectAdres" type="obj:ObjectAdres"/>
+  <xs:element name="ObjectKey" type="obj:ObjectKey" nillable="true"/>
+  <xs:element name="ObjectRef" type="obj:ObjectRef" nillable="true"/>
+  <xs:element name="Eigenschappen" type="obj:Eigenschappen"/>
+  <xs:element name="Classificaties" type="obj:Eigenschappen"/>
+  <xs:element name="Criteria" type="obj:Eigenschappen"/>
+  <xs:element name="ObjectGroep" type="obj:ObjectGroep"/>
+  <xs:element name="ObjectGroepenKey" type="obj:ObjectGroepenKey"/>
+  <xs:element name="ObjectenKey" type="obj:ObjectenKey"/>
+  <xs:element name="ObjectGroepen" nillable="true">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="ObjectGroep" type="obj:ObjectGroep" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="Kosten">
+    <xs:sequence>
+      <xs:element name="Prijs" type="obj:DoubleRange" nillable="true" minOccurs="0"/>
+      <xs:element name="NettoHuur" nillable="true" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:double">
+              <xs:attribute name="Info" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="BrutoHuur" type="xs:double" nillable="true" minOccurs="0"/>
+      <xs:element name="Koopprijs" nillable="true" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:double">
+              <xs:attribute name="Info" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Maandlasten" nillable="true" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:double">
+              <xs:attribute name="Info" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Servicekosten" type="xs:double" nillable="true" minOccurs="0"/>
+      <xs:element name="Verwarmingskosten" type="xs:double" nillable="true" minOccurs="0"/>
+      <xs:element name="BijdrageVve" type="xs:double" nillable="true" minOccurs="0"/>
+      <xs:element name="Rekenhuur" type="xs:double" nillable="true" minOccurs="0"/>
+      <xs:element name="TeWoon" type="obj:TeWoon" nillable="true" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TeWoon">
+    <xs:sequence>
+      <xs:element name="Huurvast5" type="xs:double" nillable="true" minOccurs="0"/>
+      <xs:element name="Huurvast10" type="xs:double" nillable="true" minOccurs="0"/>
+      <xs:element name="RichtprijsKoopgarant" type="xs:double" nillable="true" minOccurs="0"/>
+      <xs:element name="RichtprijsKoopcomfort" type="xs:double" nillable="true" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Afmeting">
+    <xs:sequence>
+      <xs:element name="Oppervlakte" type="obj:DoubleRange" nillable="true" minOccurs="0"/>
+      <xs:element name="Inhoud" type="obj:DoubleRange" nillable="true" minOccurs="0"/>
+      <xs:element name="Perceel" type="obj:DoubleRange" nillable="true" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DoubleRange">
+    <xs:sequence>
+      <xs:element name="Min" type="xs:double" nillable="true" minOccurs="0"/>
+      <xs:element name="Max" type="xs:double" nillable="true" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="IntegerRange">
+    <xs:sequence>
+      <xs:element name="Min" type="xs:integer" nillable="true" minOccurs="0"/>
+      <xs:element name="Max" type="xs:integer" nillable="true" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Eigenschap">
+    <xs:sequence>
+      <xs:element name="Soort" type="xs:string"/>
+      <xs:element name="Waarde" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="code" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Omschrijving" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="code" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Eigenschappen">
+    <xs:sequence>
+      <xs:element name="Eigenschap" type="obj:Eigenschap" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Kamer">
+    <xs:sequence>
+      <xs:element name="Soort" type="obj:KamerSoort" minOccurs="0"/>
+      <xs:element name="Oppervlakte" type="xs:double" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Kamers">
+    <xs:sequence>
+      <xs:element name="Aantal" type="obj:IntegerRange" minOccurs="0"/>
+      <xs:element name="Kamer" type="obj:Kamer" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Object">
+    <xs:sequence>
+      <xs:element name="ObjectKey" type="obj:ObjectKey"/>
+      <xs:element name="Naam" type="xs:string" minOccurs="0"/>
+      <xs:element name="Typen" type="obj:Typen" nillable="true" minOccurs="0"/>
+      <xs:element name="Soort" minOccurs="0" nillable="true">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="code" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="Kosten" type="obj:Kosten" nillable="true" minOccurs="0"/>
+      <xs:element name="Zelfstandig" type="xs:boolean"/>
+      <xs:element name="Verdieping" type="xs:integer" nillable="true" minOccurs="0"/>
+      <xs:element name="Bouwjaar" type="xs:integer" nillable="true" minOccurs="0"/>
+      <xs:element name="Renovatiejaar" type="xs:integer" nillable="true" minOccurs="0"/>
+      <xs:element name="Omschrijving" type="xs:string" minOccurs="0"/>
+      <xs:element name="Opmerkingen" type="xs:string" minOccurs="0"/>
+      <xs:element name="Energielabel" type="xs:string" minOccurs="0"/>
+      <xs:element name="WOZ" type="xs:double" nillable="true" minOccurs="0"/>
+      <xs:element ref="adr:Adres"/>
+      <xs:element name="Afmeting" type="obj:Afmeting" nillable="true" minOccurs="0"/>
+      <xs:element name="Eigenschappen" type="obj:Eigenschappen" nillable="true" minOccurs="0"/>
+      <xs:element name="Classificaties" type="obj:Eigenschappen" nillable="true" minOccurs="0"/>
+      <xs:element name="Criteria" type="obj:Eigenschappen" nillable="true" minOccurs="0"/>
+      <xs:element name="Kamers" type="obj:Kamers" nillable="true" minOccurs="0"/>
+      <xs:element name="Media" type="med:Media" nillable="true" minOccurs="0"/>
+      <xs:element name="ObjectGroep" type="obj:ObjectGroep" nillable="true" minOccurs="0"/>
+      <xs:element ref="egr:Vestiging" minOccurs="0"/>
+      <xs:element name="AantalObjecten" type="xs:integer" nillable="true" minOccurs="0"/>
+      <xs:element name="AantalObjectenBeschikbaar" type="xs:integer" nillable="true" minOccurs="0"/>
+      <xs:element name="Interieur" nillable="true" minOccurs="0">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="code" type="xs:string"/>
+            </xs:extension>
+          </xs:simpleContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AantalPersonen" type="obj:IntegerRange" nillable="true" minOccurs="0"/>
+      <xs:element name="Leeftijd" type="obj:IntegerRange" nillable="true" minOccurs="0"/>
+      <xs:element name="Inkomen" type="obj:IntegerRange" nillable="true" minOccurs="0"/>
+      <xs:element name="DetailStatus" type="rda:Referentiedata" minOccurs="0" nillable="true"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Typen">
+    <xs:sequence>
+      <xs:element name="Type" type="obj:Type" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Type">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="code" type="xs:string"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="GeoObject">
+    <xs:sequence>
+      <xs:element ref="obj:ObjectKey"/>
+      <xs:element ref="adr:Adres"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GeoObjecten">
+    <xs:sequence>
+      <xs:element name="GeoObject" type="obj:GeoObject" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObjectAdres">
+    <xs:sequence>
+      <xs:element ref="obj:ObjectKey"/>
+      <xs:element ref="adr:Adres"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObjectGroep">
+    <xs:sequence>
+      <xs:element name="Naam" type="xs:string" minOccurs="0"/>
+      <xs:element name="ObjectKey" type="obj:ObjectKey" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObjectKey">
+    <xs:sequence>
+      <xs:element name="Regiocode" type="xs:string"/>
+      <xs:element name="Type" type="xs:integer"/>
+      <xs:element name="Reference" type="xs:integer" nillable="true" minOccurs="0"/>
+      <xs:element name="AanbiederReferentie" type="xs:string" minOccurs="0"/>
+      <xs:element name="EenheidNummer" type="xs:integer" nillable="true" minOccurs="0"/>
+      <xs:element name="Bronnen" type="com:Bronnen" nillable="true" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObjectRef">
+    <xs:sequence>
+      <xs:element name="Regiocode" type="xs:string"/>
+      <xs:element name="Type" type="xs:integer" nillable="true" minOccurs="0"/>
+      <xs:element name="Reference" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="KamerSoort">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="2">
+        <xs:annotation id="Slaapkamer"/>
+      </xs:enumeration>
+      <xs:enumeration value="3">
+        <xs:annotation id="Woonkamer"/>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="ObjectGroepenKey">
+    <xs:sequence>
+      <xs:element name="Regiocode" type="xs:string"/>
+      <xs:element name="Type" type="xs:integer" nillable="true" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObjectGroepKey">
+    <xs:sequence>
+      <xs:element name="Regiocode" type="xs:string"/>
+      <xs:element name="Type" type="xs:integer"/>
+      <xs:element name="Reference" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ObjectenKey">
+    <xs:sequence>
+      <xs:element name="ObjectGroepKey" type="obj:ObjectGroepKey" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="Type" type="xs:integer"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

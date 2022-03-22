@@ -1,0 +1,35 @@
+Clusters-Cluster;id,idExtern,idGegevensbeheerder,code,soort,naam,omschrijving,bovenliggendeCluster,begindatum,einddatum,eenheden,geometrie,relaties,extra-attributen,informatieobjecten
+Clusters-Eenheid;id,idExtern,idGegevensbeheerder,code,soort,detailSoort
+Clusters-Geometrie;soort
+Clusters-Punt;allOf: Clusters-Geometrie,breedtegraad,lengtegraad
+Clusters-Relatie;id,idExtern,idGegevensbeheerder,code,soort,rollen
+Clusters-Relatierol;id,idExtern,idGegevensbeheerder,code,soort,naam
+Eenheden-Adres;id,idExtern,idGegevensbeheerder,code,soort,adres,huisletter,huisnummer,huisnummerToevoeging,postcode,straatnaam
+Eenheden-Afspraakverzoek;id,idExtern,idGegevensbeheerder,code,soort,duur,termijn,volgorde
+Eenheden-Buurt;id,idExtern,idGegevensbeheerder,code,naam
+Eenheden-Cluster;id,idExtern,idGegevensbeheerder,code,soort
+Eenheden-Eenheid;id,idExtern,idGegevensbeheerder,code,soort,detailSoort,naam,omschrijving,bouwnummer,status,detailStatus,beginBouwdatum,opleverdatum,inExploitatiedatum,uitExploitatiedatum,aanvullendeDoelgroep,adres,benodigdeAfspraakverzoeken,beoogdUitExploitatieDatum,bestemming,brutohuur,buitenruimten,clusters,collectieveObjecten,doelgroep,energieprestatie,energievoorzieningen,etage,gebruiksoppervlakte,inExploitatieReden,interieur,isolatie,kadastraalNummer,kamersAantal,klimaatbeheersing,kwaliteitsniveau,ligging,liggingTuin,maatschappelijkLabel,monumenten,onderhoudslabel,overigeVertrekkenTotaalOppervlakte,panden,prijscomponenten,rayon,rekenhuur,relaties,sanitair,streefhuur,toegankelijkheidslabel,totaleOppervlakte,uitExploitatieReden,verkoop,vertrekken,vertrekkenAantal,verwarmdeVertrekkenAantal,volgnummer,voorwaarden,vraagprijs,woonvertrekInhoud,woonvertrekkenTotaalOppervlakte,woonvorm,zelfstandig,zorgfaciliteitOmschrijving,extra-attributen,informatieobjecten
+Eenheden-EenheidVoorwaarden;id,idExtern,idGegevensbeheerder,code,maximumAantalPersonen,maximuminkomen,maximunleeftijd,minimumAantalPersonen,minimuminkomen,minimumleeftijd,selectiecriteria,voorrangscriteria
+Eenheden-Eenheidadres;allOf: Eenheden-Adres,buurt,gemeente,land,wijk,woonplaats
+Eenheden-Energieprestatie;id,idExtern,idGegevensbeheerder,code,begindatum,einddatum,index,label
+Eenheden-Gemeente;id,idExtern,idGegevensbeheerder,code,naam,provincie
+Eenheden-Pand;id,idExtern,idGegevensbeheerder,code,liftAanwezig
+Eenheden-Prijscomponent;id,idExtern,idGegevensbeheerder,code,soort,detailSoort,begindatum,einddatum,bedrag,bedragInclusiefBtw,btw
+Eenheden-Relatie;id,idExtern,idGegevensbeheerder,code,soort,rollen
+Eenheden-Relatierol;id,idExtern,idGegevensbeheerder,code,soort,naam
+Eenheden-Stadsdeel;id,idExtern,idGegevensbeheerder,code,naam
+Eenheden-Vertrek;id,idExtern,idGegevensbeheerder,code,soort
+Eenheden-Wijk;id,idExtern,idGegevensbeheerder,code,naam,stadsdeel
+Eenheden-Woonplaats;id,idExtern,idGegevensbeheerder,code,naam
+ExtraAttribuut;naam,waarde
+Foutbericht;code,omschrijving
+Huuropzeggingen-Adres;id,idExtern,idGegevensbeheerder,code,soort,adres,huisletter,huisnummer,huisnummerToevoeging,postcode,straatnaam
+Huuropzeggingen-Afspraak;id,idExtern,idGegevensbeheerder,code,onderwerp,status,begindatum,einddatum,bloktijdBegin,bloktijdEind,alternatiefContactgegeven,locatie,relaties
+Huuropzeggingen-Eenheidadres;allOf: Huuropzeggingen-Adres,land,woonplaats
+Huuropzeggingen-Huuropzegging;id,idExtern,idGegevensbeheerder,code,status,begindatum,einddatum,huurovereenkomst,inspectieafspraken,nieuweAdressen,opzegdatum,redenOpzegging,relaties,extra-attributen,informatieobjecten
+Huuropzeggingen-Relatie;id,idExtern,idGegevensbeheerder,code,soort,adressen,rollen
+Huuropzeggingen-RelatieAdres;id,idExtern,idGegevensbeheerder,code,soort,begindatum,adres,relatie
+Huuropzeggingen-Relatierol;id,idExtern,idGegevensbeheerder,code,soort,naam
+Huuropzeggingen-Woonplaats;code,naam
+Informatieobject;id,idExtern,idGegevensbeheerder,code,soort,detailSoort,onderwerp,subonderwerp,titel,beschrijving,bestand,bestandsgrootte,bestandslocatie,bestandsnaam,externePublicatie,externePublicatietekst,formaat,gebruiksrechten,taal,versie,vertrouwelijkheid
+Referentiedata;code,naam

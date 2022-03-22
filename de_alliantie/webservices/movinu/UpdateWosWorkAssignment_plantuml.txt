@@ -1,0 +1,26 @@
+@startuml
+title UpdateWosWorkAssignment
+object workAssignment{
+Assignment
+ConstructorInstruction
+WorkOrderList
+WorkOrder
+AXInspectionActivityID
+AXInspectionComment
+AXInspectionNumber
+AXInspectionObservationID
+AXInspectionUnitID
+WOStoAXInspectionID
+WorkOrderAccountable
+WorkOrderAmount
+WorkOrderDate
+WorkOrderID
+WorkOrderPayer
+assignmentID
+assignmentStatus
+constructorName
+IntakeID
+company
+objectId
+}
+@enduml

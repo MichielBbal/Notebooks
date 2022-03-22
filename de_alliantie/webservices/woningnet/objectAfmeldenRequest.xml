@@ -1,0 +1,19 @@
+ <Completed>
+      <Publication>
+        <Id>string</Id>
+        <AddressStreet>string</AddressStreet>
+        <AddressHouseNumber>string</AddressHouseNumber>
+        <AddressHouseNumberAddition>string</AddressHouseNumberAddition>
+        <AddressZipcode>string</AddressZipcode>
+        <AddressCity>string</AddressCity>
+      </Publication>
+      <Participation>
+        <PropertySeekerId>string</PropertySeekerId>
+        <PropertySeekerExternal>string</PropertySeekerExternal>
+        <AcceptationDate>string</AcceptationDate>
+        <ContractSigningDateTime>string</ContractSigningDateTime>
+        <PreliminaryContractDate>string</PreliminaryContractDate>
+        <PreliminaryContractToDate>string</PreliminaryContractToDate>
+        <PreliminaryRentFromDate>string</PreliminaryRentFromDate>
+      </Participation>
+</Completed>

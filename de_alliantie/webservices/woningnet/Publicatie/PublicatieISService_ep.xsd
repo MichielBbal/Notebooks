@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.woningnet.nl/IS/PublicatieService" elementFormDefault="qualified" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woningnet.nl/IS/PublicatieService" xmlns:gbr="http://www.woningnet.nl/Contracten/Gebruiker" xmlns:mld="http://www.woningnet.nl/Contracten/Common/Meldingen" xmlns:pub="http://www.woningnet.nl/Contracten/Aanbod/Publicatie" xmlns:obj="http://www.woningnet.nl/Contracten/Aanbod/Object">
+  <xsd:import namespace="http://www.woningnet.nl/Contracten/Gebruiker" schemaLocation="GebruikerV1.xsd"/>
+  <xsd:import namespace="http://www.woningnet.nl/Contracten/Common/Meldingen" schemaLocation="MeldingenV1.xsd"/>
+  <xsd:import namespace="http://www.woningnet.nl/Contracten/Aanbod/Publicatie" schemaLocation="PublicatieV1.xsd"/>
+  <xsd:import namespace="http://www.woningnet.nl/Contracten/Aanbod/Object" schemaLocation="ObjectV1.xsd"/>
+  <xsd:element name="SavePublicatieRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="gbr:Autorisatie"/>
+        <xsd:element ref="obj:ObjectKey"/>
+        <xsd:element ref="pub:Publicatie"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="SavePublicatieResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="obj:ObjectKey"/>
+        <xsd:element ref="pub:Publicatie"/>
+        <xsd:element ref="mld:Meldingen"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

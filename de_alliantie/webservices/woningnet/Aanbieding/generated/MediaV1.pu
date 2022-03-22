@@ -1,0 +1,46 @@
+@startuml
+
+class Document {
+    +Bestand : string
+    +Omschrijving : string
+    +Publicatie : boolean
+}
+class Documenten {
+    +Document : Document[]
+}
+class Foto {
+    +Large : string
+    +Medium : string
+    +Small : string
+    +Thumb : string
+    +Omschrijving : string
+    +Publicatie : boolean
+}
+class Fotos {
+    +Foto : Foto[]
+}
+class Media {
+    +Fotos : Fotos
+    +Plattegronden : Plattegronden
+    +Documenten : Documenten
+    +Videos : Videos
+}
+class Plattegrond {
+    +Large : string
+    +Thumb : string
+    +Omschrijving : string
+}
+class Plattegronden {
+    +Plattegrond : Plattegrond[]
+}
+class Video {
+    +YouTubeId : string
+    +Titel : string
+    +Thumb : string
+    +Omschrijving : string
+}
+class Videos {
+    +Video : Video[]
+}
+
+@enduml

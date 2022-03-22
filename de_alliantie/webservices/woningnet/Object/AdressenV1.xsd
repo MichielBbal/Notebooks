@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.woningnet.nl/Contracten/Common/Adressen" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:adr="http://www.woningnet.nl/Contracten/Common/Adressen" xmlns:com="http://www.woningnet.nl/Contracten/Common">
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Common" schemaLocation="CommonV1.xsd"/>
+  <xs:simpleType name="AdresSoort">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="W">
+        <xs:annotation id="Woonadres"/>
+      </xs:enumeration>
+      <xs:enumeration value="P">
+        <xs:annotation id="Postadres"/>
+      </xs:enumeration>
+      <xs:enumeration value="O">
+        <xs:annotation id="Objectadres"/>
+      </xs:enumeration>
+      <xs:enumeration value="V">
+        <xs:annotation id="Vestigingadres"/>
+      </xs:enumeration>
+      <xs:enumeration value="A">
+        <xs:annotation id="ABS-adres"/>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AdresSummary">
+    <xs:sequence>
+      <xs:element name="Key" type="adr:AdresKey"/>
+      <xs:element name="Straat" type="xs:string"/>
+      <xs:element name="Plaats" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Adres">
+    <xs:sequence>
+      <xs:element ref="adr:AdresKey" minOccurs="1"/>
+      <xs:element name="Soort" type="adr:AdresSoort" minOccurs="0" nillable="true"/>
+      <xs:element name="Straat" type="xs:string" minOccurs="0"/>
+      <xs:element name="Buurt" type="com:LocatieType" minOccurs="0" nillable="true"/>
+      <xs:element name="Wijk" type="com:LocatieType" minOccurs="0" nillable="true"/>
+      <xs:element name="Plaats" type="com:LocatieType" minOccurs="0"/>
+      <xs:element minOccurs="0" name="Gemeente" type="com:LocatieType"/>
+      <xs:element name="Provincie" type="com:LocatieType" minOccurs="0"/>
+      <xs:element name="GeoLocatie" type="com:GeoLocatie" minOccurs="0" nillable="true"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AdresKey">
+    <xs:sequence>
+      <xs:element name="Regiocode" type="xs:string"/>
+      <xs:element name="Id" type="xs:integer" minOccurs="0" nillable="true"/>
+      <xs:element name="Land" type="com:LocatieType" minOccurs="0" nillable="true"/>
+      <xs:element name="Postcode" type="xs:string" minOccurs="0"/>
+      <xs:element name="Nummer" type="xs:integer" minOccurs="0" nillable="true"/>
+      <xs:element name="Toevoeging" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Adres" type="adr:Adres" nillable="true"/>
+  <xs:element name="AdresKey" type="adr:AdresKey"/>
+  <xs:element name="AdresSummary" type="adr:AdresSummary"/>
+  <xs:element name="Adressen" nillable="true">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Adres" type="adr:Adres" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

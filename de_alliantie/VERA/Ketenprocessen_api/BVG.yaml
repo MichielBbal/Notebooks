@@ -1,0 +1,620 @@
+openapi: 3.0.0
+info:
+  title: VERA-Beheer Vastgoedegevens
+  description: API-specificatie van ketenproces 'Beheer Vastgoedegevens'. Deze specificatie is gebaseerd op VERA versie 4.0
+  contact:
+    name: VERA
+    url: https://cora.wikixl.nl/index.php/VERA_Standaard
+    email: info@stichting-vera.nl
+  license:
+    name: "Licentie voor hergebruik: Creative Commons Naamsvermelding 4.0."
+    url: https://creativecommons.org/licenses/by/4.0/deed.nl
+  version: '1.0'
+servers:
+  - url: https://bvg.vera.io:{port}/{basePath}
+    description: Productieserver
+    variables:
+       port:
+         enum:
+           - '8443'
+           - '443'
+         default: '443'
+       basePath:
+         default: v1
+tags:
+- name: WoningwaarderingResultaten
+  description: Operaties met betrekking tot een WoningwaarderingResultaat
+paths:
+  /ping:
+    get:
+      description: |
+        Een ping wordt beantwoord met response code 200
+      operationId: ping
+      responses:
+        '200':
+          description: OK
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /woningwaardering-resultaten:
+    get:
+      tags:
+      - 'WoningwaarderingResultaten'
+      description: Ophalen van WoningwaarderingResultaten
+      operationId: listWoningwaarderingResultaten
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingResultaat'
+      responses:
+        '200':
+          description: WoningwaarderingResultaat response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingResultaat'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'WoningwaarderingResultaten'
+      description: Voegt een nieuw(e) WoningwaarderingResultaat toe.
+      operationId: createWoningwaarderingResultaat
+      requestBody:
+        description: WoningwaarderingResultaat
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingResultaat'
+      responses:
+        '200':
+          description: WoningwaarderingResultaat succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'WoningwaarderingResultaten'
+      description: |
+        Vervangen van een WoningwaarderingResultaat op basis van overeenkomstige sleutelvelden.
+      operationId: replaceWoningwaarderingResultaat
+      requestBody:
+        description: Entiteit WoningwaarderingResultaat
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingResultaat'
+      responses:
+        '200':
+          description: WoningwaarderingResultaat succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             WoningwaarderingResultaat bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: WoningwaarderingResultaat met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'WoningwaarderingResultaten'
+      description: |
+        Wijzigen van afzonderlijke attributen van een WoningwaarderingResultaat. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateWoningwaarderingResultaat
+      requestBody:
+        description: Entiteit WoningwaarderingResultaat
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingResultaat'
+      responses:
+        '200':
+          description: WoningwaarderingResultaat succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             WoningwaarderingResultaat bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: WoningwaarderingResultaat met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /woningwaardering-resultaten/{id}:
+    get:
+      tags:
+      - 'WoningwaarderingResultaten'
+      description: Retourneert een WoningwaarderingResultaat met de gegeven identifier
+      operationId: readWoningwaarderingResultaatById
+      parameters:
+      - name: id
+        in: path
+        description: Id van WoningwaarderingResultaat om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: WoningwaarderingResultaat response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingResultaat'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: WoningwaarderingResultaat met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'WoningwaarderingResultaten'
+      description: Vervangen van een WoningwaarderingResultaat
+      operationId: replaceWoningwaarderingResultaatById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van WoningwaarderingResultaat om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit WoningwaarderingResultaat
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingResultaat'
+      responses:
+        '200':
+          description: WoningwaarderingResultaat succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: WoningwaarderingResultaat met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'WoningwaarderingResultaten'
+      description: Wijzigen van een WoningwaarderingResultaat
+      operationId: updateWoningwaarderingResultaatById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van WoningwaarderingResultaat om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit WoningwaarderingResultaat
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingResultaat'
+      responses:
+        '200':
+          description: WoningwaarderingResultaat succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: WoningwaarderingResultaat met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+security:
+  - ApiKeyAuth: []
+components:
+  headers:
+    X-Stuurgegevens-TijdstipBericht:
+      schema:
+        type: string
+        format: data-time
+        description: Tijdstip waarop het bericht verzonden is
+    X-Stuurgegevens-Referentienummer:
+      schema:
+        type: string
+        format: any
+        description: Een unieke code voor correlatie
+    X-Stuurgegevens-Zender-Organisatie:
+      schema:
+        type: string
+        format: any
+        description: Naam van de verzendende organisatie
+    X-Stuurgegevens-Zender-Administratie:
+      schema:
+        type: string
+        format: any
+        description: |
+          Met het stuurgegeven Administratie kan onderscheid gemaakt worden tussen 
+          de verschillende gegevensverzamelingen die de verzendende organisatie beheert
+    X-Parameters-Aantal:
+      schema:
+        type: integer
+        description: Totaal aantal gevonden entiteiten
+        example: 135
+    X-Parameters-AantalPerPagina:
+      schema:
+        type: integer
+        description: Miximum aantal entiteiten per pagina
+        example: 20
+    X-Parameters-Pagina:
+      schema:
+        type: integer
+        description: Huidige paginanummer
+        example: 3
+    X-Parameters-PeiltijdstipMaterieel:
+      schema:
+        type: string
+        format: date-time
+        description: De peildatum. Indien leeg worden de actuele gegevens opgevraagd
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+  responses:
+    NietGeautoriseerd:
+      description: API-key ontbreekt of is ongeldig
+      headers:
+        X-API-KEY:
+          schema:
+            type: string
+  schemas:
+    WoningwaarderingResultaten-Woningwaardering:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        begindatum:
+          type: string
+          format: date
+          description: De datum waarop het woning waardering  onderdeel in gaat of is ingegaan.
+        einddatum:
+          type: string
+          format: date
+          description: De datum waarop het woningwaardering onderdeel niet meer van toepassing is.
+        aantal:
+          type: number
+          format: float
+          description: Het aantal van de opgegeven meeteenheid van de bijbehorende woningwaardering criterium.
+        criterium:
+          $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingCriterium'
+          description: De omschrijving van het woningwaardering onderdeel.
+        punten:
+          type: number
+          format: float
+          description: Het aantal woningwaarderingsstelsel punten dat is toegekend.
+    WoningwaarderingResultaten-WoningwaarderingCriterium:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        naam:
+          type: string
+          format: any
+          description: De naam van het woningwaardering element.
+        meeteenheid:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De meeteenheid waarmee het criterium wordt aangeduid.
+        stelsel:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Het woningwaardering stelsel bevat een apart puntensystemen voor de eenheidssoorten zelfstandige woningen, kamers, woonwagens en woonwagenstandplaatsen. Dit attribuut geeft het toe te passen puntensysteem aan.
+    Referentiedata:
+      type: object
+      properties:
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken) Bijvoorbeeld NL.
+        naam:
+          type: string
+          format: any
+          description: De te tonen waarde van het referentiedata item. Bijvoorbeeld Nederlandse.
+    WoningwaarderingResultaten-WoningwaarderingCriteriumGroep:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        naam:
+          type: string
+          format: any
+          description: De naam van de groep.
+        omschrijving:
+          type: string
+          format: any
+          description: De omschrijving van de groep.
+        stelsel:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Het woningwaardering stelsel bevat een apart puntensystemen voor de eenheidssoorten zelfstandige woningen, kamers, woonwagens en woonwagenstandplaatsen. Dit attribuut geeft het toe te passen puntensysteem aan.
+    WoningwaarderingResultaten-WoningwaarderingGroep:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        begindatum:
+          type: string
+          format: date
+          description: De begindatum van de woningwaardering groep.
+        einddatum:
+          type: string
+          format: date
+          description: De einddatum waarop de waarop de woningwaardering niet meer geldig is.
+        criteriumGroep:
+          $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingCriteriumGroep'
+          description: De woningwaardering criterium groep behorend bij de woningwaardering groep.
+        punten:
+          type: number
+          format: float
+          description: Het aantal woningwaarderingsstelsel punten dat is toegekend.
+        woningwaarderingen:
+          description: De woningwaarderingen behorend bij de woningwaardering groep.
+          type: array
+          items:
+            $ref: '#/components/schemas/WoningwaarderingResultaten-Woningwaardering'
+    WoningwaarderingResultaten-WoningwaarderingResultaat:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        begindatum:
+          type: string
+          format: date
+          description: De begindatum van de woningwaardering puntentotaal.
+        einddatum:
+          type: string
+          format: date
+          description: De einddatum waarop de waarop de woningwaardering niet meer geldig is.
+        eenheid:
+          $ref: '#/components/schemas/Eenheid-sleutels'
+          description: De eenheid behorend bij de woningwaardering.
+        groepen:
+          description: De woningwaarderingenGroep behorend bij het woningwaardering puntentotaal.
+          type: array
+          items:
+            $ref: '#/components/schemas/WoningwaarderingResultaten-WoningwaarderingGroep'
+        maximaleHuur:
+          type: number
+          format: float
+          description: De maximaal redelijke huur in euro's die geregistreerd staat bij de eenheid. De maximale huur is de huurprijs die gevraagd kan worden voor de eenheid op basis van de woningwaarderingspunten.
+        punten:
+          type: number
+          format: float
+          description: Het aantal woningwaarderingsstelsel punten dat is toegekend.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    Eenheid-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    ExtraAttribuut:
+      type: object
+      properties:
+        naam:
+          type: string
+          format: any
+          description: De naam van het niet bestaande attribuut. Bijv. Huurprognose.
+        waarde:
+          type: string
+          format: any
+          description: De waarde van het niet bestaande attribuut. Bijv. €850,-.
+    Informatieobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Specificatie van het documenttype. Bijvoorbeeld verslag, rapport etc.
+        detailSoort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Detail specificatie van het documenttype. Bijvoorbeeld notulen, adviesrapport etc.
+        onderwerp:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Onderwerp van het informatieobject.
+        subonderwerp:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Subonderwerp van het informatieobject.
+        titel:
+          type: string
+          format: any
+          description: Titel van het informatieobject.
+        beschrijving:
+          type: string
+          format: any
+          description: Beschrijving van het informatieobject.
+        bestand:
+          type: string
+          format: byte
+          description: De binaire representatie van het informatieobject.
+        bestandsgrootte:
+          type: integer
+          format: int32
+          description: Omvang van het bestand in bytes.
+        bestandslocatie:
+          type: string
+          format: uri
+          description: Een link (URI) naar de binaire representatie van het informatieobject.
+        bestandsnaam:
+          type: string
+          format: any
+          description: De naam van het fysieke bestand waarin de inhoud van het informatieobject is vastgelegd.
+        externePublicatie:
+          type: boolean
+          description: Aanduiding of dit informatieobject extern gepubliceerd dient te worden.
+        externePublicatietekst:
+          type: string
+          format: any
+          description: Tekstuele omschrijving ten behoeve van externe publicatie van dit informatieobject.
+        formaat:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Het digitale formaat (IANA media type) van het informatieobject.
+        gebruiksrechten:
+          type: string
+          format: any
+          description: Informatie omtrent rechten die geassocieerd zijn met het informatieobject zoals intellectueel eigendom.
+        taal:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De taal waarin het informatieobject is opgesteld.
+        versie:
+          type: number
+          format: float
+          description: Het versienummer van het informatieobject.
+        vertrouwelijkheid:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De classificatie van het vertrouwelijkheidsniveau van het informatieobject.
+    Foutbericht:
+      type: object
+      properties:
+        code:
+          type: string
+        omschrijving:
+          type: string
+

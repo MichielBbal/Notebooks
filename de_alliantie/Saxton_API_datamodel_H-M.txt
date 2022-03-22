@@ -1,0 +1,906 @@
+@startuml
+class HomeAdaptations.EndStatus{
+id
+description
+}
+class HomeAdaptations.HomeAdaptation{
+id
+description
+type
+origin
+inventoryItem
+requestStatus
+status
+endStatus
+requestDate
+}
+class HomeAdaptations.HomeAdaptationCreate{
+typeId
+originId
+requestDate
+description
+inventoryItemId
+}
+class HomeAdaptations.InventoryItem{
+id
+description
+}
+class HomeAdaptations.Origin{
+id
+description
+}
+class HomeAdaptations.RequestStatus{
+id
+description
+}
+class HomeAdaptations.Type{
+id
+description
+}
+class Hrm.Employee{
+id
+firstName
+middleName
+lastName
+phoneWork
+emailWork
+referenceType
+referenceId
+phone
+email
+mobilePhone
+}
+class Income.GrossNet{
+id
+description
+}
+class Income.IncomeCreate{
+grossNetId
+income
+periodId
+typeId
+}
+class Income.IncomePeriod{
+id
+description
+}
+class Income.IncomeType{
+id
+description
+}
+class Income.IncomeUpdate{
+grossNetId
+income
+periodId
+typeId
+}
+class Income.PersonIncome{
+companyId
+grossNet
+id
+income
+period
+type
+}
+class Inspection.InspectionActionCode{
+id
+description
+}
+class Inspection.InspectionActivity{
+id
+description
+quantity
+unit
+unitPrice
+costs
+costsWithTax
+discountPercentage
+invoiceAmount
+isCustomerPayer
+isCustomerExecutor
+takeOver
+resolved
+remarks
+actionCode
+serviceTaskId
+}
+class Inspection.InspectionAppointment{
+id
+type
+startDateTime
+endDateTime
+employee
+lastInspection
+status
+process
+inspectionType
+memo
+rescheduleIsPossible
+reasonNotRealized
+}
+class Inspection.InspectionCreate{
+processTypeId
+typeId
+inspectionTypeId
+inspectorId
+startDateTIme
+endDateTime
+memo
+}
+class Inspection.InspectionEmployee{
+id
+name
+}
+class Inspection.InspectionNotRealizedRequest{
+reasonId
+}
+class Inspection.InspectionObservation{
+rubric
+part
+subPart
+type
+activity
+}
+class Inspection.InspectionPart{
+id
+description
+}
+class Inspection.InspectionProcess{
+id
+closed
+type
+contractId
+freeForRentDate
+serviceCallId
+supplier
+}
+class Inspection.InspectionProcessType{
+id
+description
+}
+class Inspection.InspectionReasonNotRealized{
+id
+description
+}
+class Inspection.InspectionResult{
+observations
+process
+}
+class Inspection.InspectionRubric{
+id
+description
+}
+class Inspection.InspectionSchedule{
+resourceId
+startDateTime
+endDateTime
+}
+class Inspection.InspectionStatus{
+id
+description
+}
+class Inspection.InspectionStatusUpdate{
+finalInvoice
+lastInspection
+}
+class Inspection.InspectionSubPart{
+id
+description
+}
+class Inspection.InspectionType{
+id
+description
+}
+class Inspection.InvoiceActivityCreate{
+activityId
+costs
+locationId
+partId
+quantity
+subPartId
+vatgroupId
+}
+class Inspection.MeterReadingUpdate{
+reading
+typeId
+}
+class MailToPay.MailToPayCollection{
+collectionOrderId
+}
+class MailToPay.MailToPayCollectionParm{
+collectionOrderIds
+}
+class MailToPay.MailToPayPostEntity{
+amountPaid
+flowId
+mailToPayRequestTypeId
+invoices
+}
+class MailToPay.MailToPayRequest{
+collectionOrderId
+customerId
+amount
+remainAmount
+dateTimeSent
+invoices
+}
+class Maintenance.ActionCode{
+id
+description
+}
+class Maintenance.BundledServiceTask{
+callId
+bundleId
+tasks
+}
+class Maintenance.BundledServiceTasksParm{
+description
+originId
+subject
+resourceId
+planProcessId
+sessions
+}
+class Maintenance.BundledTask{
+taskId
+}
+class Maintenance.BundledTaskSession{
+description
+sessionId
+startDateTime
+endDateTime
+internalDescription
+}
+class Maintenance.CallType{
+id
+description
+}
+class Maintenance.Cause{
+id
+description
+}
+class Maintenance.ContractBase{
+id
+description
+}
+class Maintenance.DeadLine{
+id
+description
+days
+}
+class Maintenance.InvoiceFor{
+id
+description
+}
+class Maintenance.MaintenanceCustomer{
+id
+name
+email
+phone
+}
+class Maintenance.MaintenanceType{
+id
+description
+}
+class Maintenance.ObjectType{
+id
+description
+}
+class Maintenance.Origin{
+id
+description
+}
+class Maintenance.PerformedBy{
+id
+description
+}
+class Maintenance.PlanningBundle{
+planningBundleRequired
+noPlanningRequired
+noTaskPossible
+}
+class Maintenance.PlanningBundleParm{
+planBundleSessionIds
+}
+class Maintenance.PlanningBundleProposal{
+sequence
+totalPlanTime
+planProcessId
+blockTime
+planningItems
+}
+class Maintenance.PlanningBundleProposalItem{
+sessionId
+taskId
+deadlineExceeded
+startDateTime
+endDateTime
+resource
+}
+class Maintenance.PlanningBundleProposalParm{
+sessions
+bundleId
+startDateTime
+endDateTime
+quantity
+planningModelId
+taskId
+}
+class Maintenance.PlanningBundleRequired{
+number
+sessions
+}
+class Maintenance.PlanningBundleSession{
+sessionId
+}
+class Maintenance.PlanProposalCreate{
+resourceId
+startDateTime
+endDateTime
+planProcessId
+externalPlanId
+}
+class Maintenance.Project{
+id
+description
+}
+class Maintenance.ProjectGroup{
+id
+description
+}
+class Maintenance.PropertyRealEstateObject{
+id
+description
+companyId
+}
+class Maintenance.ReasonNotRealized{
+id
+description
+}
+class Maintenance.RegisterActivity{
+causeId
+chargeableTo
+employeeIdMobile
+status
+hours
+materials
+signatures
+descriptions
+}
+class Maintenance.RegisterDescription{
+description
+}
+class Maintenance.RegisterHour{
+externalLineId
+startDateTime
+endDateTime
+activityId
+activityDetailId
+}
+class Maintenance.RegisterMaterial{
+externalLineId
+date
+quantity
+unitId
+articleId
+externalArticleId
+warehouseId
+}
+class Maintenance.RegisterSignature{
+name
+image
+imageType
+}
+class Maintenance.RegisterStatus{
+id
+date
+reasonNotCompletedId
+}
+class Maintenance.ResourceExpert{
+id
+name
+}
+class Maintenance.Resourcegroup{
+id
+description
+}
+class Maintenance.ServiceCaller{
+id
+name
+phone
+email
+mobilePhone
+}
+class Maintenance.ServiceObject{
+companyId
+id
+objectId
+description
+objectType
+customer
+owner
+}
+class Maintenance.ServiceObjectSearchResult{
+id
+description
+contract
+referenceType
+referenceTypeId
+referenceTypeDescription
+street
+houseNumber
+houseNumberAddition
+zipCode
+city
+country
+realEstateObject
+objectType
+}
+class Maintenance.ServiceRequestCreate{
+originId
+causeId
+description
+invoiceForId
+subject
+complaintId
+serviceObjectId
+dateCreated
+typeId
+solutionId
+solutionDescription
+externalCallId
+urlSolution
+serviceCaller
+}
+class Maintenance.ServiceTask{
+companyId
+callId
+callStatusId
+customer
+serviceAddress
+caller
+id
+actionCode
+subject
+description
+status
+performedBy
+cause
+blockTime
+deadlineEndDate
+durationMinutes
+startDateTime
+endDateTime
+estimateAmount
+extraInfo
+settlementBy
+paidBy
+isDateLocked
+project
+projectGroup
+callType
+realizedDate
+registrationDate
+resourcegroup
+resource
+supplier
+cancelIsPossible
+rescheduleIsPossible
+planningBundleId
+reasonNotRealized
+purchId
+callDescription
+tenantMemo
+serviceObjectDescription
+}
+class Maintenance.ServiceTaskBundleRescheduleParm{
+resourceId
+planProcessId
+tasks
+}
+class Maintenance.ServiceTaskCancel{
+serviceTaskReasonNotRealizedId
+}
+class Maintenance.ServiceTaskCreate{
+callId
+actionCodeId
+description
+name
+locationId
+invoiceMethodId
+reasonId
+causeId
+extraInformation
+vendorAccountId
+resourceGroupId
+quantity
+externalId
+resourceId
+performedById
+scheduleExtern
+planProposal
+maintenanceType
+fillJob
+automaticPlanning
+deadlineDate
+}
+class Maintenance.ServiceTaskHourLineDelete{
+externalPlanId
+planProcessId
+hourLineId
+}
+class Maintenance.ServiceTaskHourLineSchedule{
+externalPlanId
+planProcessId
+hourLineId
+resourceId
+startDateTime
+endDateTime
+durationMinutes
+}
+class Maintenance.ServiceTaskPlanItem{
+taskId
+startDateTime
+endDateTime
+}
+class Maintenance.SettlementBy{
+id
+description
+}
+class Maintenance.Skill{
+id
+description
+}
+class Maintenance.StandardWork{
+id
+duration
+performedBy
+actionCode
+objectType
+skill
+scheduleExtern
+project
+deadLine
+maintenanceType
+}
+class Maintenance.StatusLog{
+registrationDateTime
+origin
+responsible
+status
+statusDateTime
+memo
+}
+class Maintenance.StatusLogResponsible{
+id
+name
+referenceType
+}
+class Maintenance.StatusLogStatus{
+id
+description
+}
+class Market.AlternativeScenario{
+id
+description
+}
+class Market.BuyRent{
+id
+description
+}
+class Market.Component{
+companyId
+description
+id
+value
+}
+class Market.CoRegistrant{
+referenceId
+referenceType
+birthDate
+coContractor
+id
+companyId
+displayName
+income
+registrationDateTime
+type
+}
+class Market.CoRegistrantCreate{
+referenceId
+referenceType
+birthDate
+coContractor
+registrationDateTime
+typeId
+}
+class Market.CoRegistrantUpdate{
+coContractor
+typeId
+}
+class Market.CriteriaGroup{
+criterias
+description
+filterGroups
+id
+}
+class Market.CriteriaGroupCriteria{
+description
+id
+matchingAttribute
+matchingRulePassFail
+matchingRuleSequence
+valueEnd
+valueStart
+valueType
+}
+class Market.CriteriaGroupFilter{
+description
+id
+}
+class Market.CurrentHousing{
+id
+description
+}
+class Market.CustomerPaymentDetails{
+bankAccount
+customerId
+customerPaymentMode
+invoiceEmail
+paymentTerm
+}
+class Market.CustomerPaymentMode{
+description
+id
+mandateRequired
+paymentType
+}
+class Market.Employee{
+id
+name
+}
+class Market.FocusGroup{
+id
+description
+}
+class Market.HouseHold{
+id
+description
+}
+class Market.MatchesStatus{
+id
+description
+}
+class Market.ObjectGroup{
+description
+id
+}
+class Market.Participation{
+acceptationDate
+address
+companyId
+contractId
+contractSigningDateTime
+id
+matchesStatus
+offerDate
+offerValidTo
+pointsTotal
+preference
+preliminaryContractDate
+preliminaryRentFromDate
+publicationId
+reasonOfferSkip
+reasonRefusal
+reasonRejection
+reasonReversedAcceptation
+refusalDate
+registrationId
+rejectionDate
+responseDateTime
+reversedAcceptationDate
+sequence
+status
+}
+class Market.ParticipationAcceptationCreate{
+acceptanceDate
+contractFormId
+invoiceFrom
+occupiedFrom
+signDateTime
+validFrom
+validTo
+}
+class Market.ParticipationCreate{
+preference
+publicationId
+responseDateTime
+}
+class Market.ParticipationPreAcceptationCreate{
+preAcceptationDate
+}
+class Market.ParticipationRefusal{
+refusalDate
+refusalReasonId
+}
+class Market.ParticipationStatus{
+id
+description
+}
+class Market.PaymentTerm{
+id
+description
+}
+class Market.PaymentType{
+id
+description
+}
+class Market.Publication{
+additionalInfo
+address
+companyId
+components
+contractDate
+dateAccepted
+dateAvailable
+dateObjectEmpty
+eligibleRent
+employee
+endDateTime
+freeForInternet
+grossRent
+id
+minimumSellingPrice
+netRent
+nrOfParticipants
+number
+objectGroup
+publicationText
+realEstateObjectId
+registrationType
+alternativeScenario
+sellingPrice
+sequence
+sortingType
+startDateTime
+status
+type
+}
+class Market.PublicationSorting{
+criteriaGroups
+number
+sequence
+}
+class Market.PublicationStatus{
+id
+description
+}
+class Market.PublicationSuitability{
+criteriaGroups
+number
+sequence
+}
+class Market.PublicationText{
+sequence
+text
+textBlock
+textType
+}
+class Market.PublicationTextBlock{
+id
+description
+}
+class Market.PublicationTextType{
+id
+description
+}
+class Market.PublicationType{
+id
+description
+}
+class Market.PurposeGroup{
+id
+description
+}
+class Market.Reason{
+id
+description
+}
+class Market.ReasonType{
+id
+description
+}
+class Market.Registrant{
+birthDate
+companyId
+displayName
+income
+referenceId
+referenceType
+}
+class Market.RegistrantType{
+id
+description
+}
+class Market.Registration{
+activationDate
+buyRent
+calculatedIncome
+coRegistrants
+companyId
+currentHousing
+currentRentSellingPrice
+endDate
+familySize
+focusGroup
+houseHold
+id
+numberOfChildren
+occupancyDate
+paymentDetails
+pointsTotal
+purposeGroup
+registrant
+registrationDateTime
+registrationType
+relocationReason
+renewalDate
+status
+}
+class Market.RegistrationCreate{
+referenceId
+referenceType
+activationDate
+birthDate
+buyRentId
+currentHousingId
+currentRentSellingPrice
+familySize
+focusGroupId
+houseHoldId
+numberOfChildren
+occupancyDate
+purposeGroupId
+registrationDateTime
+registrationTypeId
+relocationReasonId
+statusId
+}
+class Market.RegistrationSatus{
+id
+description
+}
+class Market.RegistrationType{
+id
+description
+}
+class Market.RegistrationUpdate{
+activationDate
+buyRentId
+currentHousingId
+currentRentSellingPrice
+familySize
+focusGroupId
+houseHoldId
+numberOfChildren
+occupancyDate
+purposeGroupId
+renewalDate
+}
+class Market.RegistrationUrgency{
+companyId
+grantDate
+reason
+requestDate
+urgency
+validUntilDate
+}
+class Market.SortingType{
+id
+description
+}
+class Market.Urgency{
+id
+description
+}
+@enduml

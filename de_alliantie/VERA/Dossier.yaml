@@ -1,0 +1,3673 @@
+openapi: 3.0.0
+info:
+  title: VERA-Dossier
+  description: API-specificatie van informatiedomein Dossier
+  contact:
+    name: VERA
+    url: https://cora.wikixl.nl/index.php/VERA_Standaard
+    email: info@stichting-vera.nl
+  license:
+    name: "Licentie voor hergebruik: Creative Commons Naamsvermelding 4.0."
+    url: https://creativecommons.org/licenses/by/4.0/deed.nl
+  version: '4.0'
+servers:
+  - url: https://dossier.vera.io:{port}/{basePath}
+    description: Productieserver
+    variables:
+       port:
+         enum:
+           - '8443'
+           - '443'
+         default: '443'
+       basePath:
+         default: v4
+tags:
+- name: Dossiers
+  description: Operaties met betrekking tot een Dossier
+- name: Informatieobjecten
+  description: Operaties met betrekking tot een Informatieobject
+- name: Informatieobjectkenmerken
+  description: Operaties met betrekking tot een Informatieobjectkenmerk
+- name: Processen
+  description: Operaties met betrekking tot een Proces
+- name: Procesrollen
+  description: Operaties met betrekking tot een Procesrol
+- name: Processtappen
+  description: Operaties met betrekking tot een Processtap
+- name: Zaken
+  description: Operaties met betrekking tot een Zaak
+- name: Zaakkenmerken
+  description: Operaties met betrekking tot een Zaakkenmerk
+- name: Zaakrollen
+  description: Operaties met betrekking tot een Zaakrol
+- name: Zaakstatussen
+  description: Operaties met betrekking tot een Zaakstatus
+- name: Zaaktypen
+  description: Operaties met betrekking tot een Zaaktype
+- name: Dossiers
+  description: Operaties met betrekking tot een Dossier
+- name: Informatieobjecten
+  description: Operaties met betrekking tot een Informatieobject
+- name: Informatieobjectkenmerken
+  description: Operaties met betrekking tot een Informatieobjectkenmerk
+- name: Processen
+  description: Operaties met betrekking tot een Proces
+- name: Procesrollen
+  description: Operaties met betrekking tot een Procesrol
+- name: Processtappen
+  description: Operaties met betrekking tot een Processtap
+- name: Zaken
+  description: Operaties met betrekking tot een Zaak
+- name: Zaakkenmerken
+  description: Operaties met betrekking tot een Zaakkenmerk
+- name: Zaakrollen
+  description: Operaties met betrekking tot een Zaakrol
+- name: Zaakstatussen
+  description: Operaties met betrekking tot een Zaakstatus
+- name: Zaaktypen
+  description: Operaties met betrekking tot een Zaaktype
+paths:
+  /ping:
+    get:
+      description: |
+        Een ping wordt beantwoord met response code 200
+      operationId: ping
+      responses:
+        '200':
+          description: OK
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /dossiers:
+    get:
+      tags:
+      - 'Dossiers'
+      description: Ophalen van Dossiers
+      operationId: listDossiers
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Dossier'
+      responses:
+        '200':
+          description: Dossier response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dossier'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Dossiers'
+      description: Voegt een nieuw(e) Dossier toe.
+      operationId: createDossier
+      requestBody:
+        description: Dossier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dossier'
+      responses:
+        '200':
+          description: Dossier succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Dossiers'
+      description: |
+        Vervangen van een Dossier op basis van overeenkomstige sleutelvelden.
+      operationId: replaceDossier
+      requestBody:
+        description: Entiteit Dossier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dossier'
+      responses:
+        '200':
+          description: Dossier succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Dossier bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Dossier met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Dossiers'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Dossier. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateDossier
+      requestBody:
+        description: Entiteit Dossier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dossier'
+      responses:
+        '200':
+          description: Dossier succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Dossier bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Dossier met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /dossiers/{id}:
+    get:
+      tags:
+      - 'Dossiers'
+      description: Retourneert een Dossier met de gegeven identifier
+      operationId: readDossierById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Dossier om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Dossier response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dossier'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Dossier met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Dossiers'
+      description: Vervangen van een Dossier
+      operationId: replaceDossierById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Dossier om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Dossier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dossier'
+      responses:
+        '200':
+          description: Dossier succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Dossier met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Dossiers'
+      description: Wijzigen van een Dossier
+      operationId: updateDossierById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Dossier om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Dossier
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dossier'
+      responses:
+        '200':
+          description: Dossier succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Dossier met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /informatieobjecten:
+    get:
+      tags:
+      - 'Informatieobjecten'
+      description: Ophalen van Informatieobjecten
+      operationId: listInformatieobjecten
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Informatieobject'
+      responses:
+        '200':
+          description: Informatieobject response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Informatieobject'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Informatieobjecten'
+      description: Voegt een nieuw(e) Informatieobject toe.
+      operationId: createInformatieobject
+      requestBody:
+        description: Informatieobject
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Informatieobject'
+      responses:
+        '200':
+          description: Informatieobject succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Informatieobjecten'
+      description: |
+        Vervangen van een Informatieobject op basis van overeenkomstige sleutelvelden.
+      operationId: replaceInformatieobject
+      requestBody:
+        description: Entiteit Informatieobject
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Informatieobject'
+      responses:
+        '200':
+          description: Informatieobject succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Informatieobject bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Informatieobject met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Informatieobjecten'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Informatieobject. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateInformatieobject
+      requestBody:
+        description: Entiteit Informatieobject
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Informatieobject'
+      responses:
+        '200':
+          description: Informatieobject succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Informatieobject bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Informatieobject met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /informatieobjecten/{id}:
+    get:
+      tags:
+      - 'Informatieobjecten'
+      description: Retourneert een Informatieobject met de gegeven identifier
+      operationId: readInformatieobjectById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Informatieobject om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Informatieobject response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Informatieobject'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Informatieobject met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Informatieobjecten'
+      description: Vervangen van een Informatieobject
+      operationId: replaceInformatieobjectById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Informatieobject om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Informatieobject
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Informatieobject'
+      responses:
+        '200':
+          description: Informatieobject succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Informatieobject met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Informatieobjecten'
+      description: Wijzigen van een Informatieobject
+      operationId: updateInformatieobjectById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Informatieobject om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Informatieobject
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Informatieobject'
+      responses:
+        '200':
+          description: Informatieobject succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Informatieobject met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /informatieobjectkenmerken:
+    get:
+      tags:
+      - 'Informatieobjectkenmerken'
+      description: Ophalen van Informatieobjectkenmerken
+      operationId: listInformatieobjectkenmerken
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Informatieobjectkenmerk'
+      responses:
+        '200':
+          description: Informatieobjectkenmerk response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Informatieobjectkenmerk'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Informatieobjectkenmerken'
+      description: Voegt een nieuw(e) Informatieobjectkenmerk toe.
+      operationId: createInformatieobjectkenmerk
+      requestBody:
+        description: Informatieobjectkenmerk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Informatieobjectkenmerk'
+      responses:
+        '200':
+          description: Informatieobjectkenmerk succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Informatieobjectkenmerken'
+      description: |
+        Vervangen van een Informatieobjectkenmerk op basis van overeenkomstige sleutelvelden.
+      operationId: replaceInformatieobjectkenmerk
+      requestBody:
+        description: Entiteit Informatieobjectkenmerk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Informatieobjectkenmerk'
+      responses:
+        '200':
+          description: Informatieobjectkenmerk succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Informatieobjectkenmerk bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Informatieobjectkenmerk met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Informatieobjectkenmerken'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Informatieobjectkenmerk. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateInformatieobjectkenmerk
+      requestBody:
+        description: Entiteit Informatieobjectkenmerk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Informatieobjectkenmerk'
+      responses:
+        '200':
+          description: Informatieobjectkenmerk succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Informatieobjectkenmerk bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Informatieobjectkenmerk met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /informatieobjectkenmerken/{id}:
+    get:
+      tags:
+      - 'Informatieobjectkenmerken'
+      description: Retourneert een Informatieobjectkenmerk met de gegeven identifier
+      operationId: readInformatieobjectkenmerkById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Informatieobjectkenmerk om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Informatieobjectkenmerk response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Informatieobjectkenmerk'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Informatieobjectkenmerk met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Informatieobjectkenmerken'
+      description: Vervangen van een Informatieobjectkenmerk
+      operationId: replaceInformatieobjectkenmerkById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Informatieobjectkenmerk om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Informatieobjectkenmerk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Informatieobjectkenmerk'
+      responses:
+        '200':
+          description: Informatieobjectkenmerk succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Informatieobjectkenmerk met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Informatieobjectkenmerken'
+      description: Wijzigen van een Informatieobjectkenmerk
+      operationId: updateInformatieobjectkenmerkById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Informatieobjectkenmerk om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Informatieobjectkenmerk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Informatieobjectkenmerk'
+      responses:
+        '200':
+          description: Informatieobjectkenmerk succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Informatieobjectkenmerk met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /processen:
+    get:
+      tags:
+      - 'Processen'
+      description: Ophalen van Processen
+      operationId: listProcessen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Proces'
+      responses:
+        '200':
+          description: Proces response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Proces'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Processen'
+      description: Voegt een nieuw(e) Proces toe.
+      operationId: createProces
+      requestBody:
+        description: Proces
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proces'
+      responses:
+        '200':
+          description: Proces succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Processen'
+      description: |
+        Vervangen van een Proces op basis van overeenkomstige sleutelvelden.
+      operationId: replaceProces
+      requestBody:
+        description: Entiteit Proces
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proces'
+      responses:
+        '200':
+          description: Proces succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Proces bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Proces met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Processen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Proces. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateProces
+      requestBody:
+        description: Entiteit Proces
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proces'
+      responses:
+        '200':
+          description: Proces succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Proces bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Proces met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /processen/{id}:
+    get:
+      tags:
+      - 'Processen'
+      description: Retourneert een Proces met de gegeven identifier
+      operationId: readProcesById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Proces om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Proces response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proces'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Proces met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Processen'
+      description: Vervangen van een Proces
+      operationId: replaceProcesById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Proces om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Proces
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proces'
+      responses:
+        '200':
+          description: Proces succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Proces met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Processen'
+      description: Wijzigen van een Proces
+      operationId: updateProcesById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Proces om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Proces
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proces'
+      responses:
+        '200':
+          description: Proces succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Proces met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /procesrollen:
+    get:
+      tags:
+      - 'Procesrollen'
+      description: Ophalen van Procesrollen
+      operationId: listProcesrollen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Procesrol'
+      responses:
+        '200':
+          description: Procesrol response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Procesrol'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Procesrollen'
+      description: Voegt een nieuw(e) Procesrol toe.
+      operationId: createProcesrol
+      requestBody:
+        description: Procesrol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Procesrol'
+      responses:
+        '200':
+          description: Procesrol succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Procesrollen'
+      description: |
+        Vervangen van een Procesrol op basis van overeenkomstige sleutelvelden.
+      operationId: replaceProcesrol
+      requestBody:
+        description: Entiteit Procesrol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Procesrol'
+      responses:
+        '200':
+          description: Procesrol succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Procesrol bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Procesrol met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Procesrollen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Procesrol. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateProcesrol
+      requestBody:
+        description: Entiteit Procesrol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Procesrol'
+      responses:
+        '200':
+          description: Procesrol succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Procesrol bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Procesrol met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /procesrollen/{id}:
+    get:
+      tags:
+      - 'Procesrollen'
+      description: Retourneert een Procesrol met de gegeven identifier
+      operationId: readProcesrolById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Procesrol om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Procesrol response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Procesrol'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Procesrol met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Procesrollen'
+      description: Vervangen van een Procesrol
+      operationId: replaceProcesrolById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Procesrol om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Procesrol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Procesrol'
+      responses:
+        '200':
+          description: Procesrol succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Procesrol met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Procesrollen'
+      description: Wijzigen van een Procesrol
+      operationId: updateProcesrolById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Procesrol om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Procesrol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Procesrol'
+      responses:
+        '200':
+          description: Procesrol succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Procesrol met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /processtappen:
+    get:
+      tags:
+      - 'Processtappen'
+      description: Ophalen van Processtappen
+      operationId: listProcesstappen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Processtap'
+      responses:
+        '200':
+          description: Processtap response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Processtap'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Processtappen'
+      description: Voegt een nieuw(e) Processtap toe.
+      operationId: createProcesstap
+      requestBody:
+        description: Processtap
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Processtap'
+      responses:
+        '200':
+          description: Processtap succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Processtappen'
+      description: |
+        Vervangen van een Processtap op basis van overeenkomstige sleutelvelden.
+      operationId: replaceProcesstap
+      requestBody:
+        description: Entiteit Processtap
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Processtap'
+      responses:
+        '200':
+          description: Processtap succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Processtap bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Processtap met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Processtappen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Processtap. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateProcesstap
+      requestBody:
+        description: Entiteit Processtap
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Processtap'
+      responses:
+        '200':
+          description: Processtap succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Processtap bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Processtap met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /processtappen/{id}:
+    get:
+      tags:
+      - 'Processtappen'
+      description: Retourneert een Processtap met de gegeven identifier
+      operationId: readProcesstapById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Processtap om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Processtap response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Processtap'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Processtap met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Processtappen'
+      description: Vervangen van een Processtap
+      operationId: replaceProcesstapById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Processtap om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Processtap
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Processtap'
+      responses:
+        '200':
+          description: Processtap succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Processtap met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Processtappen'
+      description: Wijzigen van een Processtap
+      operationId: updateProcesstapById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Processtap om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Processtap
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Processtap'
+      responses:
+        '200':
+          description: Processtap succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Processtap met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /zaken:
+    get:
+      tags:
+      - 'Zaken'
+      description: Ophalen van Zaken
+      operationId: listZaken
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Zaak'
+      responses:
+        '200':
+          description: Zaak response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Zaak'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Zaken'
+      description: Voegt een nieuw(e) Zaak toe.
+      operationId: createZaak
+      requestBody:
+        description: Zaak
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaak'
+      responses:
+        '200':
+          description: Zaak succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Zaken'
+      description: |
+        Vervangen van een Zaak op basis van overeenkomstige sleutelvelden.
+      operationId: replaceZaak
+      requestBody:
+        description: Entiteit Zaak
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaak'
+      responses:
+        '200':
+          description: Zaak succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Zaak bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaak met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Zaken'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Zaak. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateZaak
+      requestBody:
+        description: Entiteit Zaak
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaak'
+      responses:
+        '200':
+          description: Zaak succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Zaak bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaak met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /zaken/{id}:
+    get:
+      tags:
+      - 'Zaken'
+      description: Retourneert een Zaak met de gegeven identifier
+      operationId: readZaakById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Zaak om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Zaak response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zaak'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaak met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Zaken'
+      description: Vervangen van een Zaak
+      operationId: replaceZaakById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Zaak om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Zaak
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaak'
+      responses:
+        '200':
+          description: Zaak succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaak met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Zaken'
+      description: Wijzigen van een Zaak
+      operationId: updateZaakById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Zaak om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Zaak
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaak'
+      responses:
+        '200':
+          description: Zaak succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaak met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /zaakkenmerken:
+    get:
+      tags:
+      - 'Zaakkenmerken'
+      description: Ophalen van Zaakkenmerken
+      operationId: listZaakkenmerken
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Zaakkenmerk'
+      responses:
+        '200':
+          description: Zaakkenmerk response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Zaakkenmerk'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Zaakkenmerken'
+      description: Voegt een nieuw(e) Zaakkenmerk toe.
+      operationId: createZaakkenmerk
+      requestBody:
+        description: Zaakkenmerk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakkenmerk'
+      responses:
+        '200':
+          description: Zaakkenmerk succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Zaakkenmerken'
+      description: |
+        Vervangen van een Zaakkenmerk op basis van overeenkomstige sleutelvelden.
+      operationId: replaceZaakkenmerk
+      requestBody:
+        description: Entiteit Zaakkenmerk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakkenmerk'
+      responses:
+        '200':
+          description: Zaakkenmerk succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Zaakkenmerk bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakkenmerk met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Zaakkenmerken'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Zaakkenmerk. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateZaakkenmerk
+      requestBody:
+        description: Entiteit Zaakkenmerk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakkenmerk'
+      responses:
+        '200':
+          description: Zaakkenmerk succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Zaakkenmerk bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakkenmerk met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /zaakkenmerken/{id}:
+    get:
+      tags:
+      - 'Zaakkenmerken'
+      description: Retourneert een Zaakkenmerk met de gegeven identifier
+      operationId: readZaakkenmerkById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Zaakkenmerk om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Zaakkenmerk response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zaakkenmerk'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakkenmerk met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Zaakkenmerken'
+      description: Vervangen van een Zaakkenmerk
+      operationId: replaceZaakkenmerkById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Zaakkenmerk om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Zaakkenmerk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakkenmerk'
+      responses:
+        '200':
+          description: Zaakkenmerk succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakkenmerk met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Zaakkenmerken'
+      description: Wijzigen van een Zaakkenmerk
+      operationId: updateZaakkenmerkById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Zaakkenmerk om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Zaakkenmerk
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakkenmerk'
+      responses:
+        '200':
+          description: Zaakkenmerk succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakkenmerk met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /zaakrollen:
+    get:
+      tags:
+      - 'Zaakrollen'
+      description: Ophalen van Zaakrollen
+      operationId: listZaakrollen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Zaakrol'
+      responses:
+        '200':
+          description: Zaakrol response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Zaakrol'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Zaakrollen'
+      description: Voegt een nieuw(e) Zaakrol toe.
+      operationId: createZaakrol
+      requestBody:
+        description: Zaakrol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakrol'
+      responses:
+        '200':
+          description: Zaakrol succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Zaakrollen'
+      description: |
+        Vervangen van een Zaakrol op basis van overeenkomstige sleutelvelden.
+      operationId: replaceZaakrol
+      requestBody:
+        description: Entiteit Zaakrol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakrol'
+      responses:
+        '200':
+          description: Zaakrol succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Zaakrol bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakrol met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Zaakrollen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Zaakrol. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateZaakrol
+      requestBody:
+        description: Entiteit Zaakrol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakrol'
+      responses:
+        '200':
+          description: Zaakrol succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Zaakrol bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakrol met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /zaakrollen/{id}:
+    get:
+      tags:
+      - 'Zaakrollen'
+      description: Retourneert een Zaakrol met de gegeven identifier
+      operationId: readZaakrolById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Zaakrol om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Zaakrol response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zaakrol'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakrol met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Zaakrollen'
+      description: Vervangen van een Zaakrol
+      operationId: replaceZaakrolById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Zaakrol om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Zaakrol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakrol'
+      responses:
+        '200':
+          description: Zaakrol succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakrol met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Zaakrollen'
+      description: Wijzigen van een Zaakrol
+      operationId: updateZaakrolById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Zaakrol om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Zaakrol
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakrol'
+      responses:
+        '200':
+          description: Zaakrol succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakrol met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /zaakstatussen:
+    get:
+      tags:
+      - 'Zaakstatussen'
+      description: Ophalen van Zaakstatussen
+      operationId: listZaakstatussen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Zaakstatus'
+      responses:
+        '200':
+          description: Zaakstatus response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Zaakstatus'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Zaakstatussen'
+      description: Voegt een nieuw(e) Zaakstatus toe.
+      operationId: createZaakstatus
+      requestBody:
+        description: Zaakstatus
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakstatus'
+      responses:
+        '200':
+          description: Zaakstatus succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Zaakstatussen'
+      description: |
+        Vervangen van een Zaakstatus op basis van overeenkomstige sleutelvelden.
+      operationId: replaceZaakstatus
+      requestBody:
+        description: Entiteit Zaakstatus
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakstatus'
+      responses:
+        '200':
+          description: Zaakstatus succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Zaakstatus bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakstatus met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Zaakstatussen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Zaakstatus. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateZaakstatus
+      requestBody:
+        description: Entiteit Zaakstatus
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakstatus'
+      responses:
+        '200':
+          description: Zaakstatus succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Zaakstatus bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakstatus met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /zaakstatussen/{id}:
+    get:
+      tags:
+      - 'Zaakstatussen'
+      description: Retourneert een Zaakstatus met de gegeven identifier
+      operationId: readZaakstatusById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Zaakstatus om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Zaakstatus response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zaakstatus'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakstatus met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Zaakstatussen'
+      description: Vervangen van een Zaakstatus
+      operationId: replaceZaakstatusById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Zaakstatus om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Zaakstatus
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakstatus'
+      responses:
+        '200':
+          description: Zaakstatus succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakstatus met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Zaakstatussen'
+      description: Wijzigen van een Zaakstatus
+      operationId: updateZaakstatusById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Zaakstatus om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Zaakstatus
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaakstatus'
+      responses:
+        '200':
+          description: Zaakstatus succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaakstatus met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /zaaktypen:
+    get:
+      tags:
+      - 'Zaaktypen'
+      description: Ophalen van Zaaktypen
+      operationId: listZaaktypen
+      parameters:
+      - name: params
+        in: query
+        style: form
+        explode: true
+        schema:
+          $ref: '#/components/schemas/Zaaktype'
+      responses:
+        '200':
+          description: Zaaktype response
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Zaaktype'
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    post:
+      tags:
+      - 'Zaaktypen'
+      description: Voegt een nieuw(e) Zaaktype toe.
+      operationId: createZaaktype
+      requestBody:
+        description: Zaaktype
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaaktype'
+      responses:
+        '200':
+          description: Zaaktype succesvol toegevoegd
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Zaaktypen'
+      description: |
+        Vervangen van een Zaaktype op basis van overeenkomstige sleutelvelden.
+      operationId: replaceZaaktype
+      requestBody:
+        description: Entiteit Zaaktype
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaaktype'
+      responses:
+        '200':
+          description: Zaaktype succesvol vervangen
+        '400':
+           description: |
+             Fout in request.
+             Zaaktype bevat geen sleutelveld(en).
+        '401':
+          $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaaktype met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Zaaktypen'
+      description: |
+        Wijzigen van afzonderlijke attributen van een Zaaktype. In de meegestuurde entiteit moeten
+        sleutelvelden aanwezig zijn.
+      operationId: updateZaaktype
+      requestBody:
+        description: Entiteit Zaaktype
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaaktype'
+      responses:
+        '200':
+          description: Zaaktype succesvol gewijzigd
+        '400':
+           description: |
+             Fout in request.
+             Zaaktype bevat geen sleutelveld(en).
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaaktype met gegeven sleutelveld(en) niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+  /zaaktypen/{id}:
+    get:
+      tags:
+      - 'Zaaktypen'
+      description: Retourneert een Zaaktype met de gegeven identifier
+      operationId: readZaaktypeById
+      parameters:
+      - name: id
+        in: path
+        description: Id van Zaaktype om op te halen
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Zaaktype response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Zaaktype'
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaaktype met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    put:
+      tags:
+      - 'Zaaktypen'
+      description: Vervangen van een Zaaktype
+      operationId: replaceZaaktypeById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Zaaktype om te vervangen
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: Entiteit Zaaktype
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaaktype'
+      responses:
+        '200':
+          description: Zaaktype succesvol vervangen
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaaktype met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+    patch:
+      tags:
+      - 'Zaaktypen'
+      description: Wijzigen van een Zaaktype
+      operationId: updateZaaktypeById
+      parameters:
+      - name: 'id'
+        in: 'path'
+        description: Id van Zaaktype om te wijzigen
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        description: Entiteit Zaaktype
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Zaaktype'
+      responses:
+        '200':
+          description: Zaaktype succesvol gewijzigd
+        '401':
+           $ref: '#/components/responses/NietGeautoriseerd'
+        '404':
+           description: Zaaktype met id niet gevonden
+        default:
+          description: Onverwachte fout
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foutbericht'
+security:
+  - ApiKeyAuth: []
+components:
+  headers:
+    X-Stuurgegevens-TijdstipBericht:
+      schema:
+        type: string
+        format: data-time
+        description: Tijdstip waarop het bericht verzonden is
+    X-Stuurgegevens-Referentienummer:
+      schema:
+        type: string
+        format: any
+        description: Een unieke code voor correlatie
+    X-Stuurgegevens-Zender-Organisatie:
+      schema:
+        type: string
+        format: any
+        description: Naam van de verzendende organisatie
+    X-Stuurgegevens-Zender-Administratie:
+      schema:
+        type: string
+        format: any
+        description: |
+          Met het stuurgegeven Administratie kan onderscheid gemaakt worden tussen 
+          de verschillende gegevensverzamelingen die de verzendende organisatie beheert
+    X-Parameters-Aantal:
+      schema:
+        type: integer
+        description: Totaal aantal gevonden entiteiten
+        example: 135
+    X-Parameters-AantalPerPagina:
+      schema:
+        type: integer
+        description: Miximum aantal entiteiten per pagina
+        example: 20
+    X-Parameters-Pagina:
+      schema:
+        type: integer
+        description: Huidige paginanummer
+        example: 3
+    X-Parameters-PeiltijdstipMaterieel:
+      schema:
+        type: string
+        format: date-time
+        description: De peildatum. Indien leeg worden de actuele gegevens opgevraagd
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-KEY
+  responses:
+    NietGeautoriseerd:
+      description: API-key ontbreekt of is ongeldig
+      headers:
+        X-API-KEY:
+          schema:
+            type: string
+  schemas:
+    Dossier:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Geeft het dossier type aan. Bijvoorbeeld mutatiedossier.
+        detailSoort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Geeft het dossier detail type aan.
+        omschrijving:
+          type: string
+          format: any
+          description: Beknopte omschrijving van het dossier.
+        bovenliggendDossier:
+          $ref: '#/components/schemas/Dossier-sleutels'
+          description: Het dossier waarin dit dossier is opgenomen.
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De fase waarin het dossier zich vanuit het perspectief van afhandeling en archivering bevindt (Bijvoorbeeld "Gearchiveerd").
+        begindatum:
+          type: string
+          format: date-time
+          description: De datum waarop het dossier gevormd is.
+        einddatum:
+          type: string
+          format: date-time
+          description: De datum waarop het dossier afgesloten is.
+        archiefActiedatum:
+          type: string
+          format: date-time
+          description: De datum waarop het dossier vernietigd moet worden dan wel overgebracht moet worden naar een archiefbewaarplaats.
+        archiefnominatie:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Aanduiding of de informatieobjecten binnen het dossier blijvend bewaard of na een bepaalde termijn vernietigd moet worden.
+        clusters:
+          type: string
+          format: uri
+          description: 'Referentie naar Cluster in de vorm: vera/v4/clusters/12345'
+        collectiefObjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar CollectiefObject in de vorm: vera/v4/collectiefobjecten/12345'
+        contactmomenten:
+          type: string
+          format: uri
+          description: 'Referentie naar Contactmoment in de vorm: vera/v4/contactmomenten/12345'
+        deelDossiers:
+          description: Het dossier bevat onderliggende dossier(s).
+          type: array
+          items:
+            $ref: '#/components/schemas/Dossier-sleutels'
+        detailStatus:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Detaillering van de fase waarin het dossier zich vanuit het perspectief van afhandeling en archivering bevindt.
+        eenheden:
+          type: string
+          format: uri
+          description: 'Referentie naar Eenheid in de vorm: vera/v4/eenheden/12345'
+        inkoopfacturen:
+          type: string
+          format: uri
+          description: 'Referentie naar Inkoopfactuur in de vorm: vera/v4/inkoopfacturen/12345'
+        inkoopopdrachten:
+          type: string
+          format: uri
+          description: 'Referentie naar Inkoopopdracht in de vorm: vera/v4/inkoopopdrachten/12345'
+        onderhoudsverzoeken:
+          type: string
+          format: uri
+          description: 'Referentie naar Onderhoudsverzoek in de vorm: vera/v4/onderhoudsverzoeken/12345'
+        overeenkomsten:
+          type: string
+          format: uri
+          description: 'Referentie naar Overeenkomst in de vorm: vera/v4/overeenkomsten/12345'
+        processen:
+          description: Het dossier is gekoppeld aan/heeft betrekking op proces(sen).
+          type: array
+          items:
+            $ref: '#/components/schemas/Proces'
+        relaties:
+          type: string
+          format: uri
+          description: 'Referentie naar Relatie in de vorm: vera/v4/relaties/12345'
+        zaken:
+          description: Zaken die gekoppeld zijn aan dit dossier.
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaak'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    Referentiedata:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken) Bijvoorbeeld NL.
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De soort van het referentiedata item. Bijvoorbeeld nationaliteit.
+        naam:
+          type: string
+          format: any
+          description: De te tonen waarde van het referentiedata item. Bijvoorbeeld Nederlandse.
+        omschrijving:
+          type: string
+          format: any
+          description: De omschrijving van de referentiedata. Bijvoorbeeld De Nederlandse nationaliteit.
+        parent:
+          $ref: '#/components/schemas/Referentiedata-sleutels'
+          description: De bovenliggende referentiedata in het geval er sprake is van een hierarchische relatie tussen referentiedata.
+        begindatum:
+          type: string
+          format: date
+          description: De begindatum van het klasse item.
+        einddatum:
+          type: string
+          format: date
+          description: De einddatum van het klasse item.
+        sortering:
+          type: string
+          format: any
+          description: De sorteervolgorde van de referentiedata anders dan alfabetisch.
+    Referentiedata-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken) Bijvoorbeeld NL.
+        naam:
+          type: string
+          format: any
+          description: De te tonen waarde van het referentiedata item. Bijvoorbeeld Nederlandse.
+    Dossier-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Proces:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De omschrijving en definitie van het proces (bijvoorbeeld aanbieden woning).
+        bovenliggendProces:
+          $ref: '#/components/schemas/Proces-sleutels'
+          description: Specificeert het bijbehorende hoofdproces.
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De status van de proces. Bijvoorbeeld;In behandeling, Afgesloten. 
+        begindatum:
+          type: string
+          format: date-time
+          description: Datum en tijd waarop het proces gestart is.
+        einddatum:
+          type: string
+          format: date-time
+          description: Datum en tijd waarop het proces afgesloten is.
+        verloopdatum:
+          type: string
+          format: date-time
+          description: Datum en tijd waarop het proces afgerond zou moeten zijn.
+        clusters:
+          type: string
+          format: uri
+          description: 'Referentie naar Cluster in de vorm: vera/v4/clusters/12345'
+        collectiefObjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar CollectiefObject in de vorm: vera/v4/collectiefobjecten/12345'
+        deelprocessen:
+          description: Specificeert de bijbehorende deelprocessen.
+          type: array
+          items:
+            $ref: '#/components/schemas/Proces-sleutels'
+        dossiers:
+          description: Het proces is gekoppeld aan/heeft betrekking op dossier(s).
+          type: array
+          items:
+            $ref: '#/components/schemas/Dossier'
+        eenheden:
+          type: string
+          format: uri
+          description: 'Referentie naar Eenheid in de vorm: vera/v4/eenheden/12345'
+        inkoopfacturen:
+          type: string
+          format: uri
+          description: 'Referentie naar Inkoopfactuur in de vorm: vera/v4/inkoopfacturen/12345'
+        inkoopopdrachten:
+          type: string
+          format: uri
+          description: 'Referentie naar Inkoopopdracht in de vorm: vera/v4/inkoopopdrachten/12345'
+        niveau:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Specificeert het niveau van het proces. Bijvoorbeeld ketenproces, bedrijfsproces en werkproces.
+        onderhoudsverzoeken:
+          type: string
+          format: uri
+          description: 'Referentie naar Onderhoudsverzoek in de vorm: vera/v4/onderhoudsverzoeken/12345'
+        overeenkomsten:
+          type: string
+          format: uri
+          description: 'Referentie naar Overeenkomst in de vorm: vera/v4/overeenkomsten/12345'
+        prioriteit:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Prioriteit van het proces. Bijvoorbeeld;Hoog, Middel, Laag. 
+        processtappen:
+          description: De taken/stappen die behoren bij het proces.
+          type: array
+          items:
+            $ref: '#/components/schemas/Processtap'
+        relaties:
+          type: string
+          format: uri
+          description: 'Referentie naar Relatie in de vorm: vera/v4/relaties/12345'
+        rollen:
+          description: De rol(len) die een relatie uitoefent ten opzichte van het proces.
+          type: array
+          items:
+            $ref: '#/components/schemas/Procesrol'
+        zaken:
+          description: Het proces is gekoppeld aan/heeft betrekking op zaak(-en).
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaak'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    Proces-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Processtap:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De omschrijving en definitie van de processtap. Bijvoorbeeld keur inkoopfactuur goed of controleer huuropzegging.
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Status van de processtap. Bijvoorbeeld;In behandeling, Wachtstand, Afgerond. 
+        begindatum:
+          type: string
+          format: date-time
+          description: Datum en tijd waarop de processtap gestart is.
+        einddatum:
+          type: string
+          format: date-time
+          description: Datum en tijd waarop de processtap afgesloten is.
+        verloopdatum:
+          type: string
+          format: date-time
+          description: Datum en tijd waarop de processtap afgerond zou moeten zijn.
+        actie:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Actie die is uitgevoerd. Bijvoorbeeld;Doorsturen, Toewijzen, Stoppen. 
+        positie:
+          type: integer
+          format: int32
+          description: De positie van de processtap binnen het proces ten opzichte van andere processtappen.
+        prioriteit:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Prioriteit van de processtap Bijvoorbeeld;Hoog, Middel, Laag. 
+        proces:
+          $ref: '#/components/schemas/Proces'
+          description: Het proces waar de processtap onderdeel van is.
+        rollen:
+          description: De rol(-len) die een relatie uitoefent ten opzichte van de processtap.
+          type: array
+          items:
+            $ref: '#/components/schemas/Procesrol'
+        vorigeProcesstappen:
+          description: De processtap(-en) die deze processtap geïnitieerd heeft.
+          type: array
+          items:
+            $ref: '#/components/schemas/Processtap-sleutels'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    Procesrol:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        omschrijving:
+          type: string
+          format: any
+          description: Een beknopte omschrijving van de aard van de rol.
+        begindatum:
+          type: string
+          format: date-time
+          description: Geeft de startdatum van de geldigheid van de rol aan.
+        einddatum:
+          type: string
+          format: date-time
+          description: Geeft de einddatum van de geldigheid van de rol aan.
+        processen:
+          description: De proces(-sen) waar de rol betrekking op heeft.
+          type: array
+          items:
+            $ref: '#/components/schemas/Proces'
+        processtappen:
+          description: De processtap(-pen) waar de rol betrekking op heeft.
+          type: array
+          items:
+            $ref: '#/components/schemas/Processtap'
+        relatie:
+          type: string
+          format: uri
+          description: 'Referentie naar Relatie in de vorm: vera/v4/relaties/12345'
+        toelichtingRol:
+          type: string
+          format: any
+          description: Schriftelijke toelichting bij de rol.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    ExtraAttribuut:
+      type: object
+      properties:
+        naam:
+          type: string
+          format: any
+          description: De naam van het niet bestaande attribuut. Bijv. Huurprognose.
+        waarde:
+          type: string
+          format: any
+          description: De waarde van het niet bestaande attribuut. Bijv. €850,-.
+    Informatieobject:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Specificatie van het documenttype. Bijvoorbeeld verslag, rapport etc.
+        detailSoort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Detail specificatie van het documenttype. Bijvoorbeeld notulen, adviesrapport etc.
+        onderwerp:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Onderwerp van het informatieobject.
+        subonderwerp:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Subonderwerp van het informatieobject.
+        titel:
+          type: string
+          format: any
+          description: Titel van het informatieobject.
+        beschrijving:
+          type: string
+          format: any
+          description: Beschrijving van het informatieobject.
+        status:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De fase waarin het informatieobject zich vanuit het perspectief van archivering bevindt.
+        detailStatus:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Detaillering van de fase waarin het informatieobject zich vanuit het perspectief van archivering bevindt.
+        registratiedatum:
+          type: string
+          format: date-time
+          description: Registratiedatum van het informatieobject.
+        ontvangstdatum:
+          type: string
+          format: date-time
+          description: Ontvangstdatum van het informatieobject.
+        publicatiedatum:
+          type: string
+          format: date-time
+          description: Publicatiedatum of verzenddatum van het informatieobject.
+        archiefActiedatum:
+          type: string
+          format: date-time
+          description: De datum waarop het gearchiveerde informatieobject vernietigd moet worden dan wel overgebracht moet worden naar een archiefbewaarplaats.
+        archiefnominatie:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Aanduiding of het informatieobject blijvend bewaard of na een bepaalde termijn vernietigd moet worden.
+        auteur:
+          type: string
+          format: any
+          description: De persoon of organisatie die in de eerste plaats verantwoordelijk is voor het creëren van de inhoud van het informatieobject.
+        bestand:
+          type: string
+          format: byte
+          description: De binaire representatie van het informatieobject.
+        bestandsgrootte:
+          type: integer
+          format: int32
+          description: Omvang van het bestand in bytes.
+        bestandslocatie:
+          type: string
+          format: uri
+          description: Een link (URI) naar de binaire representatie van het informatieobject.
+        bestandsnaam:
+          type: string
+          format: any
+          description: De naam van het fysieke bestand waarin de inhoud van het informatieobject is vastgelegd.
+        bijlagen:
+          description: De bijlagen behorend bij het informatieobject.
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject-sleutels'
+        clusters:
+          type: string
+          format: uri
+          description: 'Referentie naar Cluster in de vorm: vera/v4/clusters/12345'
+        collectiefObjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar CollectiefObject in de vorm: vera/v4/collectiefobjecten/12345'
+        contactmomenten:
+          type: string
+          format: uri
+          description: 'Referentie naar Contactmoment in de vorm: vera/v4/contactmomenten/12345'
+        dossiers:
+          description: Het informatieobject is gekoppeld aan/heeft betrekking op dossier(s).
+          type: array
+          items:
+            $ref: '#/components/schemas/Dossier'
+        eenheden:
+          type: string
+          format: uri
+          description: 'Referentie naar Eenheid in de vorm: vera/v4/eenheden/12345'
+        externePublicatie:
+          type: boolean
+          description: Aanduiding of dit informatieobject extern gepubliceerd dient te worden.
+        externePublicatietekst:
+          type: string
+          format: any
+          description: Tekstuele omschrijving ten behoeve van externe publicatie van dit informatieobject.
+        formaat:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Het digitale formaat (IANA media type) van het informatieobject.
+        gebruiksrechten:
+          type: string
+          format: any
+          description: Informatie omtrent rechten die geassocieerd zijn met het informatieobject zoals intellectueel eigendom.
+        inkoopfacturen:
+          type: string
+          format: uri
+          description: 'Referentie naar Inkoopfactuur in de vorm: vera/v4/inkoopfacturen/12345'
+        inkoopopdrachten:
+          type: string
+          format: uri
+          description: 'Referentie naar Inkoopopdracht in de vorm: vera/v4/inkoopopdrachten/12345'
+        isBijlageVan:
+          $ref: '#/components/schemas/Informatieobject-sleutels'
+          description: Geeft aan dat het informatieobject een bijlage is van een ander informatieobject.
+        onderhoudsverzoeken:
+          type: string
+          format: uri
+          description: 'Referentie naar Onderhoudsverzoek in de vorm: vera/v4/onderhoudsverzoeken/12345'
+        overeenkomsten:
+          type: string
+          format: uri
+          description: 'Referentie naar Overeenkomst in de vorm: vera/v4/overeenkomsten/12345'
+        processen:
+          description: Het informatieobject is gekoppeld aan/heeft betrekking op proces(sen).
+          type: array
+          items:
+            $ref: '#/components/schemas/Proces'
+        relaties:
+          type: string
+          format: uri
+          description: 'Referentie naar Relatie in de vorm: vera/v4/relaties/12345'
+        taal:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De taal waarin het informatieobject is opgesteld.
+        verantwoordelijkeOrganisatie:
+          type: string
+          format: any
+          description: Het RSIN (Rechtspersonen en Samenwerkingsverbanden Informatienummer) van de organisatie die verantwoordelijk is voor het informatieobject.
+        versie:
+          type: number
+          format: float
+          description: Het versienummer van het informatieobject.
+        vertrouwelijkheid:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De classificatie van het vertrouwelijkheidsniveau van het informatieobject.
+        zaken:
+          description: Het informatieobject is gekoppeld aan/heeft betrekking op zaak(-en).
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaak'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+    Informatieobject-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Zaak:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        omschrijving:
+          type: string
+          format: any
+          description: Een beknopte omschrijving van de zaak.
+        toelichting:
+          type: string
+          format: any
+          description: Een beknopte toelichting op de zaak.
+        bovenliggendeZaak:
+          $ref: '#/components/schemas/Zaak-sleutels'
+          description: Specificeert de bijbehorende hoofdzaak.
+        begindatum:
+          type: string
+          format: date-time
+          description: De datum waarop met de uitvoering van de zaak gestart is.
+        einddatum:
+          type: string
+          format: date-time
+          description: De datum waarop de uitvoering van de zaak afgerond is.
+        registratiedatum:
+          type: string
+          format: date-time
+          description: De datum waarop de zaakbehandelende organisatie de zaak heeft geregistreerd.
+        publicatiedatum:
+          type: string
+          format: date-time
+          description: Datum waarop (het starten van) de zaak gepubliceerd is.
+        geplandeEinddatum:
+          type: string
+          format: date-time
+          description: De datum waarop volgens de planning verwacht wordt dat de zaak afgerond wordt.
+        uiterlijkeEinddatum:
+          type: string
+          format: date-time
+          description: De datum waarop de zaak uiterlijk dient afgehandeld te zijn.
+        archiefstatus:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De fase waarin het zaakdossier zich vanuit het perspectief van archivering bevindt.
+        archiefActiedatum:
+          type: string
+          format: date-time
+          description: De datum waarop het gearchiveerde zaakdossier vernietigd dient te worden dan wel overgebracht moet worden naar een archiefbewaarplaats.
+        archiefnominatie:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Aanduiding of het zaakdossier blijvend bewaard of na een bepaalde termijn vernietigd moet worden.
+        clusters:
+          type: string
+          format: uri
+          description: 'Referentie naar Cluster in de vorm: vera/v4/clusters/12345'
+        collectiefObjecten:
+          type: string
+          format: uri
+          description: 'Referentie naar CollectiefObject in de vorm: vera/v4/collectiefobjecten/12345'
+        contactmomenten:
+          type: string
+          format: uri
+          description: 'Referentie naar Contactmoment in de vorm: vera/v4/contactmomenten/12345'
+        deelzaken:
+          description: Specificeert de bijbehorende deelzaken.
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaak-sleutels'
+        dossier:
+          $ref: '#/components/schemas/Dossier'
+          description: Het dossier dat aan de zaak gekoppeld is.
+        eenheden:
+          type: string
+          format: uri
+          description: 'Referentie naar Eenheid in de vorm: vera/v4/eenheden/12345'
+        gerelateerdeZaken:
+          description: Heeft één of meerdere gerelateerde interne of externe zaken.
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaak-sleutels'
+        inkoopfacturen:
+          type: string
+          format: uri
+          description: 'Referentie naar Inkoopfactuur in de vorm: vera/v4/inkoopfacturen/12345'
+        inkoopopdrachten:
+          type: string
+          format: uri
+          description: 'Referentie naar Inkoopopdracht in de vorm: vera/v4/inkoopopdrachten/12345'
+        kenmerken:
+          description: Dit zijn eigenschappen behorend bij de zaak.
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaakkenmerk'
+        onderhoudsverzoeken:
+          type: string
+          format: uri
+          description: 'Referentie naar Onderhoudsverzoek in de vorm: vera/v4/onderhoudsverzoeken/12345'
+        overeenkomsten:
+          type: string
+          format: uri
+          description: 'Referentie naar Overeenkomst in de vorm: vera/v4/overeenkomsten/12345'
+        processen:
+          description: De zaak is gekoppeld aan/heeft betrekking op proces(sen).
+          type: array
+          items:
+            $ref: '#/components/schemas/Proces'
+        relaties:
+          type: string
+          format: uri
+          description: 'Referentie naar Relatie in de vorm: vera/v4/relaties/12345'
+        resultaatOmschrijving:
+          type: string
+          format: any
+          description: Een beknopte omschrijving van het resultaat van de zaak.
+        resultaatToelichting:
+          type: string
+          format: any
+          description: Een beknopte toelichting op het resultaat van de zaak.
+        rollen:
+          description: De rollen op basis waarvan relaties betrokken zijn bij de zaak.
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaakrol'
+        verantwoordelijkeOrganisatie:
+          type: string
+          format: any
+          description: Het RSIN (Rechtspersonen en Samenwerkingsverbanden Informatienummer) van de organisatie die verantwoordelijk is voor de behandeling van de gerelateerde zaak.
+        zaakstatussen:
+          description: De statussen die bereikt zijn gedurende de behandeling van de zaak.
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaakstatus'
+        zaaktype:
+          $ref: '#/components/schemas/Zaaktype'
+          description: Zaaktype duidt de aard van de zaak aan en definieert daarmee de zaak.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    Zaak-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Zaakkenmerk:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        omschrijving:
+          type: string
+          format: any
+          description: De omschrijving van het zaakkenmerk.
+        waarde:
+          type: string
+          format: any
+          description: De waarde van het zaakkenmerk.
+        datatype:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het datatype van de waarde. Bijvoorbeeld: string, decimal, integer.'
+        groep:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De groep van kenmerken behorend bij het zaakkenmerk.
+        zaken:
+          description: De zaken behorende bij het zaakkenmerk.
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaak'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    Zaakrol:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken).
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Algemeen gehanteerde benaming van de aard van de rol.
+        omschrijving:
+          type: string
+          format: any
+          description: Een beknopte omschrijving van de aard van de rol.
+        begindatum:
+          type: string
+          format: date-time
+          description: Geeft de startdatum van de geldigheid van de rol aan.
+        einddatum:
+          type: string
+          format: date-time
+          description: Geeft de einddatum van de geldigheid van de rol aan.
+        afwijkendContactgegegeven:
+          type: string
+          format: uri
+          description: 'Referentie naar Contactgegeven in de vorm: vera/v4/contactgegevens/12345'
+        indicatieGemachtigde:
+          type: boolean
+          description: Indicatie of de betrokkene in de rol bij de zaak optreedt als gemachtigde van een andere betrokkene bij die zaak.
+        relatie:
+          type: string
+          format: uri
+          description: 'Referentie naar Relatie in de vorm: vera/v4/relaties/12345'
+        toelichtingRol:
+          type: string
+          format: any
+          description: Schriftelijke toelichting bij de rol.
+        zaak:
+          description: De zaak(-en) waarop de rol betrekking heeft.
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaak'
+        zaakstatussen:
+          description: De zaak(-en) statussen waarop de rol betrekking heeft.
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaakstatus'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    Zaakstatus:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De aanduiding van de status middels een statustype.
+        begindatum:
+          type: string
+          format: date-time
+          description: Het moment waarop de status is bereikt.
+        einddatum:
+          type: string
+          format: date-time
+          description: Het moment waarop de status verlopen is.
+        toelichting:
+          type: string
+          format: any
+          description: Toelichting over de status.
+        zaak:
+          $ref: '#/components/schemas/Zaak'
+          description: De zaak waar de status betrekking op heeft.
+        zaakrol:
+          $ref: '#/components/schemas/Zaakrol'
+          description: De rol van de bijbehorende relatie die de zaakstatus gezet heeft.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    Zaaktype:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        soort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Categorisering van de aard van een zaak van dit zaaktype.
+        detailSoort:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Specificatie van de categorie ten aanzien van de aard van zaak van het zaaktype.
+        generiekeOmschrijving:
+          type: string
+          format: any
+          description: Een beknopte generieke omschrijving van de aard van de zaak en van het zaaktype gerelateerd aan een sectorale ZTC.
+        omschrijving:
+          type: string
+          format: any
+          description: Een beknopte omschrijving van de aard van de zaak en van het zaaktype.
+        begindatum:
+          type: string
+          format: date-time
+          description: Met deze datum wordt aangegeven vanaf wanneer het zaaktype bestaat en toegepast kan worden.
+        einddatum:
+          type: string
+          format: date-time
+          description: Met deze datum wordt aangegeven vanaf wanneer het zaaktype niet meer bestaat en niet meer toegepast kan worden.
+        aanleiding:
+          type: string
+          format: any
+          description: Een omschrijving van de aanleiding die leidt tot het starten van een zaak van dit zaaktype.
+        archiefcode:
+          type: string
+          format: any
+          description: De systematische identificatie van zaakdossiers van dit zaaktype overeenkomstig logisch gestructureerde conventies, methoden en procedureregels.
+        doel:
+          type: string
+          format: any
+          description: Een omschrijving van het doel
+        domein:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Het domein waarbinnen het zaaktype is uitgewerkt.
+        doorlooptijd:
+          type: integer
+          format: int32
+          description: De periode waarbinnen een zaak van dit zaaktype afgerond dient te zijn.
+        externePublicatie:
+          type: boolean
+          description: Aanduiding of (het starten van) een zaak van dit zaaktype gepubliceerd moet worden.
+        externePublicatietekst:
+          type: string
+          format: any
+          description: De generieke tekst ten behoeve van de publicatie van een zaak van dit zaaktype.
+        relatie:
+          type: string
+          format: uri
+          description: 'Referentie naar Relatie in de vorm: vera/v4/relaties/12345'
+        servicenorm:
+          type: integer
+          format: int32
+          description: De periode waarbinnen verwacht wordt dat een zaak van dit zaaktype afgerond wordt conform de geldende servicenormen van de zaakbehandelende organisatie.
+        trefwoord:
+          type: string
+          format: any
+          description: Een trefwoord waarmee een zaak van dit zaaktype kan worden gekarakteriseerd.
+        vertrouwelijkheid:
+          $ref: '#/components/schemas/Referentiedata'
+          description: Aanduiding van de mate waarin zaakdossiers van een zaak van dit zaaktype voor de openbaarheid bestemd zijn.
+        zaakstatussen:
+          description: De statussen die bereikt kunnen worden bij behandeling van een zaak van dit zaaktype. 
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaakstatus'
+        zaken:
+          description: De aanwezige/betreffende zaken van dit zaaktype.
+          type: array
+          items:
+            $ref: '#/components/schemas/Zaak'
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    Processtap-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Informatieobjectkenmerk:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+        omschrijving:
+          type: string
+          format: any
+          description: De omschrijving van het informatieobject kenmerk.
+        waarde:
+          type: string
+          format: any
+          description: De waarde van het informatieobject kenmerk.
+        datatype:
+          $ref: '#/components/schemas/Referentiedata'
+          description: 'Het datatype van de waarde. Bijvoorbeeld: string, decimal, integer.'
+        groep:
+          $ref: '#/components/schemas/Referentiedata'
+          description: De groep van kenmerken behorend bij het informatieobject kenmerk.
+        extra-attributen:
+          description: Mogelijkheid om het bericht uit te breiden met attributen die nog niet in het logisch datamodel beschikbaar zijn
+          type: array
+          items:
+            $ref: '#/components/schemas/ExtraAttribuut'
+        informatieobjecten:
+          description: Mogelijkheid om het bericht uit te breiden met documentatie
+          type: array
+          items:
+            $ref: '#/components/schemas/Informatieobject'
+    Informatieobjectkenmerk-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Procesrol-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Zaakkenmerk-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Zaakrol-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken).
+    Zaakstatus-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Zaaktype-sleutels:
+      type: object
+      properties:
+        id:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het bronsysteem. Je verstuurt een entiteit altijd met het eigen id. Id kan leeg zijn.
+        idExtern:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven in het doelsysteem. Deze idExtern wisselt om met id afhankelijk van de richting van de gegevensuitwisseling.
+        idGegevensbeheerder:
+          type: string
+          format: any
+          description: De primaire sleutel van het gegeven van de gegevensbeheerder. Bijv. de overheid of andere standaarden.
+        code:
+          type: string
+          format: any
+          description: De unieke code (Bijvoorbeeld om te tonen of te zoeken)
+    Foutbericht:
+      type: object
+      properties:
+        code:
+          type: string
+        omschrijving:
+          type: string
+

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.woningnet.nl/Contracten/Wozo/Aanbieding" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:abg="http://www.woningnet.nl/Contracten/Wozo/Aanbieding" xmlns:prs="http://www.woningnet.nl/Contracten/Wozo/Persoon" xmlns:pub="http://www.woningnet.nl/Contracten/Aanbod/Publicatie" xmlns:reg="http://www.woningnet.nl/Contracten/Wozo/Registratie" xmlns:rsel="http://www.woningnet.nl/Contracten/Wozo/ReactieSelectie" xmlns:adr="http://www.woningnet.nl/Contracten/Common/Adressen" xmlns:cgg="http://www.woningnet.nl/Contracten/Wozo/Contactgegevens" xmlns:obj="http://www.woningnet.nl/Contracten/Aanbod/Object">
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Wozo/Persoon" schemaLocation="PersoonV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Aanbod/Publicatie" schemaLocation="PublicatieV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Aanbod/Object" schemaLocation="ObjectV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Wozo/Registratie" schemaLocation="RegistratieV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Wozo/ReactieSelectie" schemaLocation="ReactieSelectieV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Common/Adressen" schemaLocation="AdressenV1.xsd"/>
+  <xs:import namespace="http://www.woningnet.nl/Contracten/Wozo/Contactgegevens" schemaLocation="ContactgegevensV1.xsd"/>
+  <xs:element name="ActueleAanbiedingKey" type="abg:ActueleAanbiedingKey"/>
+  <xs:element name="AanbiedingReactie" type="abg:AanbiedingReactie" nillable="true"/>
+  <xs:element name="ActueleAanbiedingen" type="abg:ActueleAanbiedingen" nillable="true"/>
+  <xs:element name="ActueleAanbieding" type="abg:ActueleAanbieding" nillable="true"/>
+  <xs:element name="ActueleAanbiedingenKey" type="abg:ActueleAanbiedingenKey"/>
+  <xs:element name="DomeinItem" type="abg:DomeinItem"/>
+  <xs:element name="KandidaatKey" type="abg:KandidaatKey"/>
+  <xs:element name="KandidatenKey" type="abg:KandidatenKey"/>
+  <xs:element name="Kandidaat" type="abg:Kandidaat"/>
+  <xs:element name="Kandidaten" nillable="true">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Kandidaat" type="abg:Kandidaat" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ActueleAanbiedingKey">
+    <xs:sequence>
+      <xs:element ref="prs:PersoonKey" minOccurs="1"/>
+      <xs:element minOccurs="1" ref="pub:PublicatieKey"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AanbiedingReactie">
+    <xs:sequence>
+      <xs:element name="ActueleAanbiedingKey" type="abg:ActueleAanbiedingKey" minOccurs="1"/>
+      <xs:element name="Antwoord" type="xs:string" minOccurs="1"/>
+      <xs:element minOccurs="1" name="Reden" type="xs:string"/>
+      <xs:element minOccurs="0" name="Motivatie" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActueleAanbiedingen">
+    <xs:sequence>
+      <xs:element name="ActueleAanbieding" type="abg:ActueleAanbieding" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActueleAanbieding">
+    <xs:sequence>
+      <xs:element name="ActueleAanbiedingKey" type="abg:ActueleAanbiedingKey" minOccurs="1"/>
+      <xs:element name="PublicatieXML">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:any minOccurs="0" maxOccurs="1" processContents="lax"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element ref="rsel:SelectieSummary" minOccurs="1"/>
+      <xs:element name="Omschrijving" type="xs:string" minOccurs="0"/>
+      <xs:element name="Vervaldatum" type="xs:dateTime" minOccurs="0" nillable="true"/>
+      <xs:element minOccurs="0" name="Antwoorden" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DomeinItem" type="abg:DomeinItem" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element minOccurs="0" name="Reden" nillable="true">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="DomeinItem" type="abg:DomeinItem" minOccurs="0" maxOccurs="unbounded"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ActueleAanbiedingenKey">
+    <xs:sequence>
+      <xs:element ref="prs:PersoonKey" minOccurs="1"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="DomeinItem">
+    <xs:sequence>
+      <xs:element name="Code" type="xs:string" minOccurs="1"/>
+      <xs:element name="Omschrijving" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="KandidatenKey">
+    <xs:sequence>
+      <xs:element name="Regiocode" type="xs:string" minOccurs="1"/>
+      <xs:element name="ObjectKey" type="obj:ObjectKey" minOccurs="0" nillable="true"/>
+      <xs:element name="PerDatumTijd" type="xs:dateTime" minOccurs="0" nillable="true"/>
+      <xs:element name="Status" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="KandidaatKey">
+    <xs:sequence>
+      <xs:element ref="obj:ObjectKey"/>
+      <xs:element ref="reg:RegistratieKey"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Kandidaat">
+    <xs:sequence>
+      <xs:element name="KandidaatKey" type="abg:KandidaatKey" minOccurs="1"/>
+      <xs:element name="Hoofdaanvrager" type="prs:Persoon"/>
+      <xs:element name="Medeaanvrager" type="prs:Persoon" minOccurs="0" nillable="true"/>
+      <xs:element ref="adr:Adres"/>
+      <xs:element ref="cgg:Contactgegevens"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

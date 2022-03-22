@@ -1,0 +1,56 @@
+@startuml
+
+class Eigenaar {
+    +Key : EigenaarKey
+    +Naam : string
+    +Soort : Referentiedata
+    +Vestigingen : Vestigingen
+    +MutatieDatum : dateTime
+    +MutatieGebruiker : string
+}
+class EigenaarGroep {
+    +EigenaarGroepKey : EigenaarGroepKey
+    +Naam : string
+    +Vestigingen : Vestigingen
+    +MutatieDatum : dateTime
+    +MutatieGebruiker : string
+}
+class EigenaarGroepKey {
+    +Regiocode : string
+    +Naam : string
+    +Id : integer
+}
+class EigenaarKey {
+    +EigenaarId : integer
+    +Regiocode : string
+}
+class Eigenaren {
+    +Eigenaar : Eigenaar[]
+}
+class EigenarenKey {
+    +Regiocode : string
+}
+class Vestiging {
+    +Key : VestigingKey
+    +Naam : string
+    +LogoTonen : boolean
+    +MutatieDatum : dateTime
+    +MutatieGebruiker : string
+}
+class VestigingAdres {
+    +VestigingKey : VestigingKey
+    +Adres : Adres
+}
+class VestigingKey {
+    +Regiocode : string
+    +EigenaarId : integer
+    +VestigingId : integer
+}
+class VestigingKeys {
+    +VestigingKey : VestigingKey[]
+}
+class Vestigingen {
+    +Vestiging : Vestiging[]
+}
+
+@enduml

@@ -1,0 +1,77 @@
+companyId
+callId
+callStatusId
+customer
+  id
+  name
+  email
+  phone
+serviceAddress
+caller
+  id
+  name
+  email
+  phone
+id
+actionCode
+  id
+  description
+subject
+description
+status
+  id
+  description
+performedBy
+  id
+  description
+cause
+  id
+  description
+blockTime
+deadlineEndDate
+durationMinutes
+startDateTime
+endDateTime
+estimateAmount
+extraInfo
+settlementBy
+  id
+  description
+paidBy
+  id
+  name
+  email
+  phone
+isDateLocked
+project
+  id
+  description
+projectGroup
+  id
+  description
+callType
+  id
+  description
+realizedDate
+registrationDate
+resourcegroup
+  id
+  description
+resource
+  id
+  name
+supplier
+  id
+  name
+  email
+  phone
+cancelIsPossible
+rescheduleIsPossible
+planningBundleId
+reasonNotRealized
+  id
+  description
+purchId
+callDescription
+tenantMemo
+serviceObjectDescription

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by Helpdesk (Ortec) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:include schemaLocation="comtec_cdms_task_order.xsd"/>
+	<xs:element name="bookTimeslotRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="timeslot">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="from" type="datetime"/>
+							<xs:element name="till" type="datetime"/>
+							<xs:element name="resourceId" type="id"/>
+							<xs:element name="routeId"/>
+							<xs:element name="sequenceNumber" type="xs:integer"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="orderData">
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="id" type="id"/>
+							<xs:element ref="comtec"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

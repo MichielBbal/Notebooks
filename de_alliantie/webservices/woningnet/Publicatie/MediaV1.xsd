@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://www.woningnet.nl/Contracten/Common/Media" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:med="http://www.woningnet.nl/Contracten/Common/Media">
+  <xs:element name="Media" type="med:Media" nillable="true"/>
+  <xs:complexType name="Media">
+    <xs:sequence>
+      <xs:element name="Fotos" type="med:Fotos" minOccurs="0" nillable="true"/>
+      <xs:element name="Plattegronden" type="med:Plattegronden" minOccurs="0" nillable="true"/>
+      <xs:element name="Documenten" type="med:Documenten" minOccurs="0" nillable="true"/>
+      <xs:element name="Videos" type="med:Videos" minOccurs="0" nillable="true"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Foto">
+    <xs:sequence>
+      <xs:element name="Large" type="xs:string" minOccurs="0"/>
+      <xs:element name="Medium" type="xs:string" minOccurs="0"/>
+      <xs:element name="Small" type="xs:string" minOccurs="0"/>
+      <xs:element name="Thumb" type="xs:string" minOccurs="0"/>
+      <xs:element name="Omschrijving" type="xs:string" minOccurs="0"/>
+      <xs:element name="Publicatie" type="xs:boolean" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Fotos">
+    <xs:sequence>
+      <xs:element name="Foto" type="med:Foto" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Document">
+    <xs:sequence>
+      <xs:element name="Bestand" type="xs:string" minOccurs="0"/>
+      <xs:element name="Omschrijving" type="xs:string" minOccurs="0"/>
+      <xs:element name="Publicatie" type="xs:boolean" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Documenten">
+    <xs:sequence>
+      <xs:element name="Document" type="med:Document" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Plattegrond">
+    <xs:sequence>
+      <xs:element name="Large" type="xs:string" minOccurs="0"/>
+      <xs:element name="Thumb" type="xs:string" minOccurs="0"/>
+      <xs:element name="Omschrijving" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Plattegronden">
+    <xs:sequence>
+      <xs:element name="Plattegrond" type="med:Plattegrond" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Video">
+    <xs:sequence>
+      <xs:element name="YouTubeId" type="xs:string" minOccurs="0"/>
+      <xs:element name="Titel" type="xs:string" minOccurs="0"/>
+      <xs:element name="Thumb" type="xs:string" minOccurs="0"/>
+      <xs:element name="Omschrijving" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="Videos">
+    <xs:sequence>
+      <xs:element name="Video" type="med:Video" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
