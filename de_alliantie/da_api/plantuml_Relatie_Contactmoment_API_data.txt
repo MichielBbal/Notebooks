@@ -1,0 +1,105 @@
+@startuml
+class ContactGegeven{
+soort
+detailSoort
+waarde
+}
+class Contactmoment{
+identificatie
+relatie
+kanaal
+richting
+datum
+omschrijving
+medewerker
+soort
+extraElementen
+}
+class Email{
+soort
+detailSoort
+emailAdres
+}
+class ExtraElementen{
+doel
+notitie
+actie
+}
+class ContactGegevens{
+telefoonnummers
+emailAdressen
+overigeContactGegevens
+}
+class RechtsPersoon{
+naam
+btwNummer
+kvkNummer
+organisatievorm
+}
+class RelatieNAW{
+identificatie
+natuurlijkPersoon
+rechtsPersoon
+adressen
+contactGegevens
+}
+class Medewerker{
+identificatie
+soort
+naam
+}
+class Telefoonnummer{
+soort
+detailSoort
+landnummer
+netnummer
+abonneenummer
+extensie
+dagdelen
+}
+class Actie{
+soort
+medewerker
+}
+class NatuurlijkPersoon{
+voornaam
+initialen
+tussenvoegsels
+achternaam
+roepnaam
+geslacht
+geboortedatum
+overlijdensdatum
+burgerlijkeStaat
+nationaliteit
+bsn
+}
+class Adres{
+soort
+straatnaam
+huisnummer
+huisletter
+huisnummertoevoeging
+adres
+postcode
+woonplaats
+buurt
+wijk
+corporatieBuurt
+corporatieWijk
+gemeente
+provincie
+land
+geometrie
+eenheidNevenadressen
+eenheidAdres
+bag
+}
+class ErrorResponse{
+timestamp
+status
+code
+error
+message
+}
+@enduml

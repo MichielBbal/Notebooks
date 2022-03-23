@@ -1,0 +1,73 @@
+@startuml
+class Email{
+soort
+detailSoort
+emailAdres
+}
+class ExtraElementenRelatie{
+bedrijf
+}
+class BetaalGegeven{
+identificatie
+iban
+primair
+}
+class RelatieNAW{
+identificatie
+initialen
+achternaam
+geslacht
+geboortedatum
+voornaam
+tussenvoegsels
+roepnaam
+overlijdensdatum
+burgerlijkeStaat
+nationaliteit
+bsn
+rechtsPersoon
+telefoonnummers
+emailAdressen
+betaalGegevens
+signaleringen
+extraElementen
+}
+class Signalering{
+identificatie
+soort
+status
+begindatum
+einddatum
+extraElementen
+}
+class Relatieoverzicht{
+relatie-NAW
+serviceovereenkomst
+errors
+}
+class Serviceovereenkomst{
+identificatie
+actieveServiceovereenkomst
+}
+class Telefoonnummer{
+soort
+detailSoort
+landnummer
+netnummer
+abonneenummer
+extensie
+dagdelen
+}
+class ExtraElementenSignalering{
+omschrijving
+}
+class FinancieelBedrijf{
+identificatie
+}
+class ErrorResponse{
+timestamp
+status
+error
+message
+}
+@enduml

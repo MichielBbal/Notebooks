@@ -1,0 +1,11 @@
+Email;soort,detailSoort,emailAdres
+ExtraElementenRelatie;bedrijf
+BetaalGegeven;identificatie,iban,primair
+RelatieNAW;identificatie,initialen,achternaam,geslacht,geboortedatum,voornaam,tussenvoegsels,roepnaam,overlijdensdatum,burgerlijkeStaat,nationaliteit,bsn,rechtsPersoon,telefoonnummers,emailAdressen,betaalGegevens,signaleringen,extraElementen
+Signalering;identificatie,soort,status,begindatum,einddatum,extraElementen
+Relatieoverzicht;relatie-NAW,serviceovereenkomst,errors
+Serviceovereenkomst;identificatie,actieveServiceovereenkomst
+Telefoonnummer;soort,detailSoort,landnummer,netnummer,abonneenummer,extensie,dagdelen
+ExtraElementenSignalering;omschrijving
+FinancieelBedrijf;identificatie
+ErrorResponse;timestamp,status,error,message

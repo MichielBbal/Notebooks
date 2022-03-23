@@ -1,0 +1,135 @@
+@startuml
+class Email{
+soort
+detailSoort
+emailAdres
+}
+class BetaalGegeven{
+identificatie
+iban
+primair
+}
+class RechtsPersoon{
+naam
+btwNummer
+kvkNummer
+organisatievorm
+}
+class ExtraElementenSignalering{
+omschrijving
+}
+class NatuurlijkPersoon{
+voornaam
+initialen
+tussenvoegsels
+achternaam
+roepnaam
+geslacht
+geboortedatum
+overlijdensdatum
+burgerlijkeStaat
+nationaliteit
+bsn
+signaleringen
+extraElementen
+}
+class ExtraElementenNatuurlijkPersoon{
+aanschrijfNaam
+}
+class ContactGegeven{
+soort
+detailSoort
+waarde
+}
+class ExtraElementen{
+isActieveHoofdHuurder
+bedrijf
+}
+class RelatieNAW{
+identificatie
+natuurlijkPersoon
+rechtsPersoon
+adressen
+contactGegevens
+betaalGegevens
+extraElementen
+}
+class ContactGegevens{
+telefoonnummers
+emailAdressen
+overigeContactGegevens
+}
+class Signalering{
+identificatie
+soort
+status
+begindatum
+einddatum
+extraElementen
+}
+class Telefoonnummer{
+soort
+detailSoort
+landnummer
+netnummer
+abonneenummer
+extensie
+dagdelen
+}
+class Adres{
+identificatie
+soort
+straatnaam
+huisnummer
+huisletter
+huisnummertoevoeging
+adres
+postcode
+woonplaats
+buurt
+wijk
+corporatieBuurt
+corporatieWijk
+gemeente
+provincie
+land
+geometrie
+eenheidNevenadressen
+eenheidAdres
+bag
+}
+class Bedrijf{
+identificatie
+naam
+}
+class ErrorResponse{
+timestamp
+status
+code
+error
+message
+}
+class RelatieNAWUpdate{
+identificatie
+natuurlijkPersoon
+}
+class NatuurlijkPersoonUpdate{
+overlijdensdatum
+}
+class RelatieNAWNewContactGegeven{
+identificatie
+contactGegevens
+extraElementen
+}
+class ExtraElementenNewContactGegeven{
+omschrijving
+}
+class ExtraElementenToekomstigAdres{
+startdatum
+bedrijf
+}
+class ToekomstigAdres{
+adres
+extraElementen
+}
+@enduml

@@ -1,0 +1,13 @@
+ContactGegeven;soort,detailSoort,waarde
+Contactmoment;identificatie,relatie,kanaal,richting,datum,omschrijving,medewerker,soort,extraElementen
+Email;soort,detailSoort,emailAdres
+ExtraElementen;doel,notitie,actie
+ContactGegevens;telefoonnummers,emailAdressen,overigeContactGegevens
+RechtsPersoon;naam,btwNummer,kvkNummer,organisatievorm
+RelatieNAW;identificatie,natuurlijkPersoon,rechtsPersoon,adressen,contactGegevens
+Medewerker;identificatie,soort,naam
+Telefoonnummer;soort,detailSoort,landnummer,netnummer,abonneenummer,extensie,dagdelen
+Actie;soort,medewerker
+NatuurlijkPersoon;voornaam,initialen,tussenvoegsels,achternaam,roepnaam,geslacht,geboortedatum,overlijdensdatum,burgerlijkeStaat,nationaliteit,bsn
+Adres;soort,straatnaam,huisnummer,huisletter,huisnummertoevoeging,adres,postcode,woonplaats,buurt,wijk,corporatieBuurt,corporatieWijk,gemeente,provincie,land,geometrie,eenheidNevenadressen,eenheidAdres,bag
+ErrorResponse;timestamp,status,code,error,message

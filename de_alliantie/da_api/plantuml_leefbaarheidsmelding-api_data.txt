@@ -1,0 +1,32 @@
+@startuml
+class Eenheid{
+adres
+}
+class Leefbaarheidsmelding{
+identificatie
+registratiedatum
+omschrijving
+toelichting
+type
+onderwerp
+status
+reden
+urgentie
+verantwoordelijkeMedewerker
+relatieIdentificatie
+rolRelatie
+eenheid
+}
+class Adres{
+huisnummer
+huisnummerToevoeging
+postcode
+}
+class ErrorResponse{
+timestamp
+status
+code
+error
+message
+}
+@enduml

@@ -1,0 +1,27 @@
+@startuml
+class ExtraElementenRelatieStatus{
+isOnderbewindvoering
+}
+class RelatieStatus{
+identificatie
+extraElementen
+}
+class ErrorResponse{
+timestamp
+status
+error
+message
+}
+class RelatieLookup{
+identificatie
+extraElementen
+}
+class VerificatieKanaal{
+kanaal
+adres
+}
+class ExtraElementenRelatieLookup{
+aanschrijfNaam
+verificatieKanalen
+}
+@enduml
