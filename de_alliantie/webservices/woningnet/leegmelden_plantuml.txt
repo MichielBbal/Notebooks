@@ -1,5 +1,5 @@
 @startuml
-title Leegmelden request en response 
+title leegmelden - request en response message 
 object DeclareEmpty{
 Publication
 Id
@@ -52,7 +52,7 @@ Attributes
 Criterion
 Pictures
 }
-object DeclareEmptyResult{
+object CompletedResult{
 Processed
 Report
 }
