@@ -155,7 +155,7 @@ html5lib @ file:///home/conda/feedstock_root/build_artifacts/html5lib_1592930327
 httpcore==0.9.1
 httplib2==0.19.0
 httptools==0.2.0
-httpx==0.13.3
+httpx==0.23.0
 hydra-core==1.1.1
 hyperframe==5.2.0
 idna==2.10
