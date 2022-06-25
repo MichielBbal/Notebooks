@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Soap:Envelope xmlns:Soap="http://schemas.xmlsoap.org/soap/envelope/">
+  <Soap:Header/>
+  <Soap:Body>
+    <wrvkanLk02 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://www.stichting-vera.nl/StUF/verticaal/woonruimteverdeling/0301">
+      <stuurgegevens>
+        <berichtcode xmlns="http://www.egem.nl/StUF/StUF0301">Lk02</berichtcode>
+        <zender xmlns="http://www.egem.nl/StUF/StUF0301">
+          <organisatie>XXXX</organisatie>
+          <applicatie>XXXX</applicatie>
+          <administratie>vastgoed</administratie>
+          <gebruiker>dummy</gebruiker>
+        </zender>
+        <ontvanger xmlns="http://www.egem.nl/StUF/StUF0301">
+          <organisatie>xxxx</organisatie>
+          <applicatie>TOBIAS365</applicatie>
+          <administratie>vastgoed</administratie>
+          <gebruiker>dummy</gebruiker>
+        </ontvanger>
+        <referentienummer xmlns="http://www.egem.nl/StUF/StUF0301">1021867</referentienummer>
+        <tijdstipBericht xmlns="http://www.egem.nl/StUF/StUF0301">20211020143008751</tijdstipBericht>
+        <entiteittype xmlns="http://www.egem.nl/StUF/StUF0301">WRVKAN</entiteittype>
+      </stuurgegevens>
+      <parameters>
+        <mutatiesoort xmlns="http://www.egem.nl/StUF/StUF0301">W</mutatiesoort>
+        <indicatorOvername xmlns="http://www.egem.nl/StUF/StUF0301">V</indicatorOvername>
+      </parameters>
+      <object xmlns:d2p1="http://www.egem.nl/StUF/StUF0301" d2p1:entiteittype="WOOKAN">
+        <positie xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">1</positie>
+        <status xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+          <code>AAN</code>
+          <naam>Aangeboden</naam>
+        </status>
+        <detailStatus xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+          <code>AAN</code>
+          <naam>Aanbieding</naam>
+        </detailStatus>
+        <aanvrager>
+          <soort xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+            <code>NAT</code>
+            <naam>Natuurlijk persoon</naam>
+          </soort>
+          <initialen xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">X.Y.</initialen>
+          <achternaam xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">Tester</achternaam>
+          <geslacht xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+            <code>V</code>
+            <naam>Vrouw</naam>
+          </geslacht>
+          <geboortedatum xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">1989-01-01</geboortedatum>
+          <adressen d2p1:aantalVoorkomens="2">
+            <relatieAdres>
+              <soort xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+                <code>WOO</code>
+                <naam>Woonadres</naam>
+              </soort>
+              <adres>
+                <straatnaam xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">de Waal</straatnaam>
+                <huisnummer xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">34</huisnummer>
+                <huisnummerToevoeging xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310"/>
+                <postcode xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">5684PH</postcode>
+                <woonplaats>
+                  <code xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">1456</code>
+                  <naam xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">Best</naam>
+                </woonplaats>
+              </adres>
+            </relatieAdres>
+            <relatieAdres>
+              <soort xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+                <code>POS</code>
+                <naam>Postadres</naam>
+              </soort>
+              <adres>
+                <straatnaam xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">de Waal</straatnaam>
+                <huisnummer xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">340</huisnummer>
+                <huisnummerToevoeging xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310"/>
+                <postcode xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">5684PH</postcode>
+                <woonplaats>
+                  <code xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">1456</code>
+                  <naam xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">Best</naam>
+                </woonplaats>
+              </adres>
+            </relatieAdres>
+          </adressen>
+          <contactgegevens d2p1:aantalVoorkomens="3">
+          
+        
+             
+            <contactgegeven>
+              <soort xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+                <code>TEL</code>
+                <naam>Telefoon</naam>
+              </soort>
+              <waarde xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">0612345678</waarde>
+            </contactgegeven>
+          </contactgegevens>
+          <inkomens>
+            <inkomen>
+              <brutoJaarinkomen xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">12492</brutoJaarinkomen>
+            </inkomen>
+          </inkomens>
+        </aanvrager>
+        <medeaanvrager>
+          <soort xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+            <code>NAT</code>
+            <naam>Natuurlijk persoon</naam>
+          </soort>
+          <initialen xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">M.W.Z.</initialen>
+          <achternaam xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">Tester</achternaam>
+          <geslacht xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+            <code>V</code>
+            <naam>Vrouw</naam>
+          </geslacht>
+          <geboortedatum xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">1990-01-01</geboortedatum>
+          <adressen d2p1:aantalVoorkomens="2">
+            <relatieAdres>
+              <soort xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+                <code>WOO</code>
+                <naam>Woonadres</naam>
+              </soort>
+              <adres>
+                <straatnaam xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">de Waal</straatnaam>
+                <huisnummer xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">34</huisnummer>
+                <huisnummerToevoeging xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310"/>
+                <postcode xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">5684PH</postcode>
+                <woonplaats>
+                  <code xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">1456</code>
+                  <naam xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">Best</naam>
+                </woonplaats>
+              </adres>
+            </relatieAdres>
+            <relatieAdres>
+              <soort xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">
+                <code>POS</code>
+                <naam>Postadres</naam>
+              </soort>
+              <adres>
+                <straatnaam xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">de Waal</straatnaam>
+                <huisnummer xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">340</huisnummer>
+                <huisnummerToevoeging xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310"/>
+                <postcode xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">5684PH</postcode>
+                <woonplaats>
+                  <code xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">1456</code>
+                  <naam xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">Best</naam>
+                </woonplaats>
+              </adres>
+            </relatieAdres>
+          </adressen>
+          <contactgegevens d2p1:aantalVoorkomens="3">
+        
+          </contactgegevens>
+          <inkomens>
+            <inkomen>
+              <brutoJaarinkomen xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">1249</brutoJaarinkomen>
+            </inkomen>
+          </inkomens>
+        </medeaanvrager>
+        <aantalVolwassenen>2</aantalVolwassenen>
+        <aantalKinderen>1</aantalKinderen>
+        <verzamelinkomen>13741</verzamelinkomen>
+        <eenheid d2p1:sleutelOntvangend="5637146078">
+          <brutohuur xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">0</brutohuur>
+          <subsidiabeleHuur xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">0</subsidiabeleHuur>
+          <streefhuur xmlns="http://www.stichting-vera.nl/StUF/sector/vera/0310">0</streefhuur>
+        </eenheid>
+      </object>
+    </wrvkanLk02>
+  </Soap:Body>
+</Soap:Envelope>
+
