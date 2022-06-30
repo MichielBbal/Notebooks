@@ -7,7 +7,7 @@ It's divided into four categories:
 
 1. Basics
 2. Intermediate
-3. Machine / Deep Learning 
-4. Applications
-
-Please see also other repositories such as cycling_data and facemask detector
+3. Deep learning, mostly Computer Vision
+4. Notebooks about integration
+5. Audio
+6. Misc
