@@ -1,5 +1,6 @@
 #credentials
 notebooks_config.py
+credentials.py
 
 # models / large files
 mask_rcnn_coco.h5
