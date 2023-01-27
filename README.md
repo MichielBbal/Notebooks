@@ -8,9 +8,10 @@ It's divided into seven categories:
 1. Basics
 2. Intermediate
 3. Deep learning (Computer Vision, NLP etc)
-4. Data science & data engineering (data protocols, integration etc)
+4. Data engineering (data protocols, integration etc)
 5. Audio
 6. Creative Coding & miscellanious
+
 
 ### Learning paths
 You can create your own learning path if you like. 
