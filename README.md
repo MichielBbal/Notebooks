@@ -7,8 +7,8 @@ It's divided into seven categories:
 
 1. Basics
 2. Intermediate
-3. Deep learning (Computer Vision, NLP etc)
-4. Data engineering (data protocols, integration etc)
+3. Machine learning & Deep Learning (Computer Vision, NLP etc)
+4. Big Data & Data engineering (data protocols, integration etc)
 5. Audio
 6. Creative Coding & miscellanious
 
