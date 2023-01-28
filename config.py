@@ -8,3 +8,7 @@ mastodon_access_token = 'rxbWelcSEc4F9Mhn2B2mTTwhHIXHGekBObdAygyGX-s'
 #Twitter
 
 #Strava
+
+
+#mySQL
+mysql_pw = "pw=Thomas2012"
