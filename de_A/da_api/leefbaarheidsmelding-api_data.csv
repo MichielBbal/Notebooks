@@ -1,4 +1,0 @@
-Eenheid;adres
-Leefbaarheidsmelding;identificatie,registratiedatum,omschrijving,toelichting,type,onderwerp,status,reden,urgentie,verantwoordelijkeMedewerker,relatieIdentificatie,rolRelatie,eenheid
-Adres;huisnummer,huisnummerToevoeging,postcode
-ErrorResponse;timestamp,status,code,error,message

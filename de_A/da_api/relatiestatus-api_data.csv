@@ -1,6 +1,0 @@
-ExtraElementenRelatieStatus;isOnderbewindvoering
-RelatieStatus;identificatie,extraElementen
-ErrorResponse;timestamp,status,error,message
-RelatieLookup;identificatie,extraElementen
-VerificatieKanaal;kanaal,adres
-ExtraElementenRelatieLookup;aanschrijfNaam,verificatieKanalen

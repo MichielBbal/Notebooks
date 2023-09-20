@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSpy v2016 (x64) (http://www.altova.com) by Helpdesk (Ortec) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:include schemaLocation="comtec_cdms_task_order.xsd"/>
-</xs:schema>

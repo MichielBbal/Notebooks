@@ -1,7 +1,0 @@
-Eenheid;identificatie
-BouwkundigElement;identificatie,naam,omschrijving
-InspectieOrder;identificatie,omschrijving,onderhoudSoort,begindatum,einddatum,uitvoerende,extraElementen
-Huurovereenkomst;identificatie
-ExtraElementenInspectie;uitvoerendeInterneIdentificatie,prognoseDoorverhuren,bouwkundigeElementen,bedrijf,huurovereenkomst,eenheid
-FinancieelBedrijf;identificatie
-ErrorResponse;timestamp,status,error,message
